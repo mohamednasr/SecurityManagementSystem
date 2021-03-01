@@ -1,0 +1,50 @@
+.body{
+    margin:0%;
+    align-items: left;
+    box-sizing: content-box;
+align-content: center;
+background-color:#ffffff;
+
+}
+
+
+#mainbar{
+    background-color: #bebebe;
+    }
+
+.section{
+    text-align: center;
+   
+    background-color: rgb(187, 179, 179);
+
+}
+
+.text{
+    
+    padding: 10px 0px;
+}
+
+.textbox{
+    padding: 5px;
+    
+}
+
+.section1{
+    margin-right: 5%;
+}
+.textboxin{
+    border-style: none;
+    border-bottom: solid;
+    border-color: black;
+    background-color: rgb(187, 179, 179);
+}
+
+
+.button1{
+    height: 80px;
+    width: 80px;
+    margin: 75px 15px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: darkgray;
+}
