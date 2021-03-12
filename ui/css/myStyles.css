@@ -49,7 +49,12 @@
     background-color: darkgray;
 }
 
-#place{
+.place{
+    content: none;
+    visibility: hidden;
+}
+
+#company{
     content: none;
     visibility: hidden;
 }

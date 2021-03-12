@@ -3,8 +3,10 @@ function showModal(){
 }
 
 $(document).ready(function(){
-    $("#place").cick (function(){
-        $(".hidden").css({"display":"Block","visibility":"visible"});
+    $(".add-place").click (function(){
+        $(".place").css({"display":"Block","visibility":"visible"});
     });
-
+    $("#add-company").click (function(){
+        $("#company").css({"display":"Block","visibility":"visible"});
+    });
 });
