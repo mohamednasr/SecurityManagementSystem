@@ -4,9 +4,10 @@ function showModal(){
 
 $(document).ready(function(){
     $(".add-place").click (function(){
-        $(".place").css({"display":"Block","visibility":"visible"});
+        $("#place").toggleClass('hidden');
     });
     $("#add-company").click (function(){
-        $("#company").css({"display":"Block","visibility":"visible"});
+
+        $("#company").toggleClass('hidden');
     });
 });

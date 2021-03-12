@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,99 +12,101 @@
     </head>
     <body class="body">
         <nav id="mainbar" >
-            <div class="navbar" >
+            <div class="navbar" style="padding-right: 50px;">
              
  
-          <table class="bar col-lg-6 col-md-9 col-sm-12">
+          <table class="bar col-lg-6 col-md-8 col-sm-12">
              <tr>
                  
-                 <td href="#" class="button" id="button"> تسجيل خروج</td>
+                 <td href="#" class="button " id="button"> تسجيل خروج</td>
                  <td><a href="../html/home.html" id="button">الرئيسية</td>
                  
              </tr>
           </table>
-          <img src="../images/لوجو بايونير1.jpg" class="col-lg-1 offset-lg-5 col-md-1 col-sm-1 " width="80px" id="img">
+          <img src="../images/لوجو بايونير1.jpg" class="img col-lg-1 col-md-1 col-sm-12" width="80px" id="img">
+            </div>
+          
          </nav>
-         <section class="container-fluid" style="padding-bottom: 25px;">
+        <section class="container-fluid" style="padding-bottom: 25px;">
             <div class="text text-center font-weight-bold h2">
                 إنشاء عقد   
             </div>
             <div class="row">
                 
-                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
-                        <label class="col-lg-8">الأسم</label>
-                        <input type="text" class="col-lg-8"  style="width: 600px;">
-                    </div>  
-                    <div class="form-group col-lg-4 col-md-4 col-sm-12">
-                        <label class="col-lg-5 col-md-12">تاريخ العقد</label>  
-                        <input type="date" class="col-lg-8 col-md-12"  class="col-lg-5">
-                    </div>                  
+                <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                    <label class="col-lg-8">الأسم</label>
+                    <input type="text" class="col-lg-8"  style="width: 600px;">
+                </div>  
+                <div class="form-group col-lg-4 col-md-4 col-sm-12">
+                    <label class="col-lg-5 col-md-12">تاريخ العقد</label>  
+                    <input type="date" class="col-lg-8 col-md-12"  class="col-lg-5">
+                </div>                  
             </div>
            <div class="row">
-            <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                <label class="col-lg-6 col-md-12">بداية العقد</label>  
-                <input type="date" class="col-lg-6" class="col-lg-5">
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label class="col-lg-6 col-md-12">بداية العقد</label>  
+                    <input type="date" class="col-lg-6" class="col-lg-5">
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                    <label class="col-lg-6 col-md-12">نهاية العقد</label>  
+                    <input type="date" class="col-lg-6 col-md-12" class="col-lg-5">
+                </div>
             </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                <label class="col-lg-6 col-md-12">نهاية العقد</label>  
-                <input type="date" class="col-lg-6 col-md-12" class="col-lg-5">
-            </div>
-           </div>
            <div class="row text-center">
                <button type="button" class="btn btn-primary add-place col-lg-1 offset-lg-2 col-md-1 col-sm-1" id="add-place">إضافة موقع</button> 
                <button type="button" class="btn btn-primary col-lg-1 col-md-1 col-sm-1" id="add-company">إضافة شركة</button> 
            </div>
-         </section>
-         <section class="container-fluid place" id="place">
-             <div class="row">
-                 <div class="text font-weight-bold h4">إضافة موقع</div>
-             </div>
-             <div class="row">
-                <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                    <label class="col-lg-12 col-md-12 col-sm-12">أسم الموقع</label>
-                    <input type="text" class="col-lg-12 col-md-12 col-sm-12" style="width: 1000px;">
-                </div>  
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label class="col-lg-6 col-md-12">بداية التنفيذ</label>  
-                    <input type="date" class="col-lg-6">
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-12">
-                    <label class="col-lg-6 col-md-12">نهاية التنفيذ</label>  
-                    <input type="date" class="col-lg-6">
-                </div>
-               </div>
-             </div>
-         </section>
-         <section class="container-fluid" id="company">
+        </section>
+        <section class="container-fluid" style="padding-right: 30px;">
             <div class="row">
-                <div class="text font-weight-bold h4">إضافة شركة</div>
-            </div>
-            <div class="row">
-               <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                   <label class="col-lg-12 col-md-12 col-sm-12">أسم الشركة</label>
-                   <input type="text" class="col-lg-12 col-md-12 col-sm-12" style="width: 1000px;">
-               </div>  
-               <div class="form-group col-lg-8 col-md-6 col-sm-12">
-                   <label class="col-lg-8 col-md-12">المسئول</label>  
-                   <input type="text" class="col-lg-8">
-               </div>
-               <div class="form-group col-lg-4 col-md-6 col-sm-12">
-                   <label class="col-lg-6 col-md-12">صفتة</label>  
-                   <input type="text" class="col-lg-6">
-               </div>
-              </div>
+                <div class="hidden place" id="place">
+                    <div class="text font-weight-bold h4">إضافة موقع</div>
+                
+                        <div>
+                            <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                                <label class="col-lg-12 col-md-12 col-sm-12">أسم الموقع</label>
+                                <input type="text" class="col-lg-12 col-md-12 col-sm-12" style="width: 1000px;">
+                            </div>  
+                            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                <label class="col-lg-6 col-md-12">بداية التنفيذ</label>  
+                                <input type="date" class="col-lg-6">
+                            </div>
+                            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+                                <label class="col-lg-6 col-md-12">نهاية التنفيذ</label>  
+                                <input type="date" class="col-lg-6">
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+                <div class="hidden" id="company">
+                    <div class="text font-weight-bold h4">إضافة شركة</div>
+                    <div class="row">
+                        <div class="form-group col-lg-12 col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-sm-12">أسم الشركة</label>
+                            <input type="text" class="col-lg-12 col-md-12 col-sm-12" style="width: 1000px;">
+                        </div>  
+                        <div class="form-group col-lg-8 col-md-6 col-sm-12">
+                            <label class="col-lg-8 col-md-12">المسئول</label>  
+                            <input type="text" class="col-lg-8">
+                        </div>
+                        <div class="form-group col-lg-4 col-md-6 col-sm-12">
+                            <label class="col-lg-6 col-md-12">صفتة</label>  
+                            <input type="text" class="col-lg-6">
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+        
         <section class="fluid-container">
             <div class="row">
-            <div class="text-left col-lg-1 offset-lg-5"></div>
-                <button class="btn btn-primary  " id="save">حفظ</button>
-                <button class="btn btn-primary " id="back">رجوع</button>
-            </div>
-            
+                <div class="text-left col-lg-1 offset-lg-5"></div>
+                    <button class="btn btn-primary  " id="save">حفظ</button>
+                    <button class="btn btn-primary " id="back">رجوع</button>
+                </div>
+            </div>    
         </section>
         <script src="../js/jquery-3.5.1.js"></script>
         <script src="../js/bootstrap.js"></script>
         <script src="../js/myScripts.js"></script>
     </body>
-</html>

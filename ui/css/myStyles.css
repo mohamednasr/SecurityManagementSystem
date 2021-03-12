@@ -5,6 +5,7 @@
     align-content: center;
     background-color:#ffffff;
     direction: rtl;
+    
 }
 
 
@@ -49,12 +50,8 @@
     background-color: darkgray;
 }
 
-.place{
+.hidden{
     content: none;
     visibility: hidden;
 }
 
-#company{
-    content: none;
-    visibility: hidden;
-}
