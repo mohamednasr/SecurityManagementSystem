@@ -3,7 +3,8 @@ function showModal(){
 }
 
 $(document).ready(function(){
-$("#button").hover(function(){
-    $(this).css("background-color", "orange");
-});
+    $("#place").cick (function(){
+        $(".hidden").css({"display":"Block","visibility":"visible"});
+    });
+
 });

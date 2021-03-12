@@ -48,3 +48,8 @@
     font-weight: bold;
     background-color: darkgray;
 }
+
+#place{
+    content: none;
+    visibility: hidden;
+}
