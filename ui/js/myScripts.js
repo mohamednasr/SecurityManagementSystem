@@ -10,4 +10,12 @@ $(document).ready(function(){
 
         $("#company").toggleClass('hidden');
     });
+
+    var names  = ["ahmed", "wael", "yasser"];
+    
+
+    $("#chosen").autocomplete({
+        source: names
+       
+    });
 });
