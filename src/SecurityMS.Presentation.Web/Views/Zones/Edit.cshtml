@@ -1,0 +1,36 @@
+﻿@model SecurityMS.Core.Models.ZoneModel
+
+@{
+    ViewData["Title"] = "تعديل منطقة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>تعديل منطقة</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GovernmentId" class="control-label"></label>
+                <select asp-for="GovernmentId" class="form-control" asp-items="ViewBag.GovernmentId"></select>
+                <span asp-validation-for="GovernmentId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="تعديل" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>

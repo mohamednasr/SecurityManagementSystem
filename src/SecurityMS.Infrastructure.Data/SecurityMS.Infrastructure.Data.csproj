@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210312130350_contract.cs" />
+    <Compile Remove="Migrations\20210312130350_contract.Designer.cs" />
+    <Compile Remove="Migrations\20210312135329_siteEmployees.cs" />
+    <Compile Remove="Migrations\20210312135329_siteEmployees.Designer.cs" />
+    <Compile Remove="Migrations\20210312145901_siteEmployeeAssign.cs" />
+    <Compile Remove="Migrations\20210312145901_siteEmployeeAssign.Designer.cs" />
+    <Compile Remove="Migrations\20210326133056_customerAddress.cs" />
+    <Compile Remove="Migrations\20210326133056_customerAddress.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="MNS.Repository" Version="0.0.1" />

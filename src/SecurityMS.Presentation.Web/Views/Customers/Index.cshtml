@@ -1,0 +1,96 @@
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.CustomersEntity>
+@using SecurityMS.Core.Models
+@using SecurityMS.Core.Models.Enums;
+@{
+    ViewData["Title"] = "العملاء";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>العملاء</h1>
+<partial name="_search" model="new CustomerModel()" />
+<hr />
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <a asp-action="Create" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة عميل</a>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerType.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zone.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zone.Government.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerType.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zone.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Zone.Government.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+    $(".customerType").change(function () {
+        if ($(this).val() == "@((int)CustomerTypeEnum.Individual)") {
+            $("#ParentCustomer").show();
+        } else {
+            $("#ParentCustomer").hide();
+        }
+    })
+
+        $("#government").change(function () {
+            debugger
+        getZoneByGovernmentId($(this).val());
+    })
+
+    function getZoneByGovernmentId(governmentId) {
+        $.get("/Zones/getZone/" + governmentId).done(function (response) {
+            $("#zone").html("");
+            $("#zone").append(new Option("أختر المنطقة", ""))
+
+            response.forEach(item => {
+                $("#zone").append(new Option(item.name,item.id))
+            });
+        })
+    }
+    </script>
+}

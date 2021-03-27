@@ -94,3 +94,17 @@ body {
 .ltr{
     direction: ltr !important;
 }
+
+.hidden{
+    content: none;
+    visibility: hidden;
+}
+
+.site-main-navigation > div{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.btn-default {
+    border: 1px solid gray;
+}

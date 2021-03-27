@@ -1,0 +1,121 @@
+﻿@model SecurityMS.Core.Models.CustomerModel
+@using SecurityMS.Core.Models.Enums;
+@{
+    ViewData["Title"] = "تعديل عميل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>تعديل عميل</h1>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+            <div class="row">
+                <div class="col-12">
+                    <label asp-for="CustomerTypeId" class="control-label"></label>
+                </div>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check-inline" for="CustomerType_Individual">
+                    <input asp-for="CustomerTypeId" type="radio" class="form-check-input customerType" id="CustomerType_Individual" value="@((int)CustomerTypeEnum.Individual)">
+                    شركة
+                </label>
+            </div>
+            <div class="form-check-inline">
+                <label class="form-check" for="CustomerType_Group">
+                    <input asp-for="CustomerTypeId" type="radio" class="form-check-input customerType" id="CustomerType_Group" value="@((int)CustomerTypeEnum.Group)">مجموعة شركات
+                </label>
+            </div>
+            @*<label asp-for="CustomerTypeId" class="control-label"></label>
+                <select asp-for="CustomerTypeId" class="form-control" asp-items="ViewBag.CustomerTypeId"></select>*@
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12" id="ParentCustomer">
+            <label asp-for="ParentCustomerId" class="control-label"></label>
+            <select asp-for="ParentCustomerId" class="form-control" asp-items="ViewBag.ParentCustomerId"></select>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+            <label asp-for="CommercialNumber" class="control-label"></label>
+            <input asp-for="CommercialNumber" class="form-control" />
+            <span asp-validation-for="CommercialNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+            <label asp-for="TaxId" class="control-label"></label>
+            <input asp-for="TaxId" class="form-control" />
+            <span asp-validation-for="TaxId" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12  ">
+            <label class="control-label">المحافظة</label>
+            <select class="form-control" asp-for="GovernmentId" asp-items="ViewBag.Governments" id="government"></select>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12  ">
+            <label asp-for="ZoneId" class="control-label"></label>
+            <select asp-for="ZoneId" class="form-control" asp-items="ViewBag.Zones" id="zone"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12  ">
+            <label asp-for="Address" class="control-label"></label>
+            <input asp-for="Address" class="form-control" placeholder="العنوان">
+        </div>
+    </div>
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group mt-3">
+        <input type="submit" value="تعديل" class="btn btn-primary" />
+    </div>
+</form>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var customerType = $(".customerType[checked]").val();
+            if (customerType == "@((int)CustomerTypeEnum.Individual)") {
+                $("#ParentCustomer").show();
+            } else {
+                $("#ParentCustomer").hide();
+            }
+        });
+
+
+    $(".customerType").change(function () {
+        if ($(this).val() == "@((int)CustomerTypeEnum.Individual)") {
+            $("#ParentCustomer").show();
+        } else {
+            $("#ParentCustomer").hide();
+        }
+    })
+
+    $("#government").change(function () {
+        getZoneByGovernmentId($(this).val());
+    })
+
+    function getZoneByGovernmentId(governmentId) {
+        $.get("/Zones/getZone/" + governmentId).done(function (response) {
+            $("#zone").html("");
+            $("#zone").append(new Option("أختر المنطقة", ""))
+
+            response.forEach(item => {
+                $("#zone").append(new Option(item.name,item.id))
+            });
+        })
+    }
+    </script>
+}

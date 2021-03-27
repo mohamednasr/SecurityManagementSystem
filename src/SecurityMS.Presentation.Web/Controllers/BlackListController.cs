@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
-using SecurityMS.Presentation.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +22,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             List<BlackListModel> blackList = await _context.BlackListEntity.Select(x => new BlackListModel() { 
                 Id = x.Id,
-                Ser = x.Ser,
+                Ser = x.Ser.Value,
                 Name = x.Name,
                 Company = x.Company,
                 Job = x.Job,
@@ -37,7 +37,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             List<BlackListModel> blackList = await _context.BlackListEntity.Where(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company)).Select(x => new BlackListModel()
             {
                 Id = x.Id,
-                Ser = x.Ser,
+                Ser = x.Ser.Value,
                 Name = x.Name,
                 Company = x.Company,
                 Job = x.Job,
@@ -80,6 +80,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                blackListEntity.Ser = _context.BlackListEntity.Select(b => b.Ser).Max() + 1;
                 _context.Add(blackListEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
