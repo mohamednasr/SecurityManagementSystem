@@ -20,7 +20,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Contracts
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.ContractsEntities.Include(c => c.ContactPerson).Include(c => c.Customer);
+            var appDbContext = _context.ContractsEntities.Include(c => c.ContactPerson).Include(c => c.MainCustomer);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,7 +34,9 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             var contractsEntity = await _context.ContractsEntities
                 .Include(c => c.ContactPerson)
-                .Include(c => c.Customer)
+                .Include(c => c.MainCustomer)
+                .Include(c => c.ContractSites)
+                .ThenInclude(x => x.zone)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contractsEntity == null)
             {
@@ -63,7 +65,9 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 _context.Add(contractsEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return View("Details",contractsEntity);
+                return RedirectToAction(nameof(Details), "Contracts", new { id = contractsEntity.Id });
+                //return RedirectToAction(nameof(Create), "Sites", contractsEntity.Id);
             }
             ViewData["ContractContactPersonId"] = new SelectList(_context.CustomerContactsEntities, "Id", "Name", contractsEntity.ContractContactPersonId);
             ViewData["CustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name", contractsEntity.CustomerId);
@@ -135,7 +139,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             var contractsEntity = await _context.ContractsEntities
                 .Include(c => c.ContactPerson)
-                .Include(c => c.Customer)
+                .Include(c => c.MainCustomer)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contractsEntity == null)
             {

@@ -16,6 +16,12 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FileNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FileNumber)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EmployeeCode)
         </dt>
         <dd class="col-sm-10">
@@ -62,6 +68,100 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Job.Name)
+        </dd>
+    </dl>
+    <h5>المرفقات</h5>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeBirthCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludeBirthCertificate)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeMilitaryCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludeMilitaryCertificate)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeEducationCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludeEducationCertificate)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeIDCopy)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludeIDCopy)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludePersonalPhotos)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludePersonalPhotos)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeWorkStub)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludeWorkStub)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeCriminalCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.IsIncludeCriminalCertificate)
+            {
+                <span>نعم</span>
+            }
+            else
+            {
+                <span>لا</span>
+            }
         </dd>
     </dl>
 </div>

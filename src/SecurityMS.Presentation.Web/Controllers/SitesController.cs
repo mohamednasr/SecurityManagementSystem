@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
@@ -41,8 +40,26 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
+            var employees = await _context.SiteEmployeesEntities.Include(s => s.ShiftType).Include(s => s.Job).Where(s => s.SiteId == id).ToListAsync();
+            var equipments = await _context.SiteEquipmentsEntities.Where(s => s.SiteId == id).ToListAsync();
 
-            return View(sitesEntity);
+            SiteModel site = new SiteModel()
+            {
+                Id = sitesEntity.Id,
+                Name = sitesEntity.Name,
+                Address = sitesEntity.Address,
+                ZoneId = sitesEntity.ZoneId,
+                zone = sitesEntity.zone,
+                SiteEmployees = employees,
+                SiteEquipments = equipments
+            };
+
+            if (sitesEntity == null)
+            {
+                return NotFound();
+            }
+
+            return View(site);
         }
 
         // GET: Sites/Create
@@ -52,21 +69,43 @@ namespace SecurityMS.Presentation.Web.Controllers
             return View();
         }
 
+        public async Task<IActionResult> CreateSiteForContract(long? Id)
+        {
+            SiteModel site = new SiteModel();
+            site.ContractId = Id.Value;
+            ViewData["ZoneId"] = new SelectList(_context.ZonesEntities, "Id", "Name");
+            return View("Create",site);
+        }
+
         // POST: Sites/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Address,ZoneId,Id")] SitesEntity sitesEntity)
+        public async Task<IActionResult> Create([Bind("Name,Address,ZoneId,Id,ContractId")] SiteModel site)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sitesEntity);
+                SitesEntity siteEntity = new SitesEntity()
+                {
+                    Name = site.Name,
+                    Address = site.Address,
+                    ZoneId = site.ZoneId
+                };
+                if (site.ContractId != 0)
+                {
+                    siteEntity.Contracts = await _context.ContractsEntities.Where(c => c.Id == site.ContractId).FirstOrDefaultAsync();
+                }
+                _context.Add(siteEntity);
                 await _context.SaveChangesAsync();
+                if(site.ContractId != null)
+                {
+                    return RedirectToAction(nameof(Details), "Contracts", new { id = site.ContractId});
+                }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ZoneId"] = new SelectList(_context.ZonesEntities, "Id", "Name", sitesEntity.ZoneId);
-            return View(sitesEntity);
+            ViewData["ZoneId"] = new SelectList(_context.ZonesEntities, "Id", "Name", site.ZoneId);
+            return View(site);
         }
 
         // GET: Sites/Edit/5

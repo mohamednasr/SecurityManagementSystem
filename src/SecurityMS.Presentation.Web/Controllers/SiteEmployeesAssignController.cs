@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
@@ -20,12 +19,33 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: SiteEmployeesAssign
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(long id)
         {
-            var appDbContext = _context.SiteEmployeesAssignEntities.Include(s => s.Employee).Include(s => s.SiteEmployee);
-            return View(await appDbContext.ToListAsync());
-        }
+            //if (id > 0)
+            //{
+                var appDbContext = await _context.SiteEmployeesAssignEntities.Include(s => s.Employee).Include(s => s.SiteEmployee).Where(s => s.SiteEmployeeId == id).ToListAsync();
+            SiteEmployeesAssignModel siteEmployees = new SiteEmployeesAssignModel()
+            {
+                SiteEmployeeId = id,
+                SiteEmployee = await _context.SiteEmployeesEntities.Include(s => s.Site).Where(s => s.Id == id).FirstOrDefaultAsync(),
+                SiteAssignedEmployees = appDbContext.Select(s => new SiteEmployeesAssignListModel()
+                {
+                    Id = s.Id,
+                    EmployeeId = s.EmployeeId,
+                    Employee = s.Employee,
+                    EmployeeShiftSalary = s.EmployeeShiftSalary,
+                    IsActive = s.IsActive
+                }).ToList()
+            };
+                return View(siteEmployees);
 
+            //}
+            //else
+            //{
+            //    var appDbContext = await _context.SiteEmployeesAssignEntities.Include(s => s.Employee).Include(s => s.SiteEmployee).ThenInclude(s => s.Site).ToListAsync();
+            //    return View(appDbContext);
+            //}
+        }
         // GET: SiteEmployeesAssign/Details/5
         public async Task<IActionResult> Details(long? id)
         {
@@ -53,7 +73,16 @@ namespace SecurityMS.Presentation.Web.Controllers
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
             return View();
         }
-
+        public IActionResult AssignSiteEmployee(long id)
+        {
+            SiteEmployeesAssignEntity siteEmployee = new SiteEmployeesAssignEntity()
+            {
+                SiteEmployeeId = id
+            };
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name");
+            ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
+            return View("Create", siteEmployee);
+        }
         // POST: SiteEmployeesAssign/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -65,7 +94,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 _context.Add(siteEmployeesAssignEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = siteEmployeesAssignEntity.SiteEmployeeId });
             }
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.EmployeeId);
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.SiteEmployeeId);

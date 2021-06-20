@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id")] EmployeesEntity employeesEntity)
+        public async Task<IActionResult> Create([Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate")] EmployeesEntity employeesEntity)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +100,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id")] EmployeesEntity employeesEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate")] EmployeesEntity employeesEntity)
         {
             if (id != employeesEntity.Id)
             {
@@ -161,6 +162,24 @@ namespace SecurityMS.Presentation.Web.Controllers
             _context.EmployeesEntities.Remove(employeesEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<List<LookupModel>> GetEmployeesAsLookup(string? query)
+        {
+            if(!string.IsNullOrEmpty(query) && !string.IsNullOrWhiteSpace(query))
+            {
+                return await _context.EmployeesEntities.Where(e => e.Name.Contains(query)).Select(e => new LookupModel()
+                {
+                    Id = e.Id,
+                    Name = e.Name
+                }).ToListAsync();
+            }
+            return await _context.EmployeesEntities.Select(e => new LookupModel()
+            {
+                Id = e.Id,
+                Name = e.Name
+            }).ToListAsync();
         }
 
         private bool EmployeesEntityExists(long id)

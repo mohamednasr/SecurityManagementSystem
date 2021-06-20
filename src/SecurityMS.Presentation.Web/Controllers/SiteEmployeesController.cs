@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
@@ -55,6 +53,17 @@ namespace SecurityMS.Presentation.Web.Controllers
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Name");
             return View();
         }
+
+
+        public IActionResult CreateSiteEmployees(long? id)
+        {
+            SiteEmployeesEntity siteEmployee = new SiteEmployeesEntity();
+            siteEmployee.SiteId = id.Value;
+            ViewData["JobId"] = new SelectList(_context.JobsEntities, "Id", "Name");
+            ViewData["ShiftTypeId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Name");
+            return View("Create", siteEmployee);
+        }
+
 
         // POST: SiteEmployees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

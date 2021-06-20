@@ -32,20 +32,19 @@ namespace SecurityMS.Infrastructure.Data
         public virtual DbSet<SiteEmployeesAssignEntity> SiteEmployeesAssignEntities { get; set; }
         public virtual DbSet<EquipmentDetailsEntity> EquipmentDetailsEntities { get; set; }
         public virtual DbSet<SiteEquipmentsAssignEntity> SiteEquipmentsAssignEntities { get; set; }
+        public virtual DbSet<SiteEmployeeAttendanceEntity> SiteEmployeeAttendanceEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
             builder.Entity<ContractsEntity>()
-                    .HasOne(e => e.Customer)
+                    .HasOne(e => e.MainCustomer)
                     .WithMany()
                     .HasForeignKey(e => e.CustomerId);
+
             builder.Entity<ContractsEntity>()
-                .HasOne(e => e.ContactPerson)
-                .WithMany()
-                .HasForeignKey(e => e.ContractContactPersonId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasMany(e => e.ContactPerson);
 
             builder.Entity<CustomerContactsEntity>()
                     .HasOne(e => e.Customer)
@@ -152,6 +151,23 @@ namespace SecurityMS.Infrastructure.Data
                 .HasOne(e => e.SiteEquipment)
                 .WithMany()
                 .HasForeignKey(e => e.SiteEquipmenteId);
+
+            builder.Entity<SiteEmployeeAttendanceEntity>()
+                .HasOne(x => x.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId);
+
+
+            builder.Entity<SiteEmployeeAttendanceEntity>()
+                .HasOne(x => x.Site)
+                .WithMany()
+                .HasForeignKey(e => e.SiteId);
+
+
+            builder.Entity<SiteEmployeeAttendanceEntity>()
+                .HasOne(x => x.ShiftType)
+                .WithMany()
+                .HasForeignKey(e => e.ShiftId);
         }
 
     }

@@ -8,12 +8,18 @@ namespace SecurityMS.Infrastructure.Data.Entities
     public class SiteEmployeesAssignEntity : BaseEntity<long>
     {
         [Required]
+        [Display(Name ="الموقع ")]
         public long SiteEmployeeId { get; set; }
         [Required]
+        [Display(Name ="الموظف ")]
         public long EmployeeId { get; set; }
+        [Display(Name ="مرتب الفتره ")]
         public decimal EmployeeShiftSalary { get; set; }
-        public bool IsActive { get; set; }
+        [Display(Name ="متاح")]
+        public bool IsActive { get; set; } = true;
+        [Display(Name ="الموقع ")]
         public virtual SiteEmployeesEntity SiteEmployee { get; set; }
+        [Display(Name ="الموظف ")]
         public virtual EmployeesEntity Employee { get; set; }
     }
 }

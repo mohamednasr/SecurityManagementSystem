@@ -15,11 +15,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="SiteId" class="control-label"></label>
-                <select asp-for="SiteId" class ="form-control" asp-items="ViewBag.SiteId"></select>
+                <select asp-for="SiteId" class="form-control" asp-items="ViewBag.SiteId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EquipmentId" class="control-label"></label>
-                <select asp-for="EquipmentId" class ="form-control" asp-items="ViewBag.EquipmentId"></select>
+                <select asp-for="EquipmentId" class="form-control" asp-items="ViewBag.EquipmentId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EquipmentValue" class="control-label"></label>
@@ -31,6 +31,8 @@
                 <input asp-for="EquipmentCount" class="form-control" />
                 <span asp-validation-for="EquipmentCount" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="SiteId" />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

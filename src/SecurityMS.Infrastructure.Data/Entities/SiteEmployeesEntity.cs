@@ -8,15 +8,23 @@ namespace SecurityMS.Infrastructure.Data.Entities
     public class SiteEmployeesEntity : BaseEntity<long>
     {
         [Required]
+        [Display(Name ="الموقع ")]
         public long SiteId { get; set; }
         [Required]
+        [Display(Name ="الوظيفة ")]
         public long JobId { get; set; }
         [Required]
+        [Display(Name ="الفتره ")]
         public long ShiftTypeId { get; set; }
+        [Display(Name ="قيمة الفتره ")]
         public decimal ShiftValue { get; set; }
+        [Display(Name ="عدد الأفراد")]
         public int EmployeesPerShift { get; set; }
+        [Display(Name ="الموقع ")]
         public virtual SitesEntity Site { get; set; }
+        [Display(Name ="الوظيفة ")]
         public virtual JobsEntity Job { get; set; }
+        [Display(Name ="الفتره ")]
         public virtual ShiftTypesLookup ShiftType { get; set; }
     }
 }

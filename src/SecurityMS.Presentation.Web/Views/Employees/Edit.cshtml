@@ -9,10 +9,15 @@
 <hr />
 <form asp-action="Edit" class="row">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div class="form-group col-md-8">
+    <div class="form-group col-md-4">
         <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="FileNumber" class="control-label"></label>
+        <input asp-for="FileNumber" class="form-control" />
+        <span asp-validation-for="FileNumber" class="text-danger"></span>
     </div>
     <div class="form-group col-md-4 col-sm-6">
         <label asp-for="EmployeeCode" class="control-label"></label>
@@ -55,6 +60,126 @@
         <input asp-for="EndDate" class="form-control" />
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
+    <div class="col-12">
+        <h5>المرفقات</h5>
+        <div class="row">
+            <div class="form-group col-12">
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludeBirthCertificate" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludeBirthCertificate">
+                                <input asp-for="IsIncludeBirthCertificate" type="radio" class="form-check-input customerType" id="isIncludeBirthCertificate" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeBirthCertificate">
+                                <input asp-for="IsIncludeBirthCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeBirthCertificate" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludeMilitaryCertificate" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludeMilitaryCertificate">
+                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isIncludeMilitaryCertificate" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeMilitaryCertificate">
+                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeMilitaryCertificate" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludeEducationCertificate" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludeEducationCertificate">
+                                <input asp-for="IsIncludeEducationCertificate" type="radio" class="form-check-input customerType" id="isIncludeEducationCertificate" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeEducationCertificate">
+                                <input asp-for="IsIncludeEducationCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeEducationCertificate" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludeIDCopy" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludeIDCopy">
+                                <input asp-for="IsIncludeIDCopy" type="radio" class="form-check-input customerType" id="isIncludeIDCopy" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeIDCopy">
+                                <input asp-for="IsIncludeIDCopy" type="radio" class="form-check-input customerType" id="isNotIncludeIDCopy" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludePersonalPhotos" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludePersonalPhotos">
+                                <input asp-for="IsIncludePersonalPhotos" type="radio" class="form-check-input customerType" id="isIncludePersonalPhotos" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludePersonalPhotos">
+                                <input asp-for="IsIncludePersonalPhotos" type="radio" class="form-check-input customerType" id="isNotIncludePersonalPhotos" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludeWorkStub" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludeWorkStub">
+                                <input asp-for="IsIncludeWorkStub" type="radio" class="form-check-input customerType" id="isIncludeWorkStub" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeWorkStub">
+                                <input asp-for="IsIncludeWorkStub" type="radio" class="form-check-input customerType" id="isNotIncludeWorkStub" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="IsIncludeCriminalCertificate" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <label class="form-check-inline" for="isIncludeCriminalCertificate">
+                                <input asp-for="IsIncludeCriminalCertificate" type="radio" class="form-check-input customerType" id="isIncludeCriminalCertificate" value=true>
+                                نعم
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeCriminalCertificate">
+                                <input asp-for="IsIncludeCriminalCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeCriminalCertificate" value=false>لا
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <input type="submit" value="تعديل" class="btn btn-primary" />

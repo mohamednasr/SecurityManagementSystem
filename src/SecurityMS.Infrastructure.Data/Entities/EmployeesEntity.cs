@@ -13,7 +13,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public string Name { get; set; }
         [Display(Name = "كود الموظف")]
         public string EmployeeCode { get; set; }
-        [MaxLength(14,ErrorMessage = "الرقم القومى لا يتجاوز ال14 رقم")]
+        [MaxLength(14, ErrorMessage = "الرقم القومى لا يتجاوز ال14 رقم")]
         [Display(Name = "الرقم القومي")]
         public string NationalId { get; set; }
         [Required]
@@ -30,7 +30,32 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "الوظيفة")]
         public long JobId { get; set; }
 
+        [Display(Name = "رقم الملف")]
+        public string FileNumber {get;set; }
+
+        [Display(Name = "تم ادراج شهاده الميلاد")]
+        public bool IsIncludeBirthCertificate { get; set; }
+
+        [Display(Name = "تم ادراج شهادة التجنيد")]
+        public bool IsIncludeMilitaryCertificate { get; set; }
+
+        [Display(Name = "تم ادراج شهادة المؤهل")]
+        public bool IsIncludeEducationCertificate { get; set; }
+
+        [Display(Name = "تم ادراج صورة البطاقة")]
+        public bool IsIncludeIDCopy { get; set; }
+
+        [Display(Name = "تم ادراج صور شخصية")]
+        public bool IsIncludePersonalPhotos { get; set; }
+
+        [Display(Name = "تم ادراج كعب العمل")]
+        public bool IsIncludeWorkStub { get; set; }
+
+        [Display(Name = "تم ادراج الفيش الجنائي")]
+        public bool IsIncludeCriminalCertificate { get; set; }
+
         [Display(Name = "الوظيفة")]
         public virtual JobsEntity Job { get; set; }
+
     }
 }

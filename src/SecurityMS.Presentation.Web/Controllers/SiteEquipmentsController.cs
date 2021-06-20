@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
@@ -52,6 +50,15 @@ namespace SecurityMS.Presentation.Web.Controllers
             ViewData["EquipmentId"] = new SelectList(_context.EquipmentsEntities, "Id", "Name");
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Name");
             return View();
+        }
+
+        public IActionResult Add(long? id)
+        {
+            SiteEquipmentsEntity siteEquipments = new SiteEquipmentsEntity();
+            siteEquipments.SiteId = id.Value;
+            ViewData["EquipmentId"] = new SelectList(_context.EquipmentsEntities, "Id", "Name");
+            ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Name");
+            return View("Create", siteEquipments);
         }
 
         // POST: SiteEquipments/Create

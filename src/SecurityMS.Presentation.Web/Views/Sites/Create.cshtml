@@ -1,4 +1,4 @@
-﻿@model SecurityMS.Infrastructure.Data.Entities.SitesEntity
+﻿@model SecurityMS.Core.Models.SiteModel
 
 @{
     ViewData["Title"] = "Create";
@@ -25,8 +25,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="ZoneId" class="control-label"></label>
-                <select asp-for="ZoneId" class ="form-control" asp-items="ViewBag.ZoneId"></select>
+                <select asp-for="ZoneId" class="form-control" asp-items="ViewBag.ZoneId"></select>
             </div>
+            <input type="hidden" asp-for="ContractId" />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -34,7 +36,9 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
 </div>
-

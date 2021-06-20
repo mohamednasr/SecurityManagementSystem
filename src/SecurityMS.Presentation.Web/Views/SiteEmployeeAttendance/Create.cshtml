@@ -1,0 +1,132 @@
+﻿@model SecurityMS.Core.Models.SiteAttendanceModel
+@using SecurityMS.Core.Models;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>إضافة يومية موقع</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="form-group col-sm-6">
+                    <label asp-for="SiteId" class="control-label"></label>
+                    <select asp-for="SiteId" class="form-control" asp-items="ViewBag.SiteId" id="siteId"></select>
+                </div>
+                <div class="form-group col-sm-6">
+                    <label asp-for="AttendanceDate" class="control-label"></label>
+                    <input asp-for="AttendanceDate" class="form-control" id="attendanceDate" />
+                    <span asp-validation-for="AttendanceDate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12" id="employeesStatus">
+                    @foreach (var employee in Model.EmployeesStatus)
+                    {
+                        <partial name="_attendanceStatus" model="employee" />
+                    }
+                    </div>
+                <div class="col-12">
+                    <a class="btn btn-primary" id="addEmployee">إضافة موظف</a>
+                </div>
+            </div>
+            <div class="form-group mt-5">
+                <a class="btn btn-primary" id="SaveAttendance">حفظ</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $("#SaveAttendance").click(function () {
+            var employees = $(".employee-name");
+            var shift = $(".employee-shift");
+            var status = $(".employee-status");
+            var siteId = $("#siteId").val();
+            var attendanceDate = $("#attendanceDate").val();
+            var statusList = [];
+            for (var i = 0; i < employees.length; i++) {
+                if (employees[i].value == 0 || status[i].value == 0 || shift[i].value == 0) {
+                    alert("يرجي التأكد من البيانات المدخلة");
+                    return;
+                }
+                var e = {
+                    EmployeeId: parseInt(employees[i].value),
+                    AttendanceStatusId: parseInt(status[i].value),
+                    ShiftId: parseInt(shift[i].value)
+                }
+                statusList.push(e);
+            };
+            var _list = {
+                SiteId: parseInt(siteId),
+                AttendanceDate: attendanceDate,
+                EmployeesStatus: [...statusList]
+            }
+            //$.post("/SiteEmployeeAttendance/SaveAttendance", { attendance: _list }, function (res) {
+            //    console.log(res);
+            //}, function (err) {
+            //        console.log(err)
+            //});
+
+            $.ajax({
+                url: "/SiteEmployeeAttendance/SaveAttendance",
+                type: "POST",
+                data: JSON.stringify(_list),
+                dataType: 'json', // lowercase is always preferered though jQuery does it, too.
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log(res);
+                    if (res == true); {
+                        window.history.back();
+                    }
+                }
+            });
+        })
+
+        $(".remove-row").click(function () {
+            $(this).parents('.employee-row')[0].remove();
+        })
+
+        $("#addEmployee").click(function () {
+            $.get("/SiteEmployeeAttendance/AddNewEmployeeStatus").done(function (response) {
+                $("#employeesStatus").append(response);
+            })
+        })
+
+
+        //var Employees = new Bloodhound({
+        //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+        //    queryTokenizer: Bloodhound.tokenizers.whitespace,
+        //    remote: {
+        //        url: '/Employees/GetEmployeesAsLookup',
+        //        wildcard: '%QUERY'
+        //    }
+        //});
+
+        //$('.typeahead').typeahead(null, {
+        //    name: 'Employees',
+        //    display: 'name',
+        //    source: function (query, process) {
+        //        return $.get('/Employees/GetEmployeesAsLookup', { query: query }).done(function (data) {
+        //            return process(data);
+        //        });
+        //    }
+        //});
+
+
+        //$("#save").click(function () {
+
+        //})
+    </script>
+}
