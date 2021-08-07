@@ -43,7 +43,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     Vacation = emp.Where(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Vacation).Count(),
                 };
 
-                var siteSalary = await _context.SiteEmployeesAssignEntities.Where(x => x.EmployeeId == emp.Key || x.SiteEmployeeId == emp.FirstOrDefault().SiteId).Select(x => x.EmployeeShiftSalary).FirstOrDefaultAsync();
+                var siteSalary = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).Where(x => x.EmployeeId == emp.Key || x.SiteEmployeeId == emp.FirstOrDefault().SiteId).Select(x => x.SiteEmployee.EmployeeShiftSalary).FirstOrDefaultAsync();
 
                 employeeStatus.FinalSalary = (employeeStatus.Attendance + employeeStatus.BreakDays + employeeStatus.Vacation + employeeStatus.Apologizes) * siteSalary;
 

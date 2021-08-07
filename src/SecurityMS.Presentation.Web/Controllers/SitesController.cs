@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -189,6 +190,17 @@ namespace SecurityMS.Presentation.Web.Controllers
             _context.SitesEntities.Remove(sitesEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // Get: sites/{zoneId}
+        public async Task<List<SitesEntity>> getSitesByZone(long id)
+        {
+            if(id == 0)
+            {
+                return await _context.SitesEntities.ToListAsync();
+            }
+            var sites = await _context.SitesEntities.Where(z => z.ZoneId == id).ToListAsync();
+            return sites;
         }
 
         private bool SitesEntityExists(long id)

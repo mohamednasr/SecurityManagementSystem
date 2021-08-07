@@ -13,8 +13,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Required]
         [Display(Name ="الموظف ")]
         public long EmployeeId { get; set; }
-        [Display(Name ="مرتب الفتره ")]
-        public decimal EmployeeShiftSalary { get; set; }
+
         [Display(Name ="متاح")]
         public bool IsActive { get; set; } = true;
         [Display(Name ="الموقع ")]

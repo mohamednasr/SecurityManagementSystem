@@ -87,20 +87,5 @@
             $("#ParentCustomer").hide();
         }
     })
-
-    $("#government").change(function () {
-        getZoneByGovernmentId($(this).val());
-    })
-
-    function getZoneByGovernmentId(governmentId) {
-        $.get("/Zones/getZone/" + governmentId).done(function (response) {
-            $("#zone").html("");
-            $("#zone").append(new Option("أختر المنطقة", ""))
-
-            response.forEach(item => {
-                $("#zone").append(new Option(item.name,item.id))
-            });
-        })
-    }
 </script>
 }

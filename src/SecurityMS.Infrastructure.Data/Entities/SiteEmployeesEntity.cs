@@ -18,6 +18,8 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public long ShiftTypeId { get; set; }
         [Display(Name ="قيمة الفتره ")]
         public decimal ShiftValue { get; set; }
+        [Display(Name = "مرتب الفتره ")]
+        public decimal EmployeeShiftSalary { get; set; }
         [Display(Name ="عدد الأفراد")]
         public int EmployeesPerShift { get; set; }
         [Display(Name ="الموقع ")]

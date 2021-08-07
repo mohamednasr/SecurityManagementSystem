@@ -1,5 +1,4 @@
-﻿@model SecurityMS.Infrastructure.Data.Entities.EmployeesEntity
-
+﻿@model SecurityMS.Core.Models.EmployeeModel;
 @{
     ViewData["Title"] = "إضافة موظف";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,7 +6,7 @@
 
 <h1>إضافة موظف</h1>
 
-<form asp-action="Create" class="row">
+<form asp-action="Create" enctype="multipart/form-data" method="post" class="row">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group col-md-4">
         <label asp-for="Name" class="control-label"></label>
@@ -75,9 +74,20 @@
                             </label>
                         </div>
                         <div class="form-check-inline">
-                            <label class="form-check" for="isNotIncludeBirthCertificate">
-                                <input asp-for="IsIncludeBirthCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeBirthCertificate" value=false>لا
+                            <label class="form-check-inline" for="isCopyIncludeBirthCertificate">
+                                <input asp-for="IsIncludeBirthCertificate" type="radio" class="form-check-input customerType" id="isCopyIncludeBirthCertificate" value=false>
+                                صورة منها
                             </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeBirthCertificate">
+                                <input asp-for="IsIncludeBirthCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeBirthCertificate" value="">لا
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="birthdayCopy" accept="image/*" type="file" hidden asp-for="BirthCertificateCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="birthdayCopy" class="btn btn-primary upload-btn">رفع صورة</label>
                         </div>
                     </div>
                 </div>
@@ -86,14 +96,25 @@
                         <label asp-for="IsIncludeMilitaryCertificate" class="control-label"></label>
                         <div class="form-check-inline">
                             <label class="form-check-inline" for="isIncludeMilitaryCertificate">
-                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isIncludeMilitaryCertificate" value=true>
+                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isCopyIncludeMilitaryCertificate" value=true>
                                 نعم
                             </label>
                         </div>
                         <div class="form-check-inline">
-                            <label class="form-check" for="isNotIncludeMilitaryCertificate">
-                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeMilitaryCertificate" value=false>لا
+                            <label class="form-check-inline" for="isCopyIncludeMilitaryCertificate">
+                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isIncludeMilitaryCertificate" value=false>
+                                صورة منها
                             </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeMilitaryCertificate">
+                                <input asp-for="IsIncludeMilitaryCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeMilitaryCertificate" value="">لا
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="MilitaryCertificateCopy" accept="image/*" type="file" hidden asp-for="MilitaryCertificateCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="MilitaryCertificateCopy" class="btn btn-primary upload-btn">رفع صورة</label>
                         </div>
                     </div>
                 </div>
@@ -107,9 +128,20 @@
                             </label>
                         </div>
                         <div class="form-check-inline">
-                            <label class="form-check" for="isNotIncludeEducationCertificate">
-                                <input asp-for="IsIncludeEducationCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeEducationCertificate" value=false>لا
+                            <label class="form-check-inline" for="isCopyIncludeEducationCertificate">
+                                <input asp-for="IsIncludeEducationCertificate" type="radio" class="form-check-input customerType" id="isCopyIncludeEducationCertificate" value=false>
+                                صورة منها
                             </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludeEducationCertificate">
+                                <input asp-for="IsIncludeEducationCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeEducationCertificate" value="">لا
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="EducationCertificateSoftCopy" accept="image/*" type="file" hidden asp-for="EducationCertificateSoftCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="EducationCertificateSoftCopy" class="btn btn-primary upload-btn">رفع صورة</label>
                         </div>
                     </div>
                 </div>
@@ -127,6 +159,11 @@
                                 <input asp-for="IsIncludeIDCopy" type="radio" class="form-check-input customerType" id="isNotIncludeIDCopy" value=false>لا
                             </label>
                         </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="IDSoftCopy" accept="image/*" type="file" hidden asp-for="IDSoftCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="IDSoftCopy" class="btn btn-primary upload-btn">رفع صورة</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -139,9 +176,20 @@
                             </label>
                         </div>
                         <div class="form-check-inline">
-                            <label class="form-check" for="isNotIncludePersonalPhotos">
-                                <input asp-for="IsIncludePersonalPhotos" type="radio" class="form-check-input customerType" id="isNotIncludePersonalPhotos" value=false>لا
+                            <label class="form-check-inline" for="isCopyIncludePersonalPhotos">
+                                <input asp-for="IsIncludePersonalPhotos" type="radio" class="form-check-input customerType" id="isCopyIncludePersonalPhotos" value=false>
+                                صورة منها
                             </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check" for="isNotIncludePersonalPhotos">
+                                <input asp-for="IsIncludePersonalPhotos" type="radio" class="form-check-input customerType" id="isNotIncludePersonalPhotos" value="">لا
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="PersonalPhotoSoftCopy" accept="image/*" type="file" hidden asp-for="PersonalPhotoSoftCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="PersonalPhotoSoftCopy" class="btn btn-primary upload-btn">رفع صورة</label>
                         </div>
                     </div>
                 </div>
@@ -159,6 +207,11 @@
                                 <input asp-for="IsIncludeWorkStub" type="radio" class="form-check-input customerType" id="isNotIncludeWorkStub" value=false>لا
                             </label>
                         </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="WorkStubSoftCopy" accept="image/*" type="file" hidden asp-for="WorkStubSoftCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="WorkStubSoftCopy" class="btn btn-primary upload-btn">رفع صورة</label>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -175,15 +228,42 @@
                                 <input asp-for="IsIncludeCriminalCertificate" type="radio" class="form-check-input customerType" id="isNotIncludeCriminalCertificate" value=false>لا
                             </label>
                         </div>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="CriminalCertificateSoftCopy" accept="image/*" type="file" hidden asp-for="CriminalCertificateSoftCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="CriminalCertificateSoftCopy" class="btn btn-primary upload-btn">رفع صورة</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="form-group">
+    @*<hr />
+
+    <div class="form-group col-md-4">
+        <label class="control-label">المحافظه</label>
+        <select class="form-control" name="government" asp-items="ViewBag.Governments" id="government"></select>
+    </div>
+    <div class="form-group col-md-4">
+        <label class="control-label">المنطقة</label>
+        <select class="form-control" name="zone" asp-items="ViewBag.Zones" id="zone"></select>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="SiteId" class="control-label"></label>
+        <select asp-for="SiteId" class="form-control" asp-items="ViewBag.Sites" id="Sites"></select>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="ShiftSalary" class="control-label"></label>
+        <input asp-for="ShiftSalary" class="form-control" />
+    </div>
+
+    <hr />*@
+
+    <div class="form-group col-12">
         <input type="submit" value="حفظ" class="btn btn-primary" />
     </div>
+
 </form>
 
 <div class="row">
@@ -192,3 +272,18 @@
         <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+
+        $("#zone").change(function () {
+            getSitesByZoneId($(this).val());
+        })
+        $(".employee-attachment").on("change", function () {
+            $(this).parent().find(".attachment-path").html($(this).val());
+            $(this).parent().find(".upload-btn").html("تغير الصورة");
+            $(this).parent().find(".upload-btn").removeClass("btn-primary");
+            $(this).parent().find(".upload-btn").addClass("btn-outline-primary");
+        })
+    </script>
+}

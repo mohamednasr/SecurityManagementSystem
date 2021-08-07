@@ -213,6 +213,10 @@ namespace SecurityMS.Presentation.Web.Controllers
 
         public async Task<List<ZonesEntity>> getZone(long id)
         {
+            if (id == 0)
+            {
+                return await _context.ZonesEntities.ToListAsync();
+            }
             var zonesEntity = await _context.ZonesEntities.Where(z => z.Government.Id == id).ToListAsync();
             return zonesEntity;
         }

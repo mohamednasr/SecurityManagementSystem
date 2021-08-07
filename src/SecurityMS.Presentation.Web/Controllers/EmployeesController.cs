@@ -2,18 +2,20 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
+using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
     public class EmployeesController : Controller
     {
         private readonly AppDbContext _context;
-
+        private static Uploader _uploader = new Uploader();
         public EmployeesController(AppDbContext context)
         {
             _context = context;
@@ -41,8 +43,16 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
-
-            return View(employeesEntity);
+            EmployeeModel employeeModel = new EmployeeModel();
+            employeeModel = employeeModel.convertToModel(employeesEntity);
+            var site = await _context.SiteEmployeesAssignEntities.Include(x => x.SiteEmployee).ThenInclude(x => x.Site).Where(s => s.EmployeeId == employeesEntity.Id).FirstOrDefaultAsync();
+            if (site != null)
+            {
+                employeeModel.SiteId = site.SiteEmployee.SiteId;
+                //employeeModel.ShiftSalary = site.EmployeeShiftSalary;
+                employeeModel.Site = site.SiteEmployee.Site;
+            }
+            return View(employeeModel);
         }
 
         // GET: Employees/Create
@@ -52,6 +62,18 @@ namespace SecurityMS.Presentation.Web.Controllers
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
             jobs.AddRange(await _context.JobsEntities.ToListAsync());
             ViewData["JobId"] = new SelectList(jobs, "Id", "Name");
+            var Governments = new List<GovernmentEntity>();
+            Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
+            Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
+            ViewData["Governments"] = new SelectList(Governments, "Id", "Name");
+            var Zones = new List<ZonesEntity>();
+            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
+            Zones.AddRange(await _context.ZonesEntities.ToListAsync());
+            ViewData["Zones"] = new SelectList(Zones, "Id", "Name");
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["Sites"] = new SelectList(Sites, "Id", "Name");
             return View();
         }
 
@@ -60,19 +82,46 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate")] EmployeesEntity employeesEntity)
+        public async Task<IActionResult> Create([Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate, SiteId, ShiftSalary")] EmployeeModel employeeModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employeesEntity);
+
+                var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
+                employeeModel.addAttachmentsPath(uploads);
+                var emplpyeeEntity = employeeModel.convertToEntity();
+                await _context.AddAsync(emplpyeeEntity);
+                await _context.SaveChangesAsync();
+
+                var siteEmployee = await _context.SiteEmployeesEntities.Where(s => s.JobId == emplpyeeEntity.JobId && s.SiteId == employeeModel.SiteId).FirstOrDefaultAsync();
+                SiteEmployeesAssignEntity employeeSite = new SiteEmployeesAssignEntity()
+                {
+                    EmployeeId = emplpyeeEntity.Id,
+                    IsActive = true,
+                    SiteEmployeeId = siteEmployee.Id,
+                    //EmployeeShiftSalary = employeeModel.ShiftSalary
+                };
+                await _context.AddAsync(employeeSite);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             var jobs = new List<JobsEntity>();
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
             jobs.AddRange(await _context.JobsEntities.ToListAsync());
-            ViewData["JobId"] = new SelectList(jobs, "Id", "Name", employeesEntity.JobId);
-            return View(employeesEntity);
+            ViewData["JobId"] = new SelectList(jobs, "Id", "Name", employeeModel.JobId);
+            var Governments = new List<GovernmentEntity>();
+            Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
+            Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
+            ViewData["Governments"] = new SelectList(Governments, "Id", "Name");
+            var Zones = new List<ZonesEntity>();
+            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
+            Zones.AddRange(await _context.ZonesEntities.ToListAsync());
+            ViewData["Zones"] = new SelectList(Zones, "Id", "Name");
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["Sites"] = new SelectList(Sites, "Id", "Name");
+            return View(employeeModel);
         }
 
         // GET: Employees/Edit/5
@@ -92,7 +141,28 @@ namespace SecurityMS.Presentation.Web.Controllers
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
             jobs.AddRange(await _context.JobsEntities.ToListAsync());
             ViewData["JobId"] = new SelectList(jobs, "Id", "Name", employeesEntity.JobId);
-            return View(employeesEntity);
+            var Governments = new List<GovernmentEntity>();
+            Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
+            Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
+            ViewData["Governments"] = new SelectList(Governments, "Id", "Name");
+            var Zones = new List<ZonesEntity>();
+            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
+            Zones.AddRange(await _context.ZonesEntities.ToListAsync());
+            ViewData["Zones"] = new SelectList(Zones, "Id", "Name");
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["Sites"] = new SelectList(Sites, "Id", "Name");
+
+            EmployeeModel employeeModel = new EmployeeModel();
+            employeeModel = employeeModel.convertToModel(employeesEntity);
+            var site = await _context.SiteEmployeesAssignEntities.Include(x => x.SiteEmployee).Where(s => s.EmployeeId == employeesEntity.Id).FirstOrDefaultAsync();
+            if (site != null)
+            {
+                employeeModel.SiteId = site.SiteEmployee.SiteId;
+                //employeeModel.ShiftSalary = site.EmployeeShiftSalary;
+            }
+            return View(employeeModel);
         }
 
         // POST: Employees/Edit/5
@@ -100,9 +170,9 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate")] EmployeesEntity employeesEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate, SiteId, ShiftSalary, BirthCertificateCopyPath, MilitaryCertificateCopyPath, EducationCertificateSoftCopyPath, IDSoftCopyPath, PersonalPhotoSoftCopyPath, WorkStubSoftCopyPath, CriminalCertificateSoftCopyPath")] EmployeeModel employeeModel)
         {
-            if (id != employeesEntity.Id)
+            if (id != employeeModel.Id)
             {
                 return NotFound();
             }
@@ -111,12 +181,26 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
-                    _context.Update(employeesEntity);
+                    var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
+                    employeeModel.addAttachmentsPath(uploads);   
+                    var emplpyeeEntity = employeeModel.convertToEntity();
+                    _context.Update(emplpyeeEntity);
                     await _context.SaveChangesAsync();
+
+                    //var siteEmployee = await _context.SiteEmployeesEntities.Where(s => s.JobId == emplpyeeEntity.JobId && s.SiteId == employeeModel.SiteId).FirstOrDefaultAsync();
+                    //SiteEmployeesAssignEntity employeeSite = new SiteEmployeesAssignEntity()
+                    //{
+                    //    EmployeeId = emplpyeeEntity.Id,
+                    //    IsActive = true,
+                    //    SiteEmployeeId = siteEmployee.Id,
+                    //    EmployeeShiftSalary = employeeModel.ShiftSalary
+                    //};
+                    //await _context.AddAsync(employeeSite);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeesEntityExists(employeesEntity.Id))
+                    if (!EmployeesEntityExists(employeeModel.Id))
                     {
                         return NotFound();
                     }
@@ -130,8 +214,20 @@ namespace SecurityMS.Presentation.Web.Controllers
             var jobs = new List<JobsEntity>();
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
             jobs.AddRange(await _context.JobsEntities.ToListAsync());
-            ViewData["JobId"] = new SelectList(jobs, "Id", "Name", employeesEntity.JobId);
-            return View(employeesEntity);
+            ViewData["JobId"] = new SelectList(jobs, "Id", "Name", employeeModel.JobId);
+            var Governments = new List<GovernmentEntity>();
+            Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
+            Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
+            ViewData["Governments"] = new SelectList(Governments, "Id", "Name");
+            var Zones = new List<ZonesEntity>();
+            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
+            Zones.AddRange(await _context.ZonesEntities.ToListAsync());
+            ViewData["Zones"] = new SelectList(Zones, "Id", "Name");
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["Sites"] = new SelectList(Sites, "Id", "Name");
+            return View(employeeModel);
         }
 
         // GET: Employees/Delete/5
@@ -164,10 +260,51 @@ namespace SecurityMS.Presentation.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> DeleteAttachment(long id, int attachmentType)
+        {
+            var employee = await _context.EmployeesEntities.FirstOrDefaultAsync(x => x.Id == id);
+            string deletePath = "";
+            switch (attachmentType)
+            {
+                case (int)EmployeeAttachmentTypeEnum.BirthCertificate:
+                    deletePath = employee.BirthCertificateCopy;
+                    employee.BirthCertificateCopy = null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.CriminalCertificate:
+                    deletePath = employee.CriminalCertificateSoftCopy;
+                    employee.CriminalCertificateSoftCopy = null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.EducationCertificate:
+                    deletePath = employee.EducationCertificateSoftCopy;
+                    employee.EducationCertificateSoftCopy= null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.Identity:
+                    deletePath = employee.IDSoftCopy;
+                    employee.IDSoftCopy = null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.MilitaryCertificate:
+                    deletePath = employee.MilitaryCertificateCopy;
+                    employee.MilitaryCertificateCopy = null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.PersonalPhotos:
+                    deletePath = employee.PersonalPhotoSoftCopy;
+                    employee.PersonalPhotoSoftCopy = null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.WorkStub:
+                    deletePath = employee.WorkStubSoftCopy;
+                    employee.WorkStubSoftCopy = null;
+                    break;
+            }
+            _context.Update(employee);
+            await _context.SaveChangesAsync();
+            _uploader.DeleteFile(deletePath);
+            return RedirectToAction("Edit", new { id = id });
+        }
+
         [HttpGet]
         public async Task<List<LookupModel>> GetEmployeesAsLookup(string? query)
         {
-            if(!string.IsNullOrEmpty(query) && !string.IsNullOrWhiteSpace(query))
+            if (!string.IsNullOrEmpty(query) && !string.IsNullOrWhiteSpace(query))
             {
                 return await _context.EmployeesEntities.Where(e => e.Name.Contains(query)).Select(e => new LookupModel()
                 {
@@ -186,5 +323,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             return _context.EmployeesEntities.Any(e => e.Id == id);
         }
+
+       
     }
 }

@@ -33,7 +33,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     Id = s.Id,
                     EmployeeId = s.EmployeeId,
                     Employee = s.Employee,
-                    EmployeeShiftSalary = s.EmployeeShiftSalary,
+                    //EmployeeShiftSalary = s.EmployeeShiftSalary,
                     IsActive = s.IsActive
                 }).ToList()
             };

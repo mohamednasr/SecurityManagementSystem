@@ -25,6 +25,36 @@ namespace SecurityMS.Presentation.Web.Controllers
             return View();
         }
 
+        public IActionResult HRIndex()
+        {
+            return View("EmployeesManagementIndexView");
+        }
+
+        public IActionResult ContractsManagementIndexView()
+        {
+            return View();
+        }
+        
+        public IActionResult FinincialManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult OperationsManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult StoresManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult SystemSettingsIndexView()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

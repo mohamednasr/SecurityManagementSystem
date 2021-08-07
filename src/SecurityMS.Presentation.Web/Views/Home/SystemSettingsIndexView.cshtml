@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "إعدادات النظام";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+    <h4>إعدادات النظام</h4>
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="EquipmentTypes">انواع الأدوات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Zones">المناطق</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Government">المحافظات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="ShiftTypes">أعدادات الفترات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="CountriesLookup">البلاد</a>
+        </div>
+    </div>
+</section>
