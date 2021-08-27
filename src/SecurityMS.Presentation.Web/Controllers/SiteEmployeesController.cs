@@ -70,7 +70,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SiteId,JobId,ShiftTypeId,ShiftValue,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
+        public async Task<IActionResult> Create([Bind("SiteId,JobId,ShiftTypeId,ShiftValue,EmployeeShiftSalary,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("SiteId,JobId,ShiftTypeId,ShiftValue,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("SiteId,JobId,ShiftTypeId,ShiftValue,EmployeeShiftSalary,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
         {
             if (id != siteEmployeesEntity.Id)
             {

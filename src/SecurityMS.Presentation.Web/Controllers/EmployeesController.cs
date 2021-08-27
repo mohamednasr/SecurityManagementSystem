@@ -93,17 +93,17 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.AddAsync(emplpyeeEntity);
                 await _context.SaveChangesAsync();
 
-                var siteEmployee = await _context.SiteEmployeesEntities.Where(s => s.JobId == emplpyeeEntity.JobId && s.SiteId == employeeModel.SiteId).FirstOrDefaultAsync();
-                SiteEmployeesAssignEntity employeeSite = new SiteEmployeesAssignEntity()
-                {
-                    EmployeeId = emplpyeeEntity.Id,
-                    IsActive = true,
-                    SiteEmployeeId = siteEmployee.Id,
-                    //EmployeeShiftSalary = employeeModel.ShiftSalary
-                };
-                await _context.AddAsync(employeeSite);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //var siteEmployee = await _context.SiteEmployeesEntities.Where(s => s.JobId == emplpyeeEntity.JobId && s.SiteId == employeeModel.SiteId).FirstOrDefaultAsync();
+                //SiteEmployeesAssignEntity employeeSite = new SiteEmployeesAssignEntity()
+                //{
+                //    EmployeeId = emplpyeeEntity.Id,
+                //    IsActive = true,
+                //    SiteEmployeeId = siteEmployee.Id,
+                //    //EmployeeShiftSalary = employeeModel.ShiftSalary
+                //};
+                //await _context.AddAsync(employeeSite);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
             }
             var jobs = new List<JobsEntity>();
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
