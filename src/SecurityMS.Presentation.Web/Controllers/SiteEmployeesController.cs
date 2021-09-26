@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             SiteEmployeesEntity siteEmployee = new SiteEmployeesEntity();
             siteEmployee.SiteId = id.Value;
-            ViewData["JobId"] = new SelectList(_context.JobsEntities, "Id", "Name");
+            ViewData["JobId"] = new SelectList(_context.JobsEntities.Where(x => x.DepartmentId == (int)DepartmentsEnum.Operations).ToList(), "Id", "Name");
             ViewData["ShiftTypeId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Name");
             return View("Create", siteEmployee);
         }
@@ -78,7 +79,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JobId"] = new SelectList(_context.JobsEntities, "Id", "Name", siteEmployeesEntity.JobId);
+            ViewData["JobId"] = new SelectList(_context.JobsEntities.Where(x => x.DepartmentId == (int)DepartmentsEnum.Operations).ToList(), "Id", "Name", siteEmployeesEntity.JobId);
             ViewData["ShiftTypeId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Name", siteEmployeesEntity.ShiftTypeId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Name", siteEmployeesEntity.SiteId);
             return View(siteEmployeesEntity);
@@ -97,7 +98,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["JobId"] = new SelectList(_context.JobsEntities, "Id", "Name", siteEmployeesEntity.JobId);
+            ViewData["JobId"] = new SelectList(_context.JobsEntities.Where(x => x.DepartmentId == (int)DepartmentsEnum.Operations).ToList(), "Id", "Name", siteEmployeesEntity.JobId);
             ViewData["ShiftTypeId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Name", siteEmployeesEntity.ShiftTypeId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Name", siteEmployeesEntity.SiteId);
             return View(siteEmployeesEntity);
@@ -135,7 +136,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JobId"] = new SelectList(_context.JobsEntities, "Id", "Name", siteEmployeesEntity.JobId);
+            ViewData["JobId"] = new SelectList(_context.JobsEntities.Where(x => x.DepartmentId == (int)DepartmentsEnum.Operations).ToList(), "Id", "Name", siteEmployeesEntity.JobId);
             ViewData["ShiftTypeId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Name", siteEmployeesEntity.ShiftTypeId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Name", siteEmployeesEntity.SiteId);
             return View(siteEmployeesEntity);

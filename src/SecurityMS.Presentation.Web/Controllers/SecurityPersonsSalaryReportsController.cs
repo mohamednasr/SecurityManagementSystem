@@ -36,11 +36,11 @@ namespace SecurityMS.Presentation.Web.Controllers
                 SecurityPersonsSalaryReport employeeStatus = new SecurityPersonsSalaryReport()
                 {
                     EmployeeName = emp.FirstOrDefault().Employee.Name,
-                    Attendance = emp.Where(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Attend).Count(),
-                    BreakDays = emp.Where(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Break).Count(),
-                    Apologizes = emp.Where(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Aplogize).Count(),
-                    Absence = emp.Where(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Absence).Count(),
-                    Vacation = emp.Where(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Vacation).Count(),
+                    Attendance = emp.Count(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Attend),
+                    BreakDays = emp.Count(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Break),
+                    Apologizes = emp.Count(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Aplogize),
+                    Absence = emp.Count(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Absence),
+                    Vacation = emp.Count(x => x.AttendanceStatusId == (long)AttendanceStatusEnum.Vacation)
                 };
 
                 var siteSalary = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).Where(x => x.EmployeeId == emp.Key || x.SiteEmployeeId == emp.FirstOrDefault().SiteId).Select(x => x.SiteEmployee.EmployeeShiftSalary).FirstOrDefaultAsync();

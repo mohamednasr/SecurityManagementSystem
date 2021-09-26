@@ -33,7 +33,8 @@ namespace SecurityMS.Infrastructure.Data
         public virtual DbSet<EquipmentDetailsEntity> EquipmentDetailsEntities { get; set; }
         public virtual DbSet<SiteEquipmentsAssignEntity> SiteEquipmentsAssignEntities { get; set; }
         public virtual DbSet<SiteEmployeeAttendanceEntity> SiteEmployeeAttendanceEntities { get; set; }
-
+        public virtual DbSet<InvoiceEntity> InvoicesEntity { get; set; }
+        public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -168,6 +169,12 @@ namespace SecurityMS.Infrastructure.Data
                 .HasOne(x => x.ShiftType)
                 .WithMany()
                 .HasForeignKey(e => e.ShiftId);
+
+            builder.Entity<InvoiceEntity>()
+                .HasMany(x => x.items)
+                .WithOne(x => x.invoice).HasForeignKey(x => x.InvoiceId);
+
+           
         }
 
     }

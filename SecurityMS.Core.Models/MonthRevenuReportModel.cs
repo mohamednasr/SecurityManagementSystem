@@ -12,6 +12,7 @@ namespace SecurityMS.Core.Models
 
     public class MonthRevenuReport
     {
+        public long CompanyId { get; set; }
         [Display(Name ="أسم العميل")]
         public string CompanyName { get; set; }
 

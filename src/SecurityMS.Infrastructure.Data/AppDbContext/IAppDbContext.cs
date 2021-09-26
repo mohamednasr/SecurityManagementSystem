@@ -25,6 +25,8 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<SiteEmployeesAssignEntity> SiteEmployeesAssignEntities { get; set; }
         DbSet<EquipmentDetailsEntity> EquipmentDetailsEntities { get; set; }
         DbSet<SiteEquipmentsAssignEntity> SiteEquipmentsAssignEntities { get; set; }
+        DbSet<InvoiceEntity> InvoicesEntity { get; set; }
+        DbSet<InvoiceDetails> InvoiceDetails { get; set; }
 
     }
 }

@@ -17,6 +17,10 @@
     <Compile Remove="Migrations\20210327185336_contractCustomers.Designer.cs" />
     <Compile Remove="Migrations\20210327190142_dummy.cs" />
     <Compile Remove="Migrations\20210327190142_dummy.Designer.cs" />
+    <Compile Remove="Migrations\20210910190538_invoices.cs" />
+    <Compile Remove="Migrations\20210910190538_invoices.Designer.cs" />
+    <Compile Remove="Migrations\20210910191056_invoices.cs" />
+    <Compile Remove="Migrations\20210910191056_invoices.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

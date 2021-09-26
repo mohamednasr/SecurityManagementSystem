@@ -1,0 +1,52 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.InvoiceEntity
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h4>فاتورة عميل</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="CompanyId" class="control-label"></label>
+            <input asp-for="CompanyId" class="form-control" />
+            <span asp-validation-for="CompanyId" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InvoiceDate" class="control-label"></label>
+                <input asp-for="InvoiceDate" class="form-control" />
+                <span asp-validation-for="InvoiceDate" class="text-danger"></span>
+            </div>
+
+            <h4>تفاصيل الفاتورة</h4>
+            <hr />
+
+            @foreach (var i in Model.items)
+            {
+                <partial name="_CreateItem"></partial>
+            }
+            <hr />
+            <div class="form-group">
+                <label asp-for="FinalIncome" class="control-label"></label>
+                <input asp-for="FinalIncome" class="form-control" />
+                <span asp-validation-for="FinalIncome" class="text-danger"></span>
+            </div>
+
+            @*<div class="form-group">
+                <input type="submit" value="إنشاء" class="btn btn-primary" />
+            </div>*@
+        </form>
+    </div>
+</div>
+
+

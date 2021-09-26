@@ -3,19 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210910191351_invoices")]
+    partial class invoices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.15")
+                .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -604,11 +606,11 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("ItemName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
-                    b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -633,8 +635,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<decimal>("FinalIncome")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("InvoiceDate")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("SitesCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
