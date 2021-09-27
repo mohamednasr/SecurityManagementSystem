@@ -1,5 +1,4 @@
 ﻿using MNS.Repository;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -21,9 +20,10 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "سجل تجاري")]
         public string CommercialNumber { get; set; }
 
-        [Display(Name = "بطاقة ضريبية")]
+        [Display(Name = "رقم التسجيل الضريبي")]
         public string TaxId { get; set; }
-
+        [Display(Name = "رقم الملف الضريبي")]
+        public string TaxFileNumber { get; set; }
         [Display(Name = "العنوان")]
         public string Address { get; set; }
         [Display(Name = "المنطقة")]
@@ -31,5 +31,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public virtual CustomersEntity ParentCustomers { get; set; }
         public virtual CustomerTypesLookup CustomerType { get; set; }
         public virtual ZonesEntity Zone { get; set; }
+        //[Display(Name = "جهات الاتصال")]
+        //public virtual List<CustomerContactsEntity> ContactPersons { get; set; }
     }
 }

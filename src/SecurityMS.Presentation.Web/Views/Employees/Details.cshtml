@@ -8,6 +8,14 @@
 <h1>بيانات موظف "@Model.Name"</h1>
 
 <div>
+    <div class="row">
+        <div class="col-12 text-right">
+        <a class="btn btn-danger" data-toggle="modal" data-target="#endingServiceModal">اقاله</a>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#rewardModal">اضافه حافز / مكافأه</a>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#penaltyModal">اضافه جزاء / خصم</a>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#advancedPaymentModal">اضافه سلفه</a>
+        </div>
+    </div>
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
@@ -58,12 +66,6 @@
             @Html.DisplayFor(model => model.EndDate)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InsuranceNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InsuranceNumber)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Job)
         </dt>
         <dd class="col-sm-10">
@@ -80,6 +82,36 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ShiftSalary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsurancePercentage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsurancePercentage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceStartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceStartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceEndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceEndDate)
         </dd>
     </dl>
     <h5>المرفقات</h5>
@@ -134,14 +166,15 @@
                         <span>لا</span>
                     }
                 </div>
-                     @if (!string.IsNullOrEmpty(Model.MilitaryCertificateCopyPath)) {
-                <div class="col-md-4 col-sm-12">
-                         <div class="form-check-inline">
-                                <input id="MilitaryCertificateCopy" type="text" hidden asp-for="MilitaryCertificateCopyPath" />
-                                <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.MilitaryCertificateCopyPath">عرض الصورة</label>
-                            </div>
-                </div>
-                     }
+                @if (!string.IsNullOrEmpty(Model.MilitaryCertificateCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="MilitaryCertificateCopy" type="text" hidden asp-for="MilitaryCertificateCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.MilitaryCertificateCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
             </div>
         </dd>
         <dt class="col-sm-2">
@@ -163,14 +196,15 @@
                         <span>لا</span>
                     }
                 </div>
-                     @if (!string.IsNullOrEmpty(Model.EducationCertificateSoftCopyPath)) {
-                <div class="col-md-4 col-sm-12">
-                         <div class="form-check-inline">
-                                <input id="EducationCertificateSoftCopy" type="text" hidden asp-for="EducationCertificateSoftCopyPath" />
-                                <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.EducationCertificateSoftCopyPath">عرض الصورة</label>
-                            </div>
-                </div>
-                     }
+                @if (!string.IsNullOrEmpty(Model.EducationCertificateSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="EducationCertificateSoftCopy" type="text" hidden asp-for="EducationCertificateSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.EducationCertificateSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
             </div>
         </dd>
         <dt class="col-sm-2">
@@ -188,14 +222,15 @@
                         <span>لا</span>
                     }
                 </div>
-                     @if (!string.IsNullOrEmpty(Model.IDSoftCopyPath)) {
-                <div class="col-md-4 col-sm-12">
-                         <div class="form-check-inline">
-                                <input id="IDSoftCopy" type="text" hidden asp-for="IDSoftCopyPath" />
-                                <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.IDSoftCopyPath">عرض الصورة</label>
-                            </div>
-                </div>
-                     }
+                @if (!string.IsNullOrEmpty(Model.IDSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="IDSoftCopy" type="text" hidden asp-for="IDSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.IDSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
             </div>
         </dd>
         <dt class="col-sm-2">
@@ -217,14 +252,15 @@
                         <span>لا</span>
                     }
                 </div>
-                     @if (!string.IsNullOrEmpty(Model.PersonalPhotoSoftCopyPath)) {
-                <div class="col-md-4 col-sm-12">
-                         <div class="form-check-inline">
-                                <input id="PersonalPhotoSoftCopy" type="text" hidden asp-for="PersonalPhotoSoftCopyPath" />
-                                <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.PersonalPhotoSoftCopyPath">عرض الصورة</label>
-                            </div>
-                </div>
-                     }
+                @if (!string.IsNullOrEmpty(Model.PersonalPhotoSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="PersonalPhotoSoftCopy" type="text" hidden asp-for="PersonalPhotoSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.PersonalPhotoSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
             </div>
         </dd>
         <dt class="col-sm-2">
@@ -242,14 +278,15 @@
                         <span>لا</span>
                     }
                 </div>
-                     @if (!string.IsNullOrEmpty(Model.WorkStubSoftCopyPath)) {
-                <div class="col-md-4 col-sm-12">
-                         <div class="form-check-inline">
-                                <input id="WorkStubSoftCopy" type="text" hidden asp-for="WorkStubSoftCopyPath" />
-                                <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.WorkStubSoftCopyPath">عرض الصورة</label>
-                            </div>
-                </div>
-                     }
+                @if (!string.IsNullOrEmpty(Model.WorkStubSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="WorkStubSoftCopy" type="text" hidden asp-for="WorkStubSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.WorkStubSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
             </div>
         </dd>
         <dt class="col-sm-2">
@@ -267,14 +304,15 @@
                         <span>لا</span>
                     }
                 </div>
-                     @if (!string.IsNullOrEmpty(Model.CriminalCertificateSoftCopyPath)) { 
-                <div class="col-md-4 col-sm-12">
-                         <div class="form-check-inline">
+                @if (!string.IsNullOrEmpty(Model.CriminalCertificateSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
                             <input id="CriminalCertificateSoftCopy" type="text" hidden asp-for="CriminalCertificateSoftCopyPath" />
                             <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.CriminalCertificateSoftCopyPath">عرض الصورة</label>
                         </div>
-                </div>
-                     }
+                    </div>
+                }
             </div>
         </dd>
     </dl>
@@ -292,6 +330,10 @@
     </div>
 </div>
 <partial name="_ImageViewer"></partial>
+<partial name="_AdvancedPayment"></partial>
+<partial name="_EndingService"></partial>
+<partial name="_Penalty"></partial>
+<partial name="_Reward"></partial>
 
 @section Scripts{
     <script>

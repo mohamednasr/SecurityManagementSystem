@@ -82,7 +82,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate, SiteId, ShiftSalary")] EmployeeModel employeeModel)
+        public async Task<IActionResult> Create([Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate, SiteId, ShiftSalary, InsuranceAmount, InsurancePercentage, InsuranceStartDate, InsuranceEndDate")] EmployeeModel employeeModel)
         {
             if (ModelState.IsValid)
             {
@@ -170,7 +170,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate, SiteId, ShiftSalary, BirthCertificateCopyPath, MilitaryCertificateCopyPath, EducationCertificateSoftCopyPath, IDSoftCopyPath, PersonalPhotoSoftCopyPath, WorkStubSoftCopyPath, CriminalCertificateSoftCopyPath")] EmployeeModel employeeModel)
+        public async Task<IActionResult> Edit(long id, [Bind("Name,EmployeeCode,NationalId,Phone,Phone2,StartDate,EndDate,InsuranceNumber,JobId,Id, FileNumber, IsIncludeBirthCertificate, IsIncludeMilitaryCertificate, IsIncludeEducationCertificate, IsIncludeIDCopy, IsIncludePersonalPhotos, IsIncludeWorkStub, IsIncludeCriminalCertificate, SiteId, ShiftSalary, BirthCertificateCopyPath, MilitaryCertificateCopyPath, EducationCertificateSoftCopyPath, IDSoftCopyPath, PersonalPhotoSoftCopyPath, WorkStubSoftCopyPath, CriminalCertificateSoftCopyPath, InsuranceAmount, InsurancePercentage, InsuranceStartDate, InsuranceEndDate")] EmployeeModel employeeModel)
         {
             if (id != employeeModel.Id)
             {

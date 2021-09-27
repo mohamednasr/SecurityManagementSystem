@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210927050808_RewardsPenaltiesAdvancedPayments")]
+    partial class RewardsPenaltiesAdvancedPayments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,14 +317,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("CommercialProfits")
-                        .HasColumnType("float");
-
                     b.Property<long?>("ContractContactPersonId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("ContractPDF")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
@@ -335,9 +331,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("TaxPercentage")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -431,9 +424,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<long?>("ParentCustomerId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("TaxFileNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxId")
                         .HasColumnType("nvarchar(max)");
@@ -961,9 +951,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Transportations")
-                        .HasColumnType("float");
 
                     b.Property<long>("ZoneId")
                         .HasColumnType("bigint");

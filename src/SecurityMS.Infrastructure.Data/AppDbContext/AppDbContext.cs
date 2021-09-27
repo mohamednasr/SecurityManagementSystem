@@ -35,6 +35,9 @@ namespace SecurityMS.Infrastructure.Data
         public virtual DbSet<SiteEmployeeAttendanceEntity> SiteEmployeeAttendanceEntities { get; set; }
         public virtual DbSet<InvoiceEntity> InvoicesEntity { get; set; }
         public virtual DbSet<InvoiceDetails> InvoiceDetails { get; set; }
+        public virtual DbSet<AdvancedPaymentEntity> AdvancedPaymentsEntity { get; set; }
+        public virtual DbSet<RewardEntity> RewardsEntity { get; set; }
+        public virtual DbSet<PenaltyEntity> PenaltiesEntity { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -174,7 +177,35 @@ namespace SecurityMS.Infrastructure.Data
                 .HasMany(x => x.items)
                 .WithOne(x => x.invoice).HasForeignKey(x => x.InvoiceId);
 
-           
+            builder.Entity<SiteEmployeesAssignEntity>()
+                 .HasOne(e => e.Employee)
+                 .WithMany()
+                 .HasForeignKey(e => e.EmployeeId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SiteEmployeesAssignEntity>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<RewardEntity>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<PenaltyEntity>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<AdvancedPaymentEntity>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

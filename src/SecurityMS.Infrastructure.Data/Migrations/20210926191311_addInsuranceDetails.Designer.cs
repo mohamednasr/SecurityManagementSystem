@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210926191311_addInsuranceDetails")]
+    partial class addInsuranceDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -219,50 +221,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("AcceptedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("AcceptedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsAcceptable")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("PayedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PayedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("installments")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("AdvancedPayments");
-                });
-
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AttendanceStatusLookup", b =>
                 {
                     b.Property<long>("Id")
@@ -315,14 +273,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("CommercialProfits")
-                        .HasColumnType("float");
-
                     b.Property<long?>("ContractContactPersonId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("ContractPDF")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("CustomerId")
                         .HasColumnType("bigint");
@@ -335,9 +287,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("TaxPercentage")
-                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -431,9 +380,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<long?>("ParentCustomerId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("TaxFileNumber")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxId")
                         .HasColumnType("nvarchar(max)");
@@ -730,58 +676,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("PenaltyType")
-                        .HasColumnType("int");
-
-                    b.Property<long>("Reason")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Penalties");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
-
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Reason")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("RewardType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.ToTable("Rewards");
-                });
-
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", b =>
                 {
                     b.Property<long>("Id")
@@ -962,9 +856,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Transportations")
-                        .HasColumnType("float");
-
                     b.Property<long>("ZoneId")
                         .HasColumnType("bigint");
 
@@ -1045,15 +936,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
@@ -1145,24 +1027,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .WithMany()
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

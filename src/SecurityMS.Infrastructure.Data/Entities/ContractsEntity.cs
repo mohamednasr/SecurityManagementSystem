@@ -16,6 +16,16 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public DateTime StartDate { get; set; }
         [Display(Name = "تاريخ انتهاء التنفيذ")]
         public DateTime EndDate { get; set; }
+
+        [Display(Name = "نسخه ضوئيه")]
+        public string ContractPDF { get; set; }
+        
+        [Display(Name = "ارباح تجاريه وصناعيه")]
+        public double CommercialProfits { get; set; }
+
+        [Display(Name = "تحمل ضرائب")]
+        public double TaxPercentage { get; set; }
+
         [Display(Name = "العميل")]
         public long CustomerId { get; set; }
         [Display(Name = "جهة التواصل")]

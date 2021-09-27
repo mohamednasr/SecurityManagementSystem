@@ -28,6 +28,14 @@ namespace SecurityMS.Core.Models
         public DateTime? EndDate { get; set; }
         [Display(Name = "الرقم التأميني")]
         public string InsuranceNumber { get; set; }
+        [Display(Name = "المبلغ التأميني")]
+        public string InsuranceAmount { get; set; }
+        [Display(Name = "نسبة تحمل التأمينات")]
+        public string InsurancePercentage { get; set; }
+        [Display(Name = "تاريخ بداية التأمين")]
+        public DateTime? InsuranceStartDate { get; set; }
+        [Display(Name = "تاريخ انتهاء التأمين")]
+        public DateTime? InsuranceEndDate { get; set; }
         [Display(Name = "الوظيفة")]
         public long JobId { get; set; }
 
@@ -108,6 +116,10 @@ namespace SecurityMS.Core.Models
                 EndDate = entity.EndDate,
                 FileNumber = entity.FileNumber,
                 InsuranceNumber = entity.InsuranceNumber,
+                InsuranceAmount = entity.InsuranceAmount,
+                InsurancePercentage = entity.InsurancePercentage,
+                InsuranceStartDate = entity.InsuranceStartDate,
+                InsuranceEndDate = entity.InsuranceEndDate,
                 IsIncludeBirthCertificate = entity.IsIncludeBirthCertificate,
                 IsIncludeCriminalCertificate = entity.IsIncludeCriminalCertificate,
                 IsIncludeEducationCertificate = entity.IsIncludeEducationCertificate,
@@ -139,6 +151,10 @@ namespace SecurityMS.Core.Models
                 FileNumber = this.FileNumber,
                 IDSoftCopy = this.IDSoftCopyPath,
                 InsuranceNumber = this.InsuranceNumber,
+                InsuranceAmount = this.InsuranceAmount,
+                InsurancePercentage = this.InsurancePercentage,
+                InsuranceStartDate = this.InsuranceStartDate,
+                InsuranceEndDate = this.InsuranceEndDate,
                 IsIncludeBirthCertificate = this.IsIncludeBirthCertificate,
                 IsIncludeCriminalCertificate = this.IsIncludeCriminalCertificate,
                 IsIncludeEducationCertificate = this.IsIncludeEducationCertificate,

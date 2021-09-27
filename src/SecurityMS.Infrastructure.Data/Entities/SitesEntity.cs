@@ -13,6 +13,10 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public string Address { get; set; }
         [Display(Name = "المنطقة")]
         public long ZoneId { get; set; }
+
+        [Display(Name = "الانتقالات الشهريه")]
+        public double? Transportations { get; set; }
+
         [Display(Name = "المنطقة")]
         public virtual ZonesEntity zone { get; set; }
 

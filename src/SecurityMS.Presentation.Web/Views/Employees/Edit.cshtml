@@ -40,27 +40,49 @@
         <input asp-for="Phone2" class="form-control" />
         <span asp-validation-for="Phone2" class="text-danger"></span>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4 col-sm-6">
         <label asp-for="JobId" class="control-label"></label>
         <select asp-for="JobId" class="form-control" asp-items="ViewBag.JobId"></select>
         <span asp-validation-for="JobId" class="text-danger"></span>
     </div>
-    <div class="form-group col-md-6">
-        <label asp-for="InsuranceNumber" class="control-label"></label>
-        <input asp-for="InsuranceNumber" class="form-control" />
-        <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
-    </div>
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4 col-sm-6">
         <label asp-for="StartDate" class="control-label"></label>
         <input asp-for="StartDate" class="form-control" />
         <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4 col-sm-6">
         <label asp-for="EndDate" class="control-label"></label>
         <input asp-for="EndDate" class="form-control" />
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
+
+        <div class="form-group col-md-4 col-sm-6">
+            <label asp-for="InsuranceNumber" class="control-label"></label>
+            <input asp-for="InsuranceNumber" class="form-control" />
+            <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 col-sm-6">
+            <label asp-for="InsuranceAmount" class="control-label"></label>
+            <input asp-for="InsuranceAmount" class="form-control" />
+            <span asp-validation-for="InsuranceAmount" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 col-sm-6">
+            <label asp-for="InsurancePercentage" class="control-label"></label>
+            <input asp-for="InsurancePercentage" class="form-control" />
+            <span asp-validation-for="InsurancePercentage" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 col-sm-6">
+            <label asp-for="InsuranceStartDate" class="control-label"></label>
+            <input asp-for="InsuranceStartDate" class="form-control" />
+            <span asp-validation-for="InsuranceStartDate" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4 col-sm-6">
+            <label asp-for="InsuranceEndDate" class="control-label"></label>
+            <input asp-for="InsuranceEndDate" class="form-control" />
+            <span asp-validation-for="InsuranceEndDate" class="text-danger"></span>
+        </div>
+
     <div class="col-12">
         <h5>المرفقات</h5>
         <div class="row">
@@ -220,7 +242,7 @@
                                 <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.IDSoftCopyPath">عرض الصورة</label>
                             </div>
                             var parms = new Dictionary<string, string>
-                                                                { { "id", Model.Id.ToString() }, { "attachmentType", ((int)EmployeeAttachmentTypeEnum.Identity).ToString() } };
+                                                                            { { "id", Model.Id.ToString() }, { "attachmentType", ((int)EmployeeAttachmentTypeEnum.Identity).ToString() } };
 
                             <div class="form-check-inline">
                                 <a asp-action="DeleteAttachment" asp-all-route-data="parms" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
@@ -264,7 +286,7 @@
                                 <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.PersonalPhotoSoftCopyPath">عرض الصورة</label>
                             </div>
                             var parms = new Dictionary<string, string>
-                                                                                                    { { "id", Model.Id.ToString() }, { "attachmentType", ((int)EmployeeAttachmentTypeEnum.PersonalPhotos).ToString() } };
+                                                                                                                { { "id", Model.Id.ToString() }, { "attachmentType", ((int)EmployeeAttachmentTypeEnum.PersonalPhotos).ToString() } };
 
                             <div class="form-check-inline">
                                 <a asp-action="DeleteAttachment" asp-all-route-data="parms" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></a>

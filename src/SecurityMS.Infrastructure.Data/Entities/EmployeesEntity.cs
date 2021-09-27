@@ -27,6 +27,14 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public DateTime? EndDate { get; set; }
         [Display(Name = "الرقم التأميني")]
         public string InsuranceNumber { get; set; }
+        [Display(Name = "المبلغ التأميني")]
+        public string InsuranceAmount { get; set; }
+        [Display(Name = "نسبة تحمل التأمينات")]
+        public string InsurancePercentage { get; set; }
+        [Display(Name = "تاريخ بداية التأمين")]
+        public DateTime? InsuranceStartDate { get; set; }
+        [Display(Name = "تاريخ انتهاء التأمين")]
+        public DateTime? InsuranceEndDate { get; set; }
         [Display(Name = "الوظيفة")]
         public long JobId { get; set; }
 
