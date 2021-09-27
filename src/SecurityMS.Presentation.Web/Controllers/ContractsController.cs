@@ -59,7 +59,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Date,StartDate,EndDate,CustomerId,ContractContactPersonId,Id")] ContractsEntity contractsEntity)
+        public async Task<IActionResult> Create([Bind("Date,StartDate,EndDate,CustomerId,ContractContactPersonId,TaxPercentage,CommercialProfits,Id")] ContractsEntity contractsEntity)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Date,StartDate,EndDate,CustomerId,ContractContactPersonId,Id")] ContractsEntity contractsEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("Date,StartDate,EndDate,CustomerId,ContractContactPersonId,TaxPercentage,CommercialProfits,Id")] ContractsEntity contractsEntity)
         {
             if (id != contractsEntity.Id)
             {

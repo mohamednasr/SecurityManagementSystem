@@ -15,6 +15,8 @@ namespace SecurityMS.Core.Models
         [Display(Name = "العقد")]
         public long ContractId { get; set; }
 
+        [Display(Name = "الانتقالات الشهريه")]
+        public double? Transportations { get; set; }
         [Display(Name="المنطقة")]
         public ZonesEntity zone { get; set; }
 

@@ -9,7 +9,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
     public class AdvancedPaymentEntity : BaseEntity<long>
     {
         public long EmployeeId { get; set; }
-        [Display(Name ="القيمه / الأيام")]
+        [Display(Name ="قيمة السلفه")]
         public double Amount { get; set; }
         [Display(Name = "عدد اشهر السداد")]
         public int installments { get; set; } = 1;
@@ -17,12 +17,14 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name ="حاله الموافقه")]
         public bool IsAcceptable{ get; set; }
         [Display(Name ="تاريخ الصرف")]
-        public DateTime PayedAt { get; set; } = DateTime.Now;
+        public DateTime? PayedAt { get; set; }
         public string PayedBy { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        [Display(Name ="تاريخ الانشاء")]
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
         public string AcceptedBy { get; set; }
-        public DateTime AcceptedAt { get; set; } = DateTime.Now;
+        [Display(Name ="تاريخ الموافقه")]
+        public DateTime? AcceptedAt { get; set; }
         [Display(Name ="الموظف")]
         public virtual EmployeesEntity Employee { get; set; }
 

@@ -1,4 +1,5 @@
-﻿@model SecurityMS.Core.Models.EmployeeModel;
+﻿@using SecurityMS.Infrastructure.Data.Entities;
+@model SecurityMS.Core.Models.EmployeeModel;
 
 @{
     ViewData["Title"] = "بيانات موظف";
@@ -10,10 +11,10 @@
 <div>
     <div class="row">
         <div class="col-12 text-right">
-        <a class="btn btn-danger" data-toggle="modal" data-target="#endingServiceModal">اقاله</a>
-        <a class="btn btn-primary" data-toggle="modal" data-target="#rewardModal">اضافه حافز / مكافأه</a>
-        <a class="btn btn-primary" data-toggle="modal" data-target="#penaltyModal">اضافه جزاء / خصم</a>
-        <a class="btn btn-primary" data-toggle="modal" data-target="#advancedPaymentModal">اضافه سلفه</a>
+            <a class="btn btn-danger" data-toggle="modal" data-target="#endingServiceModal">اقاله</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#rewardModal">اضافه حافز / مكافأه</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#penaltyModal">اضافه جزاء / خصم</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#advancedPaymentModal">اضافه سلفه</a>
         </div>
     </div>
     <dl class="row">
@@ -330,10 +331,19 @@
     </div>
 </div>
 <partial name="_ImageViewer"></partial>
-<partial name="_AdvancedPayment"></partial>
+@{
+    PenaltyEntity penaltyEntity = new PenaltyEntity() { EmployeeId = Model.Id };
+    Html.RenderPartial("_Penalty", penaltyEntity);
+}
+@{
+    RewardEntity rewardEntity = new RewardEntity() { EmployeeId = Model.Id };
+    Html.RenderPartial("_Reward", rewardEntity);
+}
+@{
+    AdvancedPaymentEntity advancedPaymentEntity = new AdvancedPaymentEntity() { EmployeeId = Model.Id, Employee = Model.convertToEntity() };
+    Html.RenderPartial("_AdvancedPayment", advancedPaymentEntity);
+}
 <partial name="_EndingService"></partial>
-<partial name="_Penalty"></partial>
-<partial name="_Reward"></partial>
 
 @section Scripts{
     <script>

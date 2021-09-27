@@ -137,7 +137,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,CustomerTypeId,ParentCustomerId,CommercialNumber,TaxId,Id,Address,ZoneId,GovernmentId")] CustomerModel customer)
+        public async Task<IActionResult> Create([Bind("Name,CustomerTypeId,ParentCustomerId,CommercialNumber,TaxId,TaxFileNumber,Id,Address,ZoneId,GovernmentId")] CustomerModel customer)
         {
             if (ModelState.IsValid)
             {
@@ -149,7 +149,8 @@ namespace SecurityMS.Presentation.Web.Controllers
                     CommercialNumber = customer.CommercialNumber,
                     TaxId = customer.TaxId,
                     ZoneId = customer.ZoneId,
-                    Address = customer.Address
+                    Address = customer.Address,
+                    TaxFileNumber = customer.TaxFileNumber
                 };
                 _context.Add(customersEntity);
                 await _context.SaveChangesAsync();
@@ -211,7 +212,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Name,CustomerTypeId,ParentCustomerId,CommercialNumber,TaxId,Id,Address,ZoneId,GovernmentId")] CustomerModel customer)
+        public async Task<IActionResult> Edit(long id, [Bind("Name,CustomerTypeId,ParentCustomerId,CommercialNumber,TaxId,TaxFileNumber,Id,Address,ZoneId,GovernmentId")] CustomerModel customer)
         {
             if (id != customer.Id)
             {
@@ -231,7 +232,8 @@ namespace SecurityMS.Presentation.Web.Controllers
                         CommercialNumber = customer.CommercialNumber,
                         TaxId = customer.TaxId,
                         ZoneId = customer.ZoneId,
-                        Address = customer.Address
+                        Address = customer.Address,
+                        TaxFileNumber = customer.TaxFileNumber
                     };
                     _context.Update(customersEntity);
                     await _context.SaveChangesAsync();

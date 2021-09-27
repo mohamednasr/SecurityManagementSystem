@@ -28,6 +28,11 @@
                 <select asp-for="ZoneId" class="form-control" asp-items="ViewBag.ZoneId"></select>
                 <span asp-validation-for="ZoneId" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Transportations" class="control-label"></label>
+                <input asp-for="Transportations" class="form-control" />
+                <span asp-validation-for="Transportations" class="text-danger"></span>
+            </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

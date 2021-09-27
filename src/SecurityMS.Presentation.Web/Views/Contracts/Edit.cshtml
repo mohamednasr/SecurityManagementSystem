@@ -39,6 +39,16 @@
                 <span asp-validation-for="ContractContactPersonId" class="text-danger"></span>
                 <a class="btn btn-link" asp-controller="CustomerContacts" asp-action="Create">إضافه جهة اتصال</a>
             </div>
+            <div class="form-group">
+                <label asp-for="CommercialProfits" class="control-label"></label>
+                <input asp-for="CommercialProfits" class="form-control" />
+                <span asp-validation-for="CommercialProfits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxPercentage" class="control-label"></label>
+                <input asp-for="TaxPercentage" class="form-control" />
+                <span asp-validation-for="TaxPercentage" class="text-danger"></span>
+            </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

@@ -51,6 +51,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 Address = sitesEntity.Address,
                 ZoneId = sitesEntity.ZoneId,
                 zone = sitesEntity.zone,
+                Transportations = sitesEntity.Transportations,
                 SiteEmployees = employees,
                 SiteEquipments = equipments
             };
@@ -83,7 +84,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Address,ZoneId,Id,ContractId")] SiteModel site)
+        public async Task<IActionResult> Create([Bind("Name,Address,ZoneId,Id,ContractId, Transportations")] SiteModel site)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +132,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Name,Address,ZoneId,Id")] SitesEntity sitesEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("Name,Address,ZoneId,Id, Transportations")] SitesEntity sitesEntity)
         {
             if (id != sitesEntity.Id)
             {

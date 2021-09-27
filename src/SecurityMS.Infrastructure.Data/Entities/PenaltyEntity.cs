@@ -13,7 +13,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name ="القيمه / الأيام")]
         public double Amount { get; set; }
         [Display(Name ="السبب")]
-        public long Reason { get; set; }
+        public string Reason { get; set; }
        
         [Display(Name ="الموظف")]
         public virtual EmployeesEntity Employee { get; set; }
