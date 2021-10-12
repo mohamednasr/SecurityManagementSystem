@@ -1,4 +1,6 @@
-﻿<div class="modal fade" id="endingServiceModal" tabindex="-1" aria-labelledby="endingServiceModal" aria-hidden="true">
+﻿@model SecurityMS.Core.Models.EndServiceModel;
+
+<div class="modal fade" id="endingServiceModal" tabindex="-1" aria-labelledby="endingServiceModal" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +10,42 @@
                 </button>
             </div>
             <div class="modal-body">
-
+                <form class="row" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group col-md-4">
+                        <label>@Model.EmployeeName</label>
+                        <input asp-for="EmployeeId" hidden class="form-control" />
+                    </div>
+                    <div class="form-group col-12">
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4 col-sm-6">
+                        <label asp-for="Reason" class="control-label"></label>
+                        <select asp-for="Reason" class="form-control" asp-items="ViewBag.Reasons"></select>
+                        <span asp-validation-for="Reason" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Notes" class="control-label"></label>
+                        <input asp-for="Notes" class="form-control" />
+                        <span asp-validation-for="Notes" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="PenaltyAmount" class="control-label"></label>
+                        <input asp-for="PenaltyAmount" class="form-control" />
+                        <span asp-validation-for="PenaltyAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="PenaltyReason" class="control-label"></label>
+                        <input asp-for="PenaltyReason" class="form-control" />
+                        <span asp-validation-for="PenaltyReason" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <input asp-action="EndService" type="submit" value="حفظ" class="btn btn-primary" />
+                        <input asp-action="AddBlackList" type="submit" value="حفظ ونقل للقائمه السوداء" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
         </div>
     </div>

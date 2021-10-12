@@ -5,6 +5,7 @@ using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +53,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                 //employeeModel.ShiftSalary = site.EmployeeShiftSalary;
                 employeeModel.Site = site.SiteEmployee.Site;
             }
+            var EndServiceReasons = new List<EndServiceReasonLookup>();
+            EndServiceReasons.Add(new EndServiceReasonLookup() { Id = 0, Name = "أختر السبب" });
+            EndServiceReasons.AddRange(await _context.EndServiceReasonLookup.ToListAsync());
+            ViewData["Reasons"] = new SelectList(EndServiceReasons, "Id", "Name");
             return View(employeeModel);
         }
 
@@ -90,6 +95,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
                 employeeModel.addAttachmentsPath(uploads);
                 var emplpyeeEntity = employeeModel.convertToEntity();
+                emplpyeeEntity.IsActive = true;
                 await _context.AddAsync(emplpyeeEntity);
                 await _context.SaveChangesAsync();
 
@@ -103,7 +109,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 //};
                 //await _context.AddAsync(employeeSite);
                 //await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             var jobs = new List<JobsEntity>();
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
@@ -182,7 +188,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 try
                 {
                     var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
-                    employeeModel.addAttachmentsPath(uploads);   
+                    employeeModel.addAttachmentsPath(uploads);
                     var emplpyeeEntity = employeeModel.convertToEntity();
                     _context.Update(emplpyeeEntity);
                     await _context.SaveChangesAsync();
@@ -276,7 +282,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     break;
                 case (int)EmployeeAttachmentTypeEnum.EducationCertificate:
                     deletePath = employee.EducationCertificateSoftCopy;
-                    employee.EducationCertificateSoftCopy= null;
+                    employee.EducationCertificateSoftCopy = null;
                     break;
                 case (int)EmployeeAttachmentTypeEnum.Identity:
                     deletePath = employee.IDSoftCopy;
@@ -319,11 +325,105 @@ namespace SecurityMS.Presentation.Web.Controllers
             }).ToListAsync();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> EndService(EndServiceModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await EndEmployeeService(model);
+                    if (result)
+                    {
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                return RedirectToAction(nameof(Details), new { id = model.EmployeeId });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Details), new { id = model.EmployeeId });
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBlackList(EndServiceModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await EndEmployeeService(model);
+                    if (result)
+                    {
+                        await AddToBlackList(model);
+                        await _context.SaveChangesAsync();
+
+                        return RedirectToAction(nameof(Index));
+                    }
+                }
+                return RedirectToAction(nameof(Details), new { id = model.EmployeeId });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction(nameof(Details), new { id = model.EmployeeId });
+            }
+        }
         private bool EmployeesEntityExists(long id)
         {
             return _context.EmployeesEntities.Any(e => e.Id == id);
         }
 
-       
+        private async Task<bool> EndEmployeeService(EndServiceModel model)
+        {
+            var employee = await _context.EmployeesEntities.FirstOrDefaultAsync(x => x.Id == model.EmployeeId);
+            if (employee == null)
+            {
+                return false;
+            }
+            if(model.EndDate == default(DateTime))
+            {
+                return false;
+            }
+            employee.EndDate = model.EndDate;
+            employee.InsuranceEndDate = model.EndDate;
+            employee.EndServiceReasonId = model.Reason;
+            employee.Notes += model.Notes;
+            employee.IsActive = false;
+
+            if (model.PenaltyAmount >= 0.0)
+            {
+                var penalties = new PenaltyEntity()
+                {
+                    EmployeeId = model.EmployeeId,
+                    Amount = model.PenaltyAmount,
+                    PenaltyType = 1,
+                    Reason = model.PenaltyReason
+                };
+                await _context.PenaltiesEntity.AddAsync(penalties);
+            }
+            return true;
+        }
+
+        private async Task AddToBlackList(EndServiceModel model)
+        {
+            var employee = await _context.EmployeesEntities.Include(x => x.Job).FirstOrDefaultAsync(x => x.Id == model.EmployeeId);
+            if (employee != null)
+            {
+                var ser = (await _context.BlackListEntity.OrderByDescending(x => x.Id).FirstOrDefaultAsync());
+                var blackListMember = new BlackListEntity()
+                {
+                    Name = employee.Name,
+                    Job = employee.Job.Name,
+                    Nat_Id = employee.NationalId,
+                    Company = "بايونير",
+                    Reason = model.Notes,
+                    Ser = ser.Ser + 1
+                };
+                await _context.BlackListEntity.AddAsync(blackListMember);
+            }
+        }
     }
 }

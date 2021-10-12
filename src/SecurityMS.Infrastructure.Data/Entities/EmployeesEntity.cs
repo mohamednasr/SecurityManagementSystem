@@ -82,6 +82,14 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "ارفاق صورة ضوئية للفيش الجنائي")]
         public string CriminalCertificateSoftCopy { get; set; }
 
+        [Display(Name= "سبب الإنهاء")]
+        public int? EndServiceReasonId { get; set; }
+
+        [Display(Name = "ملاحظات")]
+        public string Notes { get; set; }
+
+        public bool IsActive { get; set; } = true;
+
         [Display(Name = "الوظيفة")]
         public virtual JobsEntity Job { get; set; }
 

@@ -38,6 +38,7 @@ namespace SecurityMS.Infrastructure.Data
         public virtual DbSet<AdvancedPaymentEntity> AdvancedPaymentsEntity { get; set; }
         public virtual DbSet<RewardEntity> RewardsEntity { get; set; }
         public virtual DbSet<PenaltyEntity> PenaltiesEntity { get; set; }
+        public virtual DbSet<EndServiceReasonLookup> EndServiceReasonLookup { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

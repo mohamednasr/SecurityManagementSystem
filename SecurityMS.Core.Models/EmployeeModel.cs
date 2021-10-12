@@ -23,8 +23,10 @@ namespace SecurityMS.Core.Models
         [Display(Name = "رقم تليفون بديل")]
         public string Phone2 { get; set; }
         [Display(Name = "تاريخ بدء الخدمة")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime StartDate { get; set; }
         [Display(Name = "تاريخ انتهاء الخدمة")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? EndDate { get; set; }
         [Display(Name = "الرقم التأميني")]
         public string InsuranceNumber { get; set; }
@@ -33,8 +35,10 @@ namespace SecurityMS.Core.Models
         [Display(Name = "نسبة تحمل التأمينات")]
         public string InsurancePercentage { get; set; }
         [Display(Name = "تاريخ بداية التأمين")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? InsuranceStartDate { get; set; }
         [Display(Name = "تاريخ انتهاء التأمين")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         public DateTime? InsuranceEndDate { get; set; }
         [Display(Name = "الوظيفة")]
         public long JobId { get; set; }
@@ -94,7 +98,7 @@ namespace SecurityMS.Core.Models
 
         [Display(Name = "قيمه الفتره")]
         public decimal ShiftSalary { get; set; }
-
+        public bool IsActive { get; set; }
         [Display(Name = "الوظيفة")]
         public JobsEntity Job { get; set; }
 
@@ -134,6 +138,7 @@ namespace SecurityMS.Core.Models
                 Phone = entity.Phone,
                 Phone2 = entity.Phone2,
                 StartDate = entity.StartDate,
+                IsActive = entity.IsActive
             };
             return employee;
         }
@@ -170,7 +175,7 @@ namespace SecurityMS.Core.Models
                 Phone = this.Phone,
                 Phone2 = this.Phone2,
                 StartDate = this.StartDate,
-                WorkStubSoftCopy = this.WorkStubSoftCopyPath
+                WorkStubSoftCopy = this.WorkStubSoftCopyPath,
             };
         }
 

@@ -30,6 +30,6 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<AdvancedPaymentEntity> AdvancedPaymentsEntity { get; set; }
         DbSet<RewardEntity> RewardsEntity { get; set; }
         DbSet<PenaltyEntity> PenaltiesEntity { get; set; }
-
+        DbSet<EndServiceReasonLookup> EndServiceReasonLookup { get; set; }
     }
 }

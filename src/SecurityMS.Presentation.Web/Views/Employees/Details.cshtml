@@ -1,4 +1,5 @@
 ﻿@using SecurityMS.Infrastructure.Data.Entities;
+@using SecurityMS.Core.Models;
 @model SecurityMS.Core.Models.EmployeeModel;
 
 @{
@@ -10,12 +11,14 @@
 
 <div>
     <div class="row">
+        @if (Model.IsActive) { 
         <div class="col-12 text-right">
             <a class="btn btn-danger" data-toggle="modal" data-target="#endingServiceModal">اقاله</a>
             <a class="btn btn-primary" data-toggle="modal" data-target="#rewardModal">اضافه حافز / مكافأه</a>
             <a class="btn btn-primary" data-toggle="modal" data-target="#penaltyModal">اضافه جزاء / خصم</a>
             <a class="btn btn-primary" data-toggle="modal" data-target="#advancedPaymentModal">اضافه سلفه</a>
         </div>
+        }
     </div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -343,7 +346,11 @@
     AdvancedPaymentEntity advancedPaymentEntity = new AdvancedPaymentEntity() { EmployeeId = Model.Id, Employee = Model.convertToEntity() };
     Html.RenderPartial("_AdvancedPayment", advancedPaymentEntity);
 }
-<partial name="_EndingService"></partial>
+@{
+    EndServiceModel endServiceModel = new EndServiceModel() { EmployeeId = Model.Id, EmployeeName = Model.Name, EndDate = DateTime.Now };
+    Html.RenderPartial("_EndingService", endServiceModel);
+}
+
 
 @section Scripts{
     <script>

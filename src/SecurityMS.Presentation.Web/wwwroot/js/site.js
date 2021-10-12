@@ -34,3 +34,11 @@ function getSitesByZoneId(zoneId) {
         });
     })
 }
+
+function reportPrint(elId) {
+    $(".noprint").addClass("d-none");
+    printJS({
+        printable: elId, type: 'html', targetStyles: ['*']
+    })
+    $(".noprint").removeClass("d-none");
+}

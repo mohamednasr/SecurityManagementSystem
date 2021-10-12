@@ -133,7 +133,7 @@
             }
         }
 
-        @for (int i = Model.PageNumber <= 3 ? 1 : Model.PageNumber - 2; i <= (Model.PageNumber <= 3 ? 10 : ((Model.TotalCount / Model.PageSize) <= Model.PageNumber + 7 ? (Model.TotalCount / Model.PageSize) : Model.PageNumber + 7)); i++)
+        @for (int i = Model.PageNumber <= 3 ? 1 : Model.PageNumber - 2; i <= (Model.PageNumber <= 3 ? 10 : (Math.Ceiling((decimal)(Model.TotalCount / (decimal)Model.PageSize)) <= Model.PageNumber + 7 ? Math.Ceiling((decimal)(Model.TotalCount / (decimal)Model.PageSize)) : Model.PageNumber + 7)); i++)
         {
             {
                 var _parms = new Dictionary<string, string>
@@ -144,12 +144,12 @@
                 @*<li class="page-item @(@Model.PageNumber == i ? "active" : "") "><a class="page-link" onclick="navigate(@i)">@i</a></li>*@
             }
         }
-        @if (Model.PageSize > 0 && Model.PageNumber < (Model.TotalCount / Model.PageSize) - 10)
+        @if (Model.PageSize > 0 && Model.PageNumber < Math.Ceiling((decimal)(Model.TotalCount / (decimal)Model.PageSize)) - 10)
         {
             {
                 var parms = new Dictionary<string, string>
     {
-                    { "page", (Model.TotalCount / Model.PageSize).ToString() },
+                    { "page", (Math.Ceiling((double)(Model.TotalCount / (decimal)Model.PageSize))).ToString() },
                 };
                 <li class="page-item"><a class="page-link" asp-action="Index" asp-all-route-data="parms">Last</a></li>
             }
