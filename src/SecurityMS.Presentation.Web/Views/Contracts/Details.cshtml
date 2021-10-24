@@ -9,6 +9,12 @@
 <hr />
 <div>
     <dl class="row">
+        @if (!string.IsNullOrEmpty(Model.ContractPDF)) { 
+        <div class="col-12">
+                <input id="ContractPDF" type="text" hidden asp-for="ContractPDF" />
+                <a href="@Model.ContractPDF" target="_blank" class="btn btn-outline-success mb-2">عرض الملف</a>
+        </div>
+        }
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.MainCustomer)
         </dt>

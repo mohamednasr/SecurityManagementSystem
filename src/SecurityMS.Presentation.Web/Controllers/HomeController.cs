@@ -50,6 +50,11 @@ namespace SecurityMS.Presentation.Web.Controllers
             return View();
         }
 
+        public IActionResult PurchasesIndexView()
+        {
+            return View();
+        }
+
         public IActionResult SystemSettingsIndexView()
         {
             return View();

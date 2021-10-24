@@ -5,13 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>ContractsEntity</h4>
+<h4>تعديل العقد</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post" class="col-12">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
@@ -50,14 +48,49 @@
                 <span asp-validation-for="TaxPercentage" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+        </div>
+        <div class="form-group col-12">
+
+            @if (string.IsNullOrEmpty(Model.ContractPDF))
+            {
+                <div>
+                    <input class="contract-attachment" id="ContractPDF" accept="application/pdf" type="file" hidden asp-for="ContractPDF" />
+                    <label class="attachment-path"></label>
+                    <label for="ContractPDF" class="btn btn-primary upload-btn">رفع PDF</label>
+                </div>
+            }
+            else
+            {
+                <div class="form-check-inline">
+                    <input id="CriminalCertificateSoftCopy" type="text" hidden asp-for="ContractPDF" />
+                    <a href="@Model.ContractPDF" target="_blank" class="btn btn-outline-success mb-2">عرض الملف</a>
+                </div>
+                var parms = new Dictionary<string, string> { { "id", Model.Id.ToString() } };
+
+                <div class="form-check-inline">
+                    <a asp-action="DeleteAttachment" asp-all-route-data="parms" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <input type="submit" value="حفظ" class="btn btn-primary" />
+        </div>
         </form>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
     </div>
-</div>
+    </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+    @section Scripts{
+        <script>
+            $(".contract-attachment").on("change", function () {
+                $(this).parent().find(".attachment-path").html($(this).val());
+                $(this).parent().find(".upload-btn").html("تغير الملف");
+                $(this).parent().find(".upload-btn").removeClass("btn-primary");
+                $(this).parent().find(".upload-btn").addClass("btn-outline-primary");
+            })
+        </script>
+    }

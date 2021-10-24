@@ -5,12 +5,14 @@ using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Linq;
 using System.Threading.Tasks;
+using Utilities;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
     public class ContractsController : Controller
     {
         private readonly AppDbContext _context;
+        private static Uploader _uploader = new Uploader();
 
         public ContractsController(AppDbContext context)
         {
@@ -63,6 +65,9 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
+                if(uploads.Count == 1)
+                    contractsEntity.ContractPDF = uploads.FirstOrDefault().Value;
                 _context.Add(contractsEntity);
                 await _context.SaveChangesAsync();
                 //return View("Details",contractsEntity);
@@ -108,6 +113,9 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
+                    var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
+                    if (uploads.Count == 1)
+                        contractsEntity.ContractPDF = uploads.FirstOrDefault().Value;
                     _context.Update(contractsEntity);
                     await _context.SaveChangesAsync();
                 }
@@ -159,7 +167,20 @@ namespace SecurityMS.Presentation.Web.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        public async Task<IActionResult> DeleteAttachment(long id)
+        {
+            if (ContractsEntityExists(id))
+            {
+                var contract = await _context.ContractsEntities.FirstOrDefaultAsync(x => x.Id == id);
+                string deletePath = "";
+                deletePath = contract.ContractPDF;
+                contract.ContractPDF = null;
+                _context.Update(contract);
+                await _context.SaveChangesAsync();
+                _uploader.DeleteFile(deletePath);
+            }
+            return RedirectToAction("Edit", new { id = id });
+        }
         private bool ContractsEntityExists(long id)
         {
             return _context.ContractsEntities.Any(e => e.Id == id);
