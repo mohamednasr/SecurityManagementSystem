@@ -23,10 +23,10 @@ namespace SecurityMS.Core.Models
         [Display(Name = "رقم تليفون بديل")]
         public string Phone2 { get; set; }
         [Display(Name = "تاريخ بدء الخدمة")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
         [Display(Name = "تاريخ انتهاء الخدمة")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime? EndDate { get; set; }
         [Display(Name = "الرقم التأميني")]
         public string InsuranceNumber { get; set; }
@@ -35,10 +35,10 @@ namespace SecurityMS.Core.Models
         [Display(Name = "نسبة تحمل التأمينات")]
         public string InsurancePercentage { get; set; }
         [Display(Name = "تاريخ بداية التأمين")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime? InsuranceStartDate { get; set; }
         [Display(Name = "تاريخ انتهاء التأمين")]
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime? InsuranceEndDate { get; set; }
         [Display(Name = "الوظيفة")]
         public long JobId { get; set; }
@@ -93,6 +93,8 @@ namespace SecurityMS.Core.Models
         [Display(Name = "ارفاق صورة ضوئية للفيش الجنائي")]
         public IFormFile CriminalCertificateSoftCopy { get; set; }
         public string CriminalCertificateSoftCopyPath { get; set; }
+        [Display(Name = "صورة التأمين")]
+        public string InsurancePrintCopy { get; set; }
         [Display(Name = "الموقع")]
         public long SiteId { get; set; }
 
@@ -138,7 +140,8 @@ namespace SecurityMS.Core.Models
                 Phone = entity.Phone,
                 Phone2 = entity.Phone2,
                 StartDate = entity.StartDate,
-                IsActive = entity.IsActive
+                IsActive = entity.IsActive,
+                InsurancePrintCopy = entity.InsurancePrintCopy
             };
             return employee;
         }
@@ -176,6 +179,7 @@ namespace SecurityMS.Core.Models
                 Phone2 = this.Phone2,
                 StartDate = this.StartDate,
                 WorkStubSoftCopy = this.WorkStubSoftCopyPath,
+                InsurancePrintCopy = this.InsurancePrintCopy
             };
         }
 
@@ -206,6 +210,9 @@ namespace SecurityMS.Core.Models
                         break;
                     case "WorkStubSoftCopy":
                         this.WorkStubSoftCopyPath = file.Value;
+                        break;
+                    case "InsurancePrintCopy":
+                        this.InsurancePrintCopy = file.Value;
                         break;
                     default:
                         throw new Exception("unkown file");

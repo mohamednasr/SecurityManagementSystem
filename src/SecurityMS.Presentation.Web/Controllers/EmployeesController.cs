@@ -233,6 +233,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
             Sites.AddRange(await _context.SitesEntities.ToListAsync());
             ViewData["Sites"] = new SelectList(Sites, "Id", "Name");
+            
             return View(employeeModel);
         }
 
@@ -299,6 +300,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                 case (int)EmployeeAttachmentTypeEnum.WorkStub:
                     deletePath = employee.WorkStubSoftCopy;
                     employee.WorkStubSoftCopy = null;
+                    break;
+                case (int)EmployeeAttachmentTypeEnum.Insurance:
+                    deletePath = employee.InsurancePrintCopy;
+                    employee.InsurancePrintCopy = null;
                     break;
             }
             _context.Update(employee);

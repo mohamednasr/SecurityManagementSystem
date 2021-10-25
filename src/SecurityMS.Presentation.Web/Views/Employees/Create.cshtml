@@ -45,12 +45,12 @@
     </div>
     <div class="form-group col-md-4 col-sm-6">
         <label asp-for="StartDate" class="control-label"></label>
-        <input asp-for="StartDate" class="form-control" />
+        <input asp-for="StartDate" class="form-control" type="date"/>
         <span asp-validation-for="StartDate" class="text-danger"></span>
     </div>
     <div class="form-group col-md-4 col-sm-6">
         <label asp-for="EndDate" class="control-label"></label>
-        <input asp-for="EndDate" class="form-control" />
+        <input asp-for="EndDate" class="form-control" type="date"/>
         <span asp-validation-for="EndDate" class="text-danger"></span>
     </div>
         <div class="form-group col-md-4 col-sm-6">
@@ -70,12 +70,12 @@
         </div>
         <div class="form-group col-md-4 col-sm-6">
             <label asp-for="InsuranceStartDate" class="control-label"></label>
-            <input asp-for="InsuranceStartDate" class="form-control" />
+            <input asp-for="InsuranceStartDate" class="form-control" type="date"/>
             <span asp-validation-for="InsuranceStartDate" class="text-danger"></span>
         </div>
         <div class="form-group col-md-4 col-sm-6">
             <label asp-for="InsuranceEndDate" class="control-label"></label>
-            <input asp-for="InsuranceEndDate" class="form-control" />
+            <input asp-for="InsuranceEndDate" class="form-control" type="date"/>
             <span asp-validation-for="InsuranceEndDate" class="text-danger"></span>
         </div>
     <div class="col-12">
@@ -250,6 +250,16 @@
                             <input class="employee-attachment" id="CriminalCertificateSoftCopy" accept="image/*" type="file" hidden asp-for="CriminalCertificateSoftCopy" />
                             <label class="attachment-path px-2"></label>
                             <label for="CriminalCertificateSoftCopy" class="btn btn-primary upload-btn">رفع صورة</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label asp-for="InsurancePrintCopy" class="control-label"></label>
+                        <div class="form-check-inline">
+                            <input class="employee-attachment" id="InsurancePrintCopy" accept="image/*" type="file" hidden asp-for="InsurancePrintCopy" />
+                            <label class="attachment-path px-2"></label>
+                            <label for="InsurancePrintCopy" class="btn btn-primary upload-btn">رفع صورة</label>
                         </div>
                     </div>
                 </div>

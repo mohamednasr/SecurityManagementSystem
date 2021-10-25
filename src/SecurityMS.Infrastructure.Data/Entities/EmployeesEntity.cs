@@ -82,6 +82,9 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "ارفاق صورة ضوئية للفيش الجنائي")]
         public string CriminalCertificateSoftCopy { get; set; }
 
+        [Display(Name = "صورة التأمين")]
+        public string InsurancePrintCopy { get; set; }
+
         [Display(Name= "سبب الإنهاء")]
         public int? EndServiceReasonId { get; set; }
 
@@ -92,7 +95,6 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "الوظيفة")]
         public virtual JobsEntity Job { get; set; }
-
     }
 
 }

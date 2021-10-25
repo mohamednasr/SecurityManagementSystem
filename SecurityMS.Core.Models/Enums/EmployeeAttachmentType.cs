@@ -8,6 +8,7 @@
         Identity = 4,
         MilitaryCertificate = 5,
         PersonalPhotos = 6,
-        WorkStub = 7
+        WorkStub = 7,
+        Insurance = 8
     }
 }
