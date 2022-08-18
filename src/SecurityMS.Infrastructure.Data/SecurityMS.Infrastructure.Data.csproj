@@ -37,12 +37,24 @@
     <Compile Remove="Migrations\20211011182942_dummy123213.Designer.cs" />
     <Compile Remove="Migrations\20211024221548_insurancePrint2.cs" />
     <Compile Remove="Migrations\20211024221548_insurancePrint2.Designer.cs" />
+    <Compile Remove="Migrations\20211106110224_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106110224_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106110545_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106110545_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106111258_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106111258_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106111431_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106111431_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106114105_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106114105_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106114459_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106114459_ItemsAndUniforms.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
-	  <PackageReference Include="MNS.Repository" Version="0.0.5" />
+	  <PackageReference Include="MNS.Repository" Version="0.1.1.1" />
   </ItemGroup>
 
 </Project>

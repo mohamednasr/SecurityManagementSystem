@@ -39,6 +39,10 @@ namespace SecurityMS.Infrastructure.Data
         public virtual DbSet<RewardEntity> RewardsEntity { get; set; }
         public virtual DbSet<PenaltyEntity> PenaltiesEntity { get; set; }
         public virtual DbSet<EndServiceReasonLookup> EndServiceReasonLookup { get; set; }
+        public DbSet<ItemEntity> Items { get; set; }
+        public DbSet<ItemDetailsEntity> ItemDetail { get; set; }
+        public DbSet<UniformEntity> Uniform { get; set; }
+        public DbSet<UniformDetailsEntity> UniformDetails { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -207,6 +211,31 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
+            
+            //builder.Entity<ItemEntity>()
+            //    .HasMany(e => e.Items)
+            //    .WithOne()
+            //    .HasForeignKey(e => e.ItemId);
+            builder.Entity<ItemDetailsEntity>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<UniformEntity>()
+            //    .HasMany(e => e.Uniforms)
+            //    .WithOne()
+            //    .HasForeignKey(e => e.UniformId);
+            builder.Entity<UniformDetailsEntity>()
+                .HasOne(e => e.Uniform)
+                .WithMany()
+                .HasForeignKey(e => e.UniformId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<UniformDetailsEntity>()
+               .HasOne(e => e.Employee)
+               .WithMany()
+               .HasForeignKey(e => e.AssignedTo)
+               .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

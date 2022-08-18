@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MNS.Repository;
 using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
@@ -23,9 +24,15 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: Employees
-        public async Task<IActionResult> Index()
+        //[HttpGet("name={name}&{employeecode}/{natid}/{job}")]
+        public async Task<IActionResult> Index([FromQuery] string name, [FromQuery] string employeecode, [FromQuery] string natid, [FromQuery] string job)
         {
-            var appDbContext = _context.EmployeesEntities.Include(e => e.Job);
+            var appDbContext = _context.EmployeesEntities.Include(e => e.Job)
+                .WhereIf(!string.IsNullOrEmpty(name) && !string.IsNullOrWhiteSpace(name), x => x.Name.Contains(name))
+                .WhereIf(!string.IsNullOrEmpty(employeecode) && !string.IsNullOrWhiteSpace(employeecode), x => x.EmployeeCode == employeecode)
+                .WhereIf(!string.IsNullOrEmpty(natid) && !string.IsNullOrWhiteSpace(natid), x => x.NationalId == natid)
+                .WhereIf(!string.IsNullOrEmpty(job) && !string.IsNullOrWhiteSpace(job), x => x.Job.Name.Contains(job));
+
             return View(await appDbContext.ToListAsync());
         }
 
@@ -91,25 +98,30 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var exist = await _context.EmployeesEntities.Where(x => x.Name == employeeModel.Name || x.EmployeeCode == employeeModel.EmployeeCode || x.NationalId == employeeModel.NationalId).FirstOrDefaultAsync();
+                if (exist == null)
+                {
+                    var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
+                    employeeModel.addAttachmentsPath(uploads);
+                    var emplpyeeEntity = employeeModel.convertToEntity();
+                    emplpyeeEntity.IsActive = true;
+                    await _context.AddAsync(emplpyeeEntity);
+                    await _context.SaveChangesAsync();
 
-                var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
-                employeeModel.addAttachmentsPath(uploads);
-                var emplpyeeEntity = employeeModel.convertToEntity();
-                emplpyeeEntity.IsActive = true;
-                await _context.AddAsync(emplpyeeEntity);
-                await _context.SaveChangesAsync();
+                    //var siteEmployee = await _context.SiteEmployeesEntities.Where(s => s.JobId == emplpyeeEntity.JobId && s.SiteId == employeeModel.SiteId).FirstOrDefaultAsync();
+                    //SiteEmployeesAssignEntity employeeSite = new SiteEmployeesAssignEntity()
+                    //{
+                    //    EmployeeId = emplpyeeEntity.Id,
+                    //    IsActive = true,
+                    //    SiteEmployeeId = siteEmployee.Id,
+                    //    //EmployeeShiftSalary = employeeModel.ShiftSalary
+                    //};
+                    //await _context.AddAsync(employeeSite);
+                    //await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
 
-                //var siteEmployee = await _context.SiteEmployeesEntities.Where(s => s.JobId == emplpyeeEntity.JobId && s.SiteId == employeeModel.SiteId).FirstOrDefaultAsync();
-                //SiteEmployeesAssignEntity employeeSite = new SiteEmployeesAssignEntity()
-                //{
-                //    EmployeeId = emplpyeeEntity.Id,
-                //    IsActive = true,
-                //    SiteEmployeeId = siteEmployee.Id,
-                //    //EmployeeShiftSalary = employeeModel.ShiftSalary
-                //};
-                //await _context.AddAsync(employeeSite);
-                //await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewData["employeeExist"] = "المستخدم موجود بالفعل";
             }
             var jobs = new List<JobsEntity>();
             jobs.Add(new JobsEntity() { Id = 0, Name = "أختر الوظيفة" });
@@ -233,7 +245,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
             Sites.AddRange(await _context.SitesEntities.ToListAsync());
             ViewData["Sites"] = new SelectList(Sites, "Id", "Name");
-            
+
             return View(employeeModel);
         }
 
@@ -350,7 +362,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return RedirectToAction(nameof(Details), new { id = model.EmployeeId });
             }
-            
+
         }
 
         [HttpPost]
@@ -388,7 +400,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return false;
             }
-            if(model.EndDate == default(DateTime))
+            if (model.EndDate == default(DateTime))
             {
                 return false;
             }

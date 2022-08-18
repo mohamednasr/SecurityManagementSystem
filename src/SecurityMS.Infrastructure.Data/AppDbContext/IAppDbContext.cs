@@ -31,5 +31,10 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<RewardEntity> RewardsEntity { get; set; }
         DbSet<PenaltyEntity> PenaltiesEntity { get; set; }
         DbSet<EndServiceReasonLookup> EndServiceReasonLookup { get; set; }
+        DbSet<ItemEntity> Items { get; set; }
+        DbSet<ItemDetailsEntity> ItemDetail { get; set; }
+        DbSet<UniformEntity> Uniform { get; set; }
+        DbSet<UniformDetailsEntity> UniformDetails { get; set; }
+
     }
 }
