@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MNS.Repository;
 using SecurityMS.Infrastructure.Data;
 
 namespace SecurityMS.Presentation.Web
@@ -25,10 +26,11 @@ namespace SecurityMS.Presentation.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
+                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            //services.AddTransient(typeof(IRepository<,>), typeof(Repository<,>));
-
+            services.AddScoped<DbContext, AppDbContext>();
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             services.AddControllersWithViews();
             services.AddRazorPages();

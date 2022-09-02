@@ -1,0 +1,56 @@
+﻿@model SecurityMS.Core.Models.SiteEmployeesAssignModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>أفراد موقع: @Model.SiteEmployee.Site.Name </h1>
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <a asp-action="AssignSiteEmployee" asp-controller="SiteEmployeesAssign" asp-route-id="@Model.SiteEmployeeId" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة فرد</a>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().Employee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().EmployeeShiftSalary)
+            </th>
+            <th>
+                
+                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().IsActive)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SiteAssignedEmployees)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeShiftSalary)
+            </td>
+            <td>
+                @if (!item.IsActive)
+                {
+                <span>غير متاح</span>
+                }
+                @*@Html.DisplayFor(modelItem => item.IsActive)*@
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Deactive</a>*@
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

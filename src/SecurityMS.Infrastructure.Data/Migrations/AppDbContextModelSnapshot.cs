@@ -15,7 +15,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.12")
+                .HasAnnotation("ProductVersion", "3.1.18")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -219,6 +219,65 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("AcceptedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("AcceptedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsAcceptable")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("PayedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PayedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("installments")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("AdvancedPayments");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AttendanceStatusLookup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AttendanceStatusLookup");
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BlackListEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -241,12 +300,860 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Ser")
+                    b.Property<long?>("Ser")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.ToTable("BlackListEntity");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("CommercialProfits")
+                        .HasColumnType("float");
+
+                    b.Property<long?>("ContractContactPersonId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ContractPDF")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("TaxPercentage")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Contracts");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CountriesLookup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CountriesLookup");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomerContactsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long?>("ContractsEntityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Job")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractsEntityId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("CustomerContacts");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomerTypesLookup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerTypeLookup");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomersEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommercialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("CustomerTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ParentCustomerId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TaxFileNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ZoneId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerTypeId");
+
+                    b.HasIndex("ParentCustomerId");
+
+                    b.HasIndex("ZoneId");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.DepartmentsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BirthCertificateCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CriminalCertificateSoftCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EducationCertificateSoftCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EndServiceReasonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IDSoftCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InsuranceAmount")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InsuranceEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InsuranceNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InsurancePercentage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("InsurancePrintCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("InsuranceStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsIncludeBirthCertificate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsIncludeCriminalCertificate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsIncludeEducationCertificate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsIncludeIDCopy")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsIncludeMilitaryCertificate")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsIncludePersonalPhotos")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsIncludeWorkStub")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("JobId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MilitaryCertificateCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NationalId")
+                        .HasColumnType("nvarchar(14)")
+                        .HasMaxLength(14);
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PersonalPhotoSoftCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("WorkStubSoftCopy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EndServiceReasonLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EndServiceReasonLookup");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentDetailsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("EquipmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("EquipmentPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("ProductionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Serial")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ServiceOutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.ToTable("EquipmentDetails");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentTypesLookup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EquipmentTypesLookup");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AvailableTotalCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("EquipmentTotalCount")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EquipmentTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ManufactureId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("MinimumAlert")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentTypeId");
+
+                    b.HasIndex("ManufactureId");
+
+                    b.ToTable("Equipments");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.GovernmentEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Government");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<long>("InvoiceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ItemName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("InvoicesDetails");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("CompanyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CompanyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("FinalIncome")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Invoices");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ItemDetailsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("AssignedTo")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("AssignedToType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ItemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("OutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ItemDetail");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ItemEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AvailableTotalCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MinimumAlert")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.JobsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("DepartmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("PenaltyType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Penalties");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RewardType")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("Rewards");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShiftTypesLookup");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeeAttendanceEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AttendanceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("AttendanceStatusId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ShiftId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SiteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttendanceStatusId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ShiftId");
+
+                    b.HasIndex("SiteId");
+
+                    b.ToTable("SiteEmployeesAttendance");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesAssignEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("SiteEmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SiteEmployeeId");
+
+                    b.ToTable("SiteEmployeesAssign");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("EmployeeShiftSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("EmployeesPerShift")
+                        .HasColumnType("int");
+
+                    b.Property<long>("JobId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ShiftTypeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("ShiftValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SiteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobId");
+
+                    b.HasIndex("ShiftTypeId");
+
+                    b.HasIndex("SiteId");
+
+                    b.ToTable("SiteEmployees");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsAssignEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("EquipmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("SiteEquipmenteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.HasIndex("SiteEquipmenteId");
+
+                    b.ToTable("SiteEquipmentsAssign");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("EquipmentCount")
+                        .HasColumnType("int");
+
+                    b.Property<long>("EquipmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("EquipmentValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SiteId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipmentId");
+
+                    b.HasIndex("SiteId");
+
+                    b.ToTable("SiteEquipments");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SitesEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ContractsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("Transportations")
+                        .HasColumnType("float");
+
+                    b.Property<long>("ZoneId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContractsId");
+
+                    b.HasIndex("ZoneId");
+
+                    b.ToTable("Sites");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformDetailsEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("AssignedTo")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("OutDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("UniformId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedTo");
+
+                    b.HasIndex("UniformId");
+
+                    b.ToTable("UniformDetails");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AvailableTotalCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MinimumAlert")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Uniform");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ZonesEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("GovernmentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GovernmentId");
+
+                    b.ToTable("Zones");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -296,6 +1203,262 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.CustomersEntity", "MainCustomer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomerContactsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", null)
+                        .WithMany("ContactPerson")
+                        .HasForeignKey("ContractsEntityId");
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.CustomersEntity", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomersEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.CustomerTypesLookup", "CustomerType")
+                        .WithMany()
+                        .HasForeignKey("CustomerTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.CustomersEntity", "ParentCustomers")
+                        .WithMany()
+                        .HasForeignKey("ParentCustomerId");
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ZonesEntity", "Zone")
+                        .WithMany()
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.JobsEntity", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentDetailsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EquipmentTypesLookup", "EquipmentType")
+                        .WithMany()
+                        .HasForeignKey("EquipmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.CountriesLookup", "Manufacturing")
+                        .WithMany()
+                        .HasForeignKey("ManufactureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceDetails", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", "invoice")
+                        .WithMany("items")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ItemDetailsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ItemEntity", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.JobsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.DepartmentsEntity", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeeAttendanceEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.AttendanceStatusLookup", "AttendanceStatus")
+                        .WithMany()
+                        .HasForeignKey("AttendanceStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", "ShiftType")
+                        .WithMany()
+                        .HasForeignKey("ShiftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SitesEntity", "Site")
+                        .WithMany()
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesAssignEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", "SiteEmployee")
+                        .WithMany()
+                        .HasForeignKey("SiteEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.JobsEntity", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", "ShiftType")
+                        .WithMany()
+                        .HasForeignKey("ShiftTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SitesEntity", "Site")
+                        .WithMany()
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsAssignEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EquipmentDetailsEntity", "EquipmentDetails")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsEntity", "SiteEquipment")
+                        .WithMany()
+                        .HasForeignKey("SiteEquipmenteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SitesEntity", "Site")
+                        .WithMany()
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SitesEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", "Contracts")
+                        .WithMany("ContractSites")
+                        .HasForeignKey("ContractsId");
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ZonesEntity", "zone")
+                        .WithMany()
+                        .HasForeignKey("ZoneId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformDetailsEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("AssignedTo")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.UniformEntity", "Uniform")
+                        .WithMany()
+                        .HasForeignKey("UniformId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ZonesEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.GovernmentEntity", "Government")
+                        .WithMany()
+                        .HasForeignKey("GovernmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

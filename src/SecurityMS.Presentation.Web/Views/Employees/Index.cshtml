@@ -1,0 +1,140 @@
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.EmployeesEntity>
+
+@{
+    ViewData["Title"] = "الموظفين";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>الموظفين</h1>
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <a asp-action="Create" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة موظف</a>
+        <a class="btn btn-primary mb-3" onclick="reportPrint('employeesReport')"><i class="fas fa-print"></i> طباعه</a>
+    </div>
+</div>
+<div id="employeesReport">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeCode)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NationalId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Job)
+                </th>
+                <th class="noprint">
+                    <a class="btn btn-primary" onclick="toggleSearch()"><i class="fa fa-filter"></i></a>
+                </th>
+            </tr>
+            <tr class="noprint d-none" id="searchBar">
+                <th>
+                    <input placeholder="الأسم..." class="form-control" id="name"/>
+                </th>
+                <th>
+                    <input placeholder="الرقم الوظيفي..." class="form-control"  id="employeecode"/>
+                </th>
+                <th>
+                    <input placeholder="الرقم القومي..." class="form-control"  id="natid"/>
+                </th>
+                <th>
+                    <input placeholder="الوظيفه..." class="form-control"  id="job"/>
+                </th>
+                <th>
+                    <button class="btn btn-info" onclick="searchEmployees()">بحث</button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NationalId)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Job.Name)
+                    </td>
+                    <td class="noprint">
+                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |
+                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a>
+                        @*<a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+@section scripts{ 
+<script charset="utf-8" >
+    function searchEmployees() {
+        var name = $("#name").val();
+        var employeecode = $("#employeecode").val();
+        var natid = $("#natid").val();
+        var job = $("#job").val();
+        var uri = "/Employees?";
+        if (name != "") {
+            uri += "name=" + name + "&";
+        }
+        if (employeecode != "") {
+            uri += "employeecode=" + employeecode + "&";
+        }
+        if (natid != "") {
+            uri += "natid=" + natid + "&";
+        }
+        if (job != "") {
+            uri += "job=" + job;
+        }
+
+        location.replace(uri)
+    }
+    function toggleSearch() {
+        $("#searchBar").toggleClass("d-none");
+    }
+    $(document).ready(function () {
+        var url = window.location;
+        if (url.search && url.search != "") {
+            $("#searchBar").removeClass("d-none");
+            if (url.search.indexOf("name") >= 0) {
+                var nameQuery = url.search.split("name=")[1];
+                var name = nameQuery.split("&")[0];
+                $("#name").val(decodeURIComponent(name));
+            }
+            if (url.search.indexOf("employeecode") >= 0) {
+                var employeecodeQuery = url.search.split("employeecode=")[1];
+                var employeecode = employeecodeQuery.split("&")[0];
+                $("#employeecode").val(decodeURIComponent(employeecode));
+            }
+            if (url.search.indexOf("natid") >= 0) {
+                var natidQuery = url.search.split("natid=")[1];
+                var natid = natidQuery.split("&")[0];
+                $("#natid").val(decodeURIComponent(natid));
+            }
+            if (url.search.indexOf("job") >= 0) {
+                var jobQuery = url.search.split("job=")[1];
+                var job = jobQuery.split("&")[0];
+                $("#job").val(decodeURIComponent(job));
+            }
+        }
+    })
+</script>
+}

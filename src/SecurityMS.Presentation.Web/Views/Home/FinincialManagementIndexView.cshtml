@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "الإداره المالية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+    <h4>الإداره المالية</h4>
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Invoices">الفواتير</a>
+        </div>
+    </div>
+    <hr />
+    <div class="row site-main-navigation">
+        <h4 class="col-12">تقارير</h4>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SecurityPersonsSalaryReports">تقرير الرواتب</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="MonthRevenuePerCompanyReport">تقرير الوارد</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="AdvancedPaymentEntities">تقرير السلف</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Penalties">تقرير الجزائات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Rewards">تقرير المكافأت</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,44 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.SiteEmployeesAssignEntity
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>إضافة فرد</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @*<label asp-for="SiteEmployeeId" class="control-label"></label>
+        <select asp-for="SiteEmployeeId" class ="form-control" asp-items="ViewBag.SiteEmployeeId"></select>*@
+                <input type="hidden" asp-for="SiteEmployeeId" />
+
+            </div>
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="EmployeeShiftSalary" class="control-label"></label>
+                <input asp-for="EmployeeShiftSalary" class="form-control" />
+                <span asp-validation-for="EmployeeShiftSalary" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

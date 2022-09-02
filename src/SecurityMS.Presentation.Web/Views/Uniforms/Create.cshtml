@@ -1,0 +1,56 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.UniformEntity
+
+@{
+    ViewData["Title"] = "إضافه زي";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>إضافه زي</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <input asp-for="Size" class="form-control" />
+                <span asp-validation-for="Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalCount" class="control-label"></label>
+                <input asp-for="TotalCount" class="form-control" />
+                <span asp-validation-for="TotalCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AvailableTotalCount" class="control-label"></label>
+                <input asp-for="AvailableTotalCount" class="form-control" />
+                <span asp-validation-for="AvailableTotalCount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinimumAlert" class="control-label"></label>
+                <input asp-for="MinimumAlert" class="form-control" />
+                <span asp-validation-for="MinimumAlert" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">رجوع</a>
+</div>
+

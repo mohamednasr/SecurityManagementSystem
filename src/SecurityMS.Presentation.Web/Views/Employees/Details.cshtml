@@ -1,0 +1,380 @@
+﻿@using SecurityMS.Infrastructure.Data.Entities;
+@using SecurityMS.Core.Models;
+@model SecurityMS.Core.Models.EmployeeModel;
+
+@{
+    ViewData["Title"] = "بيانات موظف";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>بيانات موظف "@Model.Name"</h1>
+
+<div>
+    <div class="row">
+        @if (Model.IsActive) { 
+        <div class="col-12 text-right">
+            <a class="btn btn-danger" data-toggle="modal" data-target="#endingServiceModal">اقاله</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#rewardModal">اضافه حافز / مكافأه</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#penaltyModal">اضافه جزاء / خصم</a>
+            <a class="btn btn-primary" data-toggle="modal" data-target="#advancedPaymentModal">اضافه سلفه</a>
+        </div>
+        }
+    </div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FileNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FileNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeCode)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NationalId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NationalId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Job)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Job.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SiteId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Site.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ShiftSalary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShiftSalary)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceAmount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceAmount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsurancePercentage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsurancePercentage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceStartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceStartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsuranceEndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.InsuranceEndDate)
+        </dd>
+    </dl>
+    <h5>المرفقات</h5>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeBirthCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+
+                    @if (Model.IsIncludeBirthCertificate == true)
+                    {
+                        <span>نعم</span>
+                    }
+                    else if (Model.IsIncludeBirthCertificate.HasValue && !Model.IsIncludeBirthCertificate.Value)
+                    {
+                        <span> صورة منها</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.BirthCertificateCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="birthdayCopy" type="text" hidden asp-for="BirthCertificateCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.BirthCertificateCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeMilitaryCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    @if (Model.IsIncludeMilitaryCertificate == true)
+                    {
+                        <span>نعم</span>
+                    }
+                    else if (Model.IsIncludeMilitaryCertificate.HasValue && !Model.IsIncludeMilitaryCertificate.Value)
+                    {
+                        <span> صورة منها</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.MilitaryCertificateCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="MilitaryCertificateCopy" type="text" hidden asp-for="MilitaryCertificateCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.MilitaryCertificateCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeEducationCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    @if (Model.IsIncludeEducationCertificate == true)
+                    {
+                        <span>نعم</span>
+                    }
+                    else if (Model.IsIncludeEducationCertificate.HasValue && !Model.IsIncludeEducationCertificate.Value)
+                    {
+                        <span> صورة منها</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.EducationCertificateSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="EducationCertificateSoftCopy" type="text" hidden asp-for="EducationCertificateSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.EducationCertificateSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeIDCopy)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    @if (Model.IsIncludeIDCopy)
+                    {
+                        <span>نعم</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.IDSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="IDSoftCopy" type="text" hidden asp-for="IDSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.IDSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludePersonalPhotos)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    @if (Model.IsIncludePersonalPhotos == true)
+                    {
+                        <span>نعم</span>
+                    }
+                    else if (Model.IsIncludePersonalPhotos.HasValue && !Model.IsIncludePersonalPhotos.Value)
+                    {
+                        <span>صورة منها</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.PersonalPhotoSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="PersonalPhotoSoftCopy" type="text" hidden asp-for="PersonalPhotoSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.PersonalPhotoSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeWorkStub)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    @if (Model.IsIncludeWorkStub)
+                    {
+                        <span>نعم</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.WorkStubSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="WorkStubSoftCopy" type="text" hidden asp-for="WorkStubSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.WorkStubSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsIncludeCriminalCertificate)؟
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                <div class="col-md-2 col-sm-12">
+                    @if (Model.IsIncludeCriminalCertificate)
+                    {
+                        <span>نعم</span>
+                    }
+                    else
+                    {
+                        <span>لا</span>
+                    }
+                </div>
+                @if (!string.IsNullOrEmpty(Model.CriminalCertificateSoftCopyPath))
+                {
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-check-inline">
+                            <input id="CriminalCertificateSoftCopy" type="text" hidden asp-for="CriminalCertificateSoftCopyPath" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.CriminalCertificateSoftCopyPath">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.InsurancePrintCopy)
+        </dt>
+        <dd class="col-sm-10">
+            <div class="row">
+                @if (!string.IsNullOrEmpty(Model.InsurancePrintCopy))
+                {
+                    <div class="col-12">
+                        <div class="form-check-inline">
+                            <input id="InsurancePrintCopy" type="text" hidden asp-for="InsurancePrintCopy" />
+                            <label class="btn btn-outline-success show-attachment" data-bs-toggle="modal" data-id="@Model.InsurancePrintCopy">عرض الصورة</label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-dark">تعديل</a>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-outline-dark mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-outline-dark mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+<partial name="_ImageViewer"></partial>
+@{
+    PenaltyEntity penaltyEntity = new PenaltyEntity() { EmployeeId = Model.Id };
+    Html.RenderPartial("_Penalty", penaltyEntity);
+}
+@{
+    RewardEntity rewardEntity = new RewardEntity() { EmployeeId = Model.Id };
+    Html.RenderPartial("_Reward", rewardEntity);
+}
+@{
+    AdvancedPaymentEntity advancedPaymentEntity = new AdvancedPaymentEntity() { EmployeeId = Model.Id, Employee = Model.convertToEntity() };
+    Html.RenderPartial("_AdvancedPayment", advancedPaymentEntity);
+}
+@{
+    EndServiceModel endServiceModel = new EndServiceModel() { EmployeeId = Model.Id, EmployeeName = Model.Name, EndDate = DateTime.Now };
+    Html.RenderPartial("_EndingService", endServiceModel);
+}
+
+
+@section Scripts{
+    <script>
+        $(".show-attachment").click(function () {
+            var _path = $(this).attr("data-id");
+            $("#imageViewerModal #imagePath").attr("src", _path)
+            $("#imageViewerModal").modal("show");
+        });
+
+    </script>
+}

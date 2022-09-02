@@ -1,15 +1,13 @@
 ﻿@model SecurityMS.Infrastructure.Data.Entities.BlackListEntity
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "تفاصيل شخص";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>تفاصيل @Model.Name</h1>
 
 <div>
-    <h4>BlackListEntity</h4>
-    <hr />
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Ser)
@@ -49,7 +47,9 @@
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
 </div>

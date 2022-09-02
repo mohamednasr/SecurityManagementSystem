@@ -5,9 +5,56 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210312130350_contract.cs" />
+    <Compile Remove="Migrations\20210312130350_contract.Designer.cs" />
+    <Compile Remove="Migrations\20210312135329_siteEmployees.cs" />
+    <Compile Remove="Migrations\20210312135329_siteEmployees.Designer.cs" />
+    <Compile Remove="Migrations\20210312145901_siteEmployeeAssign.cs" />
+    <Compile Remove="Migrations\20210312145901_siteEmployeeAssign.Designer.cs" />
+    <Compile Remove="Migrations\20210326133056_customerAddress.cs" />
+    <Compile Remove="Migrations\20210326133056_customerAddress.Designer.cs" />
+    <Compile Remove="Migrations\20210327185336_contractCustomers.cs" />
+    <Compile Remove="Migrations\20210327185336_contractCustomers.Designer.cs" />
+    <Compile Remove="Migrations\20210327190142_dummy.cs" />
+    <Compile Remove="Migrations\20210327190142_dummy.Designer.cs" />
+    <Compile Remove="Migrations\20210910190538_invoices.cs" />
+    <Compile Remove="Migrations\20210910190538_invoices.Designer.cs" />
+    <Compile Remove="Migrations\20210910191056_invoices.cs" />
+    <Compile Remove="Migrations\20210910191056_invoices.Designer.cs" />
+    <Compile Remove="Migrations\20210926191631_addInsuranceDetails2.cs" />
+    <Compile Remove="Migrations\20210926191631_addInsuranceDetails2.Designer.cs" />
+    <Compile Remove="Migrations\20211011180439_endServiceReasons.cs" />
+    <Compile Remove="Migrations\20211011180439_endServiceReasons.Designer.cs" />
+    <Compile Remove="Migrations\20211011182109_addNotesToEmployee.cs" />
+    <Compile Remove="Migrations\20211011182109_addNotesToEmployee.Designer.cs" />
+    <Compile Remove="Migrations\20211011182229_nullableEndReason.cs" />
+    <Compile Remove="Migrations\20211011182229_nullableEndReason.Designer.cs" />
+    <Compile Remove="Migrations\20211011182524_convertReasonLookupToInt.cs" />
+    <Compile Remove="Migrations\20211011182524_convertReasonLookupToInt.Designer.cs" />
+    <Compile Remove="Migrations\20211011182637_convertReasonLookupToInt.cs" />
+    <Compile Remove="Migrations\20211011182637_convertReasonLookupToInt.Designer.cs" />
+    <Compile Remove="Migrations\20211011182942_dummy123213.cs" />
+    <Compile Remove="Migrations\20211011182942_dummy123213.Designer.cs" />
+    <Compile Remove="Migrations\20211024221548_insurancePrint2.cs" />
+    <Compile Remove="Migrations\20211024221548_insurancePrint2.Designer.cs" />
+    <Compile Remove="Migrations\20211106110224_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106110224_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106110545_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106110545_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106111258_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106111258_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106111431_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106111431_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106114105_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106114105_ItemsAndUniforms.Designer.cs" />
+    <Compile Remove="Migrations\20211106114459_ItemsAndUniforms.cs" />
+    <Compile Remove="Migrations\20211106114459_ItemsAndUniforms.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
-    <PackageReference Include="MNS.Repository" Version="0.0.1" />
+	  <PackageReference Include="MNS.Repository" Version="0.1.1.1" />
   </ItemGroup>
 
 </Project>

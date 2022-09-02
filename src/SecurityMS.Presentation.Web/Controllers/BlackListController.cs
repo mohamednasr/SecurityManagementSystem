@@ -1,50 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MNS.Repository;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
-using SecurityMS.Presentation.Web.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class BlackListController : Controller
     {
         private readonly AppDbContext _context;
-        public BlackListController(AppDbContext context)
+        private IRepository<BlackListEntity, long> _repository;
+        public BlackListController(AppDbContext context, IRepository<BlackListEntity, long> repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         // GET: BlackList
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            List<BlackListModel> blackList = await _context.BlackListEntity.Select(x => new BlackListModel() { 
-                Id = x.Id,
-                Ser = x.Ser,
-                Name = x.Name,
-                Company = x.Company,
-                Job = x.Job,
-                Nat_Id = x.Nat_Id,
-                Reason = x.Reason
-            }).ToListAsync();
+            //List<BlackListModel> blackList = await _context.BlackListEntity.Select(x => new BlackListModel() { 
+            //    Id = x.Id,
+            //    Ser = x.Ser.Value,
+            //    Name = x.Name,
+            //    Company = x.Company,
+            //    Job = x.Job,
+            //    Nat_Id = x.Nat_Id,
+            //    Reason = x.Reason
+            //}).ToListAsync();
+
+            QueryResult<BlackListEntity> blackList;
+            //if (!string.IsNullOrEmpty(searchModel.Nat_Id) || !string.IsNullOrEmpty(searchModel.Name) || !string.IsNullOrEmpty(searchModel.Company))
+            //{
+            //    blackList = await _repository.GetAllAsync(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company), page);
+            //}
+            blackList = await _repository.GetAllAsync(page);
             return View(blackList);
         }
 
-        public async Task<IActionResult> Search(BlackListModel searchModel)
+        public async Task<IActionResult> Search(BlackListEntity searchModel)
         {
-            List<BlackListModel> blackList = await _context.BlackListEntity.Where(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company)).Select(x => new BlackListModel()
+            if (string.IsNullOrEmpty(searchModel.Name) && string.IsNullOrEmpty(searchModel.Company) && string.IsNullOrEmpty(searchModel.Nat_Id))
             {
-                Id = x.Id,
-                Ser = x.Ser,
-                Name = x.Name,
-                Company = x.Company,
-                Job = x.Job,
-                Nat_Id = x.Nat_Id,
-                Reason = x.Reason
-            }).ToListAsync();
-            return View("Index",blackList);
+                return RedirectToAction("Index");
+            }
+            //ViewBag["Name"] = 
+            var blackList = await _repository.Get(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company)).ToQueryResultAsync(0, 0);
+            return View("Index", blackList);
         }
 
         // GET: BlackList/Details/5
@@ -80,6 +86,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                blackListEntity.Ser = _context.BlackListEntity.Select(b => b.Ser).Max() + 1;
                 _context.Add(blackListEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

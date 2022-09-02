@@ -78,7 +78,7 @@ namespace SecurityMS.Presentation.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var EmailExist = await _userManager.FindByEmailAsync(Input.Email);
-                if (EmailExist == null)
+                if (EmailExist != null)
                 {
                     ModelState.AddModelError(string.Empty, "الإيميل مستخدم من قبل يرجي اختيار إيميل أخر");
                     return Page();

@@ -1,0 +1,76 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.CustomersEntity
+
+@{
+    ViewData["Title"] = "بيانات عميل";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>بيانات العميل @Model.Name</h1>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerTypeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerType.Name)
+        </dd>
+        @if (Model.ParentCustomerId != null)
+        {
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParentCustomerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParentCustomers.Name)
+        </dd>
+        }
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CommercialNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CommercialNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaxId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TaxFileNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TaxFileNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ZoneId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Zone.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Zone.Government.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Zone.Government.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-dark" asp-action="Edit" asp-route-id="@Model.Id">تعديل</a>
+</div>
+
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.GovernmentEntity>
+
+@{
+    ViewData["Title"] = "المحافظات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>المحافظات</h1>
+
+<div class="row">
+    <div class="col-12 mb-3">
+        <a asp-action="Create" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة محافظة</a>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>

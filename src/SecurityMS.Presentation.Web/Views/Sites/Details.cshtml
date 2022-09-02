@@ -1,0 +1,146 @@
+﻿@model SecurityMS.Core.Models.SiteModel
+
+@{
+    ViewData["Title"] = "تفاصيل موقع";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>تفاصيل موقع @Model.Name</h1>
+
+<div>
+    <h4>SitesEntity</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.zone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.zone.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Transportations)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Transportations)
+        </dd>
+
+    </dl>
+    <div class="row">
+        <div class="col-12 mb-3">
+            <a asp-action="CreateSiteAttendance" asp-controller="SiteEmployeeAttendance" asp-route-id="@Model.Id" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة يومية</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>الأفراد</h4>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <a asp-action="CreateSiteEmployees" asp-controller="SiteEmployees" asp-route-id="@Model.Id" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة</a>
+                </div>
+            </div>
+            <hr />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEmployees.FirstOrDefault().Job)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEmployees.FirstOrDefault().EmployeesPerShift)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEmployees.FirstOrDefault().ShiftType)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEmployees.FirstOrDefault().ShiftValue)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SiteEmployees)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Job.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeesPerShift)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShiftType.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ShiftValue)
+                            </td>
+                            <td>
+                                <a asp-action="Index" asp-controller="SiteEmployeesAssign" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <h4>المعدات</h4>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <a asp-action="Add" asp-controller="SiteEquipments" asp-route-id="@Model.Id" class="btn btn-dark mb-3"><i class="fas fa-plus"></i> إضافة</a>
+                </div>
+            </div>
+            <hr />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEquipments.FirstOrDefault().EquipmentValue)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEquipments.FirstOrDefault().EquipmentCount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEquipments.FirstOrDefault().Site)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SiteEquipments.FirstOrDefault().Equipment)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.SiteEquipments)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EquipmentValue)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EquipmentCount)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Site.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Equipment.Id)
+                            </td>
+                            <td>
+                                <a asp-action="Index" asp-controller="SiteEquipmentsAssign" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">تعديل</a>
+</div>

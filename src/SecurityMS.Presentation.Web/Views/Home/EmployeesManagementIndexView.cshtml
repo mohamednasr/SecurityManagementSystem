@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "إداره الموارد البشرية";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+    <h4>إداره الموارد البشرية</h4>
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BlackList">استعلام القائمة السوداء</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Employees">الموظفين</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Departments">الأقسام</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Jobs">الوظائف</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SiteEmployeeAttendance">اليوميات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SiteEmployeeAttendance">اضافه سلف</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SiteEmployeeAttendance">اضافه مكافأت</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SiteEmployeeAttendance">اضافه جزاءات</a>
+        </div>
+    </div>
+    <hr />
+    <div class="row site-main-navigation">
+        <h4 class="col-12">تقارير</h4>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SecurityPersonsSalaryReports">تقرير الرواتب</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="AttendanceReports">تقرير الحضور</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="AdvancedPaymentEntities">تقرير السلف</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Penalties">تقرير الجزائات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Rewards">تقرير المكافأت</a>
+        </div>
+    </div>
+</section>

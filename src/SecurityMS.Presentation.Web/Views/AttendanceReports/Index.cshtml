@@ -1,0 +1,97 @@
+﻿@model SecurityMS.Core.Models.SecurityPersonsSalaryReportModel
+
+<partial name="_SearchAttendanceReportPartial" model="Model.searchModel" />
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().EmployeeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Attendance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Absence)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Apologizes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().BreakDays)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data.FirstOrDefault().Vacation)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Attendance)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Absence)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apologizes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BreakDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vacation)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@section Scripts{
+    <script>
+        function getMonths(year = (@Model.searchModel.Year)) {
+
+            if (year == currentDate.getFullYear()) {
+                var currentMonth = currentDate.getMonth();
+                $("#monthSelect").html("");
+                for (var i = 0; i <= currentMonth; i++) {
+                    $("#monthSelect").append(new Option(monthsMap[i], i+1))
+                }
+                $("#monthSelect").val((@Model.searchModel.Month));
+                return;
+            }
+
+            else {
+                $("#monthSelect").html("");
+                var currentMonth = currentDate.getMonth();
+                for (var i = 0; i < monthsMap.length; i++) {
+                    $("#monthSelect").append(new Option(monthsMap[i], i+1))
+                }
+                $("#monthSelect").val((@Model.searchModel.Month));
+                return;
+            }
+        }
+
+        function setYears() {
+            $("#yearSelect").html("");
+            for (var i = currentDate.getFullYear(); i >= startYear; i--) {
+                $("#yearSelect").append(new Option(i, i))
+            }
+            $("#yearSelect").val((@Model.searchModel.Year));
+        };
+        getMonths();
+        setYears();
+
+        $("#yearSelect").change((e) => {
+            getMonths($("#yearSelect").val());
+        })
+    </script>
+} 

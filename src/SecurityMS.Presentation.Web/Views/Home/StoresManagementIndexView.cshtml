@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "إداره المخازن";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+    <h4>إداره المخازن</h4>
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">التوريدات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">المعدات</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Items">الأدوات المكتبية</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Uniforms">الملابس</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">صرف شخصي</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">صرف موقع</a>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">طلبات صيانه</a>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <h4 class="col-12">تقارير</h4>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">إعاده الطلب</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">اصناف بالصيانه</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">هالك</a>
+        </div>
+    </div>
+</section>

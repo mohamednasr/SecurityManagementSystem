@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "إداره التعاقدات";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+    <h4>إداره التعاقدات</h4>
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Customers">العملاء</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Contracts">العقود</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Sites">المواقع</a>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <h4 class="col-12">تقارير</h4>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="SecurityPersonsSalaryReports">تقرير الوارد</a>
+        </div>
+    </div>
+</section>

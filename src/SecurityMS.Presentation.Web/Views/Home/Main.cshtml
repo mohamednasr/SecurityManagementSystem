@@ -4,9 +4,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <section class="container-fluid">
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-sm-6 center">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BlackList">استعلام</a>
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="HRIndex" asp-controller="Home">الموارد البشرية</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="FinincialManagementIndexView" asp-controller="Home">المالية</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="ContractsManagementIndexView" asp-controller="Home">التعاقدات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="StoresManagementIndexView" asp-controller="Home">المخازن</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="PurchasesIndexView" asp-controller="Home">المشتريات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="OperationsManagementIndexView" asp-controller="Home">العمليات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="SystemSettingsIndexView" asp-controller="Home">اعدادات النظام</a>
         </div>
     </div>
 </section>

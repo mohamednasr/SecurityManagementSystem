@@ -1,0 +1,38 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity;
+
+<div class="modal fade" id="advancedPaymentModal" tabindex="-1" aria-labelledby="advancedPaymentModal" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">اضافه سلفه</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" asp-controller="AdvancedPaymentEntities" class="row" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group col-md-4">
+                        <label>@Model.Employee.Name</label>
+                        @*<label asp-for="EmployeeId" class="control-label"></label>*@
+                        <input asp-for="EmployeeId" hidden class="form-control" />
+                        @*<span asp-validation-for="EmployeeId" class="text-danger"></span>*@
+                    </div>
+                    <div class="form-group col-12">
+                        <label asp-for="Amount" class="control-label"></label>
+                        <input asp-for="Amount" class="form-control" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-12">
+                        <label asp-for="installments" class="control-label"></label>
+                        <input asp-for="installments" class="form-control" />
+                        <span asp-validation-for="installments" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <input type="submit" value="حفظ" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

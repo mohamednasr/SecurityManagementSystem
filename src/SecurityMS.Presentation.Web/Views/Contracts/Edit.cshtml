@@ -1,0 +1,96 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.ContractsEntity
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>تعديل العقد</h4>
+<hr />
+<div class="row">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post" class="col-12">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractContactPersonId" class="control-label"></label>
+                <select asp-for="ContractContactPersonId" class="form-control" asp-items="ViewBag.ContractContactPersonId"></select>
+                <span asp-validation-for="ContractContactPersonId" class="text-danger"></span>
+                <a class="btn btn-link" asp-controller="CustomerContacts" asp-action="Create">إضافه جهة اتصال</a>
+            </div>
+            <div class="form-group">
+                <label asp-for="CommercialProfits" class="control-label"></label>
+                <input asp-for="CommercialProfits" class="form-control" />
+                <span asp-validation-for="CommercialProfits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxPercentage" class="control-label"></label>
+                <input asp-for="TaxPercentage" class="form-control" />
+                <span asp-validation-for="TaxPercentage" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+        </div>
+        <div class="form-group col-12">
+
+            @if (string.IsNullOrEmpty(Model.ContractPDF))
+            {
+                <div>
+                    <input class="contract-attachment" id="ContractPDF" accept="application/pdf" type="file" hidden asp-for="ContractPDF" />
+                    <label class="attachment-path"></label>
+                    <label for="ContractPDF" class="btn btn-primary upload-btn">رفع PDF</label>
+                </div>
+            }
+            else
+            {
+                <div class="form-check-inline">
+                    <input id="CriminalCertificateSoftCopy" type="text" hidden asp-for="ContractPDF" />
+                    <a href="@Model.ContractPDF" target="_blank" class="btn btn-outline-success mb-2">عرض الملف</a>
+                </div>
+                var parms = new Dictionary<string, string> { { "id", Model.Id.ToString() } };
+
+                <div class="form-check-inline">
+                    <a asp-action="DeleteAttachment" asp-all-route-data="parms" class="btn btn-outline-danger"><i class="fa fa-trash-alt"></i></a>
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <input type="submit" value="حفظ" class="btn btn-primary" />
+        </div>
+        </form>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+    </div>
+    </div>
+
+    @section Scripts{
+        <script>
+            $(".contract-attachment").on("change", function () {
+                $(this).parent().find(".attachment-path").html($(this).val());
+                $(this).parent().find(".upload-btn").html("تغير الملف");
+                $(this).parent().find(".upload-btn").removeClass("btn-primary");
+                $(this).parent().find(".upload-btn").addClass("btn-outline-primary");
+            })
+        </script>
+    }

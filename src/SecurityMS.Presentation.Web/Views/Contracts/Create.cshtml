@@ -1,0 +1,76 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.ContractsEntity
+
+@{
+    ViewData["Title"] = "انشاء عقد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>انشاء عقد</h1>
+
+<div class="row">
+        <form asp-action="Create" enctype="multipart/form-data" method="post" class="col-12">
+    <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CustomerId" class="control-label"></label>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CommercialProfits" class="control-label"></label>
+                <input asp-for="CommercialProfits" class="form-control" />
+                <span asp-validation-for="CommercialProfits" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TaxPercentage" class="control-label"></label>
+                <input asp-for="TaxPercentage" class="form-control" />
+                <span asp-validation-for="TaxPercentage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContractContactPersonId" class="control-label"></label>
+                <select asp-for="ContractContactPersonId" class="form-control" asp-items="ViewBag.ContractContactPersonId"></select>
+                <a class="btn btn-link" asp-controller="CustomerContacts" asp-action="Create">إضافه جهة اتصال</a>
+            </div>
+        </div>
+            <div class="col-12">
+                <input class="contract-attachment" id="ContractPDF" accept="application/pdf" type="file" hidden asp-for="ContractPDF" />
+                <label class="attachment-path px-2"></label>
+                <label for="ContractPDF" class="btn btn-primary upload-btn">رفع PDF</label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="حفظ و متابعة" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(".contract-attachment").on("change", function () {
+            $(this).parent().find(".attachment-path").html($(this).val());
+            $(this).parent().find(".upload-btn").html("تغير الملف");
+            $(this).parent().find(".upload-btn").removeClass("btn-primary");
+            $(this).parent().find(".upload-btn").addClass("btn-outline-primary");
+        })
+    </script>
+}

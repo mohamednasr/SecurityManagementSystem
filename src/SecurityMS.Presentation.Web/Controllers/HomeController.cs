@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SecurityMS.Presentation.Web.Models;
 using System.Diagnostics;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -21,6 +23,41 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         public IActionResult Main()
+        {
+            return View();
+        }
+
+        public IActionResult HRIndex()
+        {
+            return View("EmployeesManagementIndexView");
+        }
+
+        public IActionResult ContractsManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult FinincialManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult OperationsManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult StoresManagementIndexView()
+        {
+            return View();
+        }
+
+        public IActionResult PurchasesIndexView()
+        {
+            return View();
+        }
+        [Authorize(Roles = "Administrator,Admin")]
+        public IActionResult SystemSettingsIndexView()
         {
             return View();
         }
