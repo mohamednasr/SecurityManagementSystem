@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
@@ -10,23 +9,22 @@ using System.Threading.Tasks;
 namespace SecurityMS.Presentation.Web.Controllers
 {
     [Authorize]
-    public class RewardsController : Controller
+    public class ItemsController : Controller
     {
         private readonly AppDbContext _context;
 
-        public RewardsController(AppDbContext context)
+        public ItemsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: Rewards
+        // GET: Items
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.RewardsEntity.Include(r => r.Employee);
-            return View(await appDbContext.ToListAsync());
+            return View(await _context.Items.ToListAsync());
         }
 
-        // GET: Rewards/Details/5
+        // GET: Items/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -34,43 +32,39 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
 
-            var rewardEntity = await _context.RewardsEntity
-                .Include(r => r.Employee)
+            var itemEntity = await _context.Items
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (rewardEntity == null)
+            if (itemEntity == null)
             {
                 return NotFound();
             }
 
-            return View(rewardEntity);
+            return View(itemEntity);
         }
 
-        // GET: Rewards/Create
+        // GET: Items/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name");
             return View();
         }
 
-        // POST: Rewards/Create
+        // POST: Items/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,RewardType,Amount,Reason,Id")] RewardEntity rewardEntity)
+        public async Task<IActionResult> Create([Bind("Code,Name,TotalCount,AvailableTotalCount,MinimumAlert,Id")] ItemEntity itemEntity)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rewardEntity);
+                _context.Add(itemEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Employees", new { id = rewardEntity.EmployeeId });
-                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", rewardEntity.EmployeeId);
-            return View(rewardEntity);
+            return View(itemEntity);
         }
 
-        // GET: Rewards/Edit/5
+        // GET: Items/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -78,23 +72,22 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
 
-            var rewardEntity = await _context.RewardsEntity.FindAsync(id);
-            if (rewardEntity == null)
+            var itemEntity = await _context.Items.FindAsync(id);
+            if (itemEntity == null)
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", rewardEntity.EmployeeId);
-            return View(rewardEntity);
+            return View(itemEntity);
         }
 
-        // POST: Rewards/Edit/5
+        // POST: Items/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,RewardType,Amount,Reason,Id")] RewardEntity rewardEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("Code,Name,TotalCount,AvailableTotalCount,MinimumAlert,Id")] ItemEntity itemEntity)
         {
-            if (id != rewardEntity.Id)
+            if (id != itemEntity.Id)
             {
                 return NotFound();
             }
@@ -103,12 +96,12 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
-                    _context.Update(rewardEntity);
+                    _context.Update(itemEntity);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RewardEntityExists(rewardEntity.Id))
+                    if (!ItemEntityExists(itemEntity.Id))
                     {
                         return NotFound();
                     }
@@ -119,11 +112,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", rewardEntity.EmployeeId);
-            return View(rewardEntity);
+            return View(itemEntity);
         }
 
-        // GET: Rewards/Delete/5
+        // GET: Items/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -131,31 +123,30 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
 
-            var rewardEntity = await _context.RewardsEntity
-                .Include(r => r.Employee)
+            var itemEntity = await _context.Items
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (rewardEntity == null)
+            if (itemEntity == null)
             {
                 return NotFound();
             }
 
-            return View(rewardEntity);
+            return View(itemEntity);
         }
 
-        // POST: Rewards/Delete/5
+        // POST: Items/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var rewardEntity = await _context.RewardsEntity.FindAsync(id);
-            _context.RewardsEntity.Remove(rewardEntity);
+            var itemEntity = await _context.Items.FindAsync(id);
+            _context.Items.Remove(itemEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RewardEntityExists(long id)
+        private bool ItemEntityExists(long id)
         {
-            return _context.RewardsEntity.Any(e => e.Id == id);
+            return _context.Items.Any(e => e.Id == id);
         }
     }
 }

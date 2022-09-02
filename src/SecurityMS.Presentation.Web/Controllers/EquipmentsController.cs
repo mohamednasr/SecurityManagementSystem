@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class EquipmentsController : Controller
     {
         private readonly AppDbContext _context;

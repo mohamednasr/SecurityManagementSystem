@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class ZonesController : Controller
     {
         private readonly AppDbContext _context;

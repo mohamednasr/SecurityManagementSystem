@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class JobsController : Controller
     {
         private readonly AppDbContext _context;
@@ -48,7 +50,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> Create()
         {
             var Departments = new List<DepartmentsEntity>();
-            Departments.Add(new DepartmentsEntity() {Name = "أختر القسم" });
+            Departments.Add(new DepartmentsEntity() { Name = "أختر القسم" });
             Departments.AddRange(await _context.DepartmentsEntities.ToListAsync());
             ViewData["DepartmentId"] = new SelectList(Departments, "Id", "Name");
 
@@ -90,7 +92,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
             var Departments = new List<DepartmentsEntity>();
-            Departments.Add(new DepartmentsEntity() {Name = "أختر القسم" });
+            Departments.Add(new DepartmentsEntity() { Name = "أختر القسم" });
             Departments.AddRange(await _context.DepartmentsEntities.ToListAsync());
             ViewData["DepartmentId"] = new SelectList(Departments, "Id", "Name", jobsEntity.DepartmentId);
             return View(jobsEntity);
@@ -129,7 +131,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             var Departments = new List<DepartmentsEntity>();
-            Departments.Add(new DepartmentsEntity() {Name = "أختر القسم" });
+            Departments.Add(new DepartmentsEntity() { Name = "أختر القسم" });
             Departments.AddRange(await _context.DepartmentsEntities.ToListAsync());
             ViewData["DepartmentId"] = new SelectList(Departments, "Id", "Name", jobsEntity.DepartmentId);
             return View(jobsEntity);

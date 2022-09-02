@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MNS.Repository;
@@ -14,6 +15,7 @@ using Utilities;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class EmployeesController : Controller
     {
         private readonly AppDbContext _context;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class SecurityPersonsSalaryReportsController : Controller
     {
         private readonly AppDbContext _context;
@@ -27,11 +29,11 @@ namespace SecurityMS.Presentation.Web.Controllers
                 searchModel = new SalarySearchModel()
             };
 
-            var result = await  _context.SiteEmployeeAttendanceEntities.Include(x => x.Employee).Include(x => x.Site).Where(x => x.AttendanceDate.Month == searchModel.Month && x.AttendanceDate.Year == searchModel.Year).ToListAsync();
+            var result = await _context.SiteEmployeeAttendanceEntities.Include(x => x.Employee).Include(x => x.Site).Where(x => x.AttendanceDate.Month == searchModel.Month && x.AttendanceDate.Year == searchModel.Year).ToListAsync();
 
             var employees = result.GroupBy(r => r.EmployeeId);
             List<SecurityPersonsSalaryReport> report = new List<SecurityPersonsSalaryReport>();
-            foreach(var emp in employees)
+            foreach (var emp in employees)
             {
                 SecurityPersonsSalaryReport employeeStatus = new SecurityPersonsSalaryReport()
                 {

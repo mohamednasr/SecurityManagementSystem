@@ -26,8 +26,9 @@ namespace SecurityMS.Presentation.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>()
+                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
-            
+
             services.AddScoped<DbContext, AppDbContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 

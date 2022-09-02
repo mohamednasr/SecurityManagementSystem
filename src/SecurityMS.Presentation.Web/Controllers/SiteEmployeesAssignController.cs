@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class SiteEmployeesAssignController : Controller
     {
         private readonly AppDbContext _context;
@@ -23,7 +25,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             //if (id > 0)
             //{
-                var appDbContext = await _context.SiteEmployeesAssignEntities.Include(s => s.Employee).Include(s => s.SiteEmployee).Where(s => s.SiteEmployeeId == id).ToListAsync();
+            var appDbContext = await _context.SiteEmployeesAssignEntities.Include(s => s.Employee).Include(s => s.SiteEmployee).Where(s => s.SiteEmployeeId == id).ToListAsync();
             SiteEmployeesAssignModel siteEmployees = new SiteEmployeesAssignModel()
             {
                 SiteEmployeeId = id,
@@ -37,7 +39,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     IsActive = s.IsActive
                 }).ToList()
             };
-                return View(siteEmployees);
+            return View(siteEmployees);
 
             //}
             //else

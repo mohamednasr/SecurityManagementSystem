@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class PenaltiesController : Controller
     {
         private readonly AppDbContext _context;
@@ -61,7 +63,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 _context.Add(penaltyEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Employees", new {id = penaltyEntity.EmployeeId });
+                return RedirectToAction("Details", "Employees", new { id = penaltyEntity.EmployeeId });
                 //return RedirectToAction(nameof(Index));
             }
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", penaltyEntity.EmployeeId);

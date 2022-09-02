@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class SitesController : Controller
     {
         private readonly AppDbContext _context;
@@ -76,7 +78,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             SiteModel site = new SiteModel();
             site.ContractId = Id.Value;
             ViewData["ZoneId"] = new SelectList(_context.ZonesEntities, "Id", "Name");
-            return View("Create",site);
+            return View("Create", site);
         }
 
         // POST: Sites/Create
@@ -100,9 +102,9 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 _context.Add(siteEntity);
                 await _context.SaveChangesAsync();
-                if(site.ContractId != null)
+                if (site.ContractId != null)
                 {
-                    return RedirectToAction(nameof(Details), "Contracts", new { id = site.ContractId});
+                    return RedirectToAction(nameof(Details), "Contracts", new { id = site.ContractId });
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -196,7 +198,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // Get: sites/{zoneId}
         public async Task<List<SitesEntity>> getSitesByZone(long id)
         {
-            if(id == 0)
+            if (id == 0)
             {
                 return await _context.SitesEntities.ToListAsync();
             }

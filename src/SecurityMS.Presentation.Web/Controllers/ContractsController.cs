@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
@@ -9,6 +10,7 @@ using Utilities;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class ContractsController : Controller
     {
         private readonly AppDbContext _context;
@@ -66,7 +68,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             if (ModelState.IsValid)
             {
                 var uploads = _uploader.uploadFile(HttpContext, "\\uploads\\");
-                if(uploads.Count == 1)
+                if (uploads.Count == 1)
                     contractsEntity.ContractPDF = uploads.FirstOrDefault().Value;
                 _context.Add(contractsEntity);
                 await _context.SaveChangesAsync();

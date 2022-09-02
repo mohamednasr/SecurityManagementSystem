@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class MonthRevenuePerCompanyReportController : Controller
     {
         private readonly AppDbContext _context;
@@ -28,12 +30,12 @@ namespace SecurityMS.Presentation.Web.Controllers
                 searchModel = new MonthRevenuReportSearchModel()
             };
 
-            var result = await  _context.SiteEmployeeAttendanceEntities.Include(x => x.Employee).Include(x => x.Site).ThenInclude(x => x.Contracts).ThenInclude(x => x.MainCustomer)
+            var result = await _context.SiteEmployeeAttendanceEntities.Include(x => x.Employee).Include(x => x.Site).ThenInclude(x => x.Contracts).ThenInclude(x => x.MainCustomer)
                 .Where(x => x.AttendanceDate.Month == searchModel.Month && x.AttendanceDate.Year == searchModel.Year).ToListAsync();
 
             var companies = result.GroupBy(r => r.Site.Contracts.CustomerId);
             List<MonthRevenuReport> report = new List<MonthRevenuReport>();
-            foreach(var company in companies)
+            foreach (var company in companies)
             {
                 MonthRevenuReport employeeStatus = new MonthRevenuReport()
                 {
@@ -61,7 +63,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             var result = await _context.SiteEmployeeAttendanceEntities.Include(x => x.Employee).Include(x => x.Site).ThenInclude(x => x.Contracts).ThenInclude(x => x.MainCustomer)
                 .Where(x => x.AttendanceDate.Month == month && x.AttendanceDate.Year == year).ToListAsync();
-            var ContractIncome = _context.SiteEmployeesEntities.Include(x => x.Job).Include(x => x.Site).ThenInclude(x=>x.Contracts).ThenInclude(x=> x.MainCustomer).ThenInclude(x => x.ParentCustomers).Where(x => x.Site.Contracts.CustomerId == id).ToList();
+            var ContractIncome = _context.SiteEmployeesEntities.Include(x => x.Job).Include(x => x.Site).ThenInclude(x => x.Contracts).ThenInclude(x => x.MainCustomer).ThenInclude(x => x.ParentCustomers).Where(x => x.Site.Contracts.CustomerId == id).ToList();
 
             var items = ContractIncome.Select(x => new InvoiceDetails()
             {

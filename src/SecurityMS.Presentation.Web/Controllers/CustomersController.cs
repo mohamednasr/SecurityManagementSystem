@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         private readonly AppDbContext _context;
@@ -27,7 +29,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
 
 
-            
+
             var CustomerType = new List<CustomerTypesLookup>();
             CustomerType.Add(new CustomerTypesLookup() { Id = 0, Name = "أختر نوع العميل" });
             CustomerType.AddRange(await _context.CustomerTypesLookups.ToListAsync());
@@ -120,7 +122,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             customer.CustomerTypeId = (int)CustomerTypeEnum.Individual;
 
             ViewData["ParentCustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name");
-           
+
             var Governments = new List<GovernmentEntity>();
             Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
             Governments.AddRange(await _context.GovernmentEntities.ToListAsync());

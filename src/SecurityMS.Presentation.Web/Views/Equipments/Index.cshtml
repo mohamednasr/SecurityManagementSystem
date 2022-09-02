@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "معدات";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>المعدات</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">إضافه معده</a>
 </p>
 <table class="table">
     <thead>
@@ -51,7 +51,7 @@
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |
-                  <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
                 <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
             </td>
         </tr>

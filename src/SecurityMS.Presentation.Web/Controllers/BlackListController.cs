@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MNS.Repository;
 using SecurityMS.Infrastructure.Data;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class BlackListController : Controller
     {
         private readonly AppDbContext _context;
@@ -30,8 +32,8 @@ namespace SecurityMS.Presentation.Web.Controllers
             //    Nat_Id = x.Nat_Id,
             //    Reason = x.Reason
             //}).ToListAsync();
-            
-            QueryResult<BlackListEntity> blackList; 
+
+            QueryResult<BlackListEntity> blackList;
             //if (!string.IsNullOrEmpty(searchModel.Nat_Id) || !string.IsNullOrEmpty(searchModel.Name) || !string.IsNullOrEmpty(searchModel.Company))
             //{
             //    blackList = await _repository.GetAllAsync(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company), page);
@@ -42,13 +44,13 @@ namespace SecurityMS.Presentation.Web.Controllers
 
         public async Task<IActionResult> Search(BlackListEntity searchModel)
         {
-            if(string.IsNullOrEmpty(searchModel.Name) && string.IsNullOrEmpty(searchModel.Company) && string.IsNullOrEmpty(searchModel.Nat_Id))
+            if (string.IsNullOrEmpty(searchModel.Name) && string.IsNullOrEmpty(searchModel.Company) && string.IsNullOrEmpty(searchModel.Nat_Id))
             {
                 return RedirectToAction("Index");
             }
             //ViewBag["Name"] = 
-            var blackList = await _repository.Get(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company)).ToQueryResultAsync(0,0);
-            return View("Index",blackList);
+            var blackList = await _repository.Get(l => l.Nat_Id == searchModel.Nat_Id || l.Name.Contains(searchModel.Name) || l.Company.Contains(searchModel.Company)).ToQueryResultAsync(0, 0);
+            return View("Index", blackList);
         }
 
         // GET: BlackList/Details/5

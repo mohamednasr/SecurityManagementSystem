@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class SiteEmployeeAttendanceController : Controller
     {
         private readonly AppDbContext _context;
@@ -207,7 +209,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             return PartialView("_attendanceStatus");
         }
 
-        
+
         public async Task<IActionResult> CreateSiteAttendance(long id)
         {
 
@@ -246,12 +248,12 @@ namespace SecurityMS.Presentation.Web.Controllers
                     ShiftId = s.SiteEmployee.ShiftTypeId
                 }).ToList()
             };
-           
+
             return View("Create", siteAttendance);
         }
 
         [HttpPost]
-        public async Task<bool> SaveAttendance([FromBody]SiteAttendanceModel attendance)
+        public async Task<bool> SaveAttendance([FromBody] SiteAttendanceModel attendance)
         {
             try
             {
@@ -278,7 +280,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
                 throw ex;
             }
-            
+
         }
 
         private bool SiteEmployeeAttendanceEntityExists(long id)
