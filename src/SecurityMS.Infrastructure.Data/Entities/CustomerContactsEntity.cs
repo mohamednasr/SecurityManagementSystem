@@ -24,5 +24,29 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "الشركة")]
         public virtual CustomersEntity Customer { get; set; }
+
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                if (Phone == null)
+                    return string.Format("{0}", Name);
+
+                return string.Format("{0} - {1}", Name, Customer.Name);
+            }
+        }
+
+        [NotMapped]
+        public string NameContact
+        {
+            get
+            {
+                if (Phone == null)
+                    return string.Format("{0}", Name);
+
+                return string.Format("{0} - {1}", Name, Phone);
+            }
+        }
     }
 }

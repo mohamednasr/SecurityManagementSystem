@@ -27,10 +27,10 @@
                     @Html.DisplayNameFor(model => model.CustomerType.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Zone.Name)
+                    @Html.DisplayNameFor(model => model.ParentCustomers.Name)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Zone.Government.Name)
+                    @Html.DisplayNameFor(model => model.Government.Name)
                 </th>
                 <th class="noprint"></th>
             </tr>
@@ -46,10 +46,10 @@
                         @Html.DisplayFor(modelItem => item.CustomerType.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Zone.Name)
+                        @Html.DisplayFor(modelItem => item.ParentCustomers.Name)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Zone.Government.Name)
+                        @Html.DisplayFor(modelItem => item.Government.Name)
                     </td>
                     <td class="noprint">
                         <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |

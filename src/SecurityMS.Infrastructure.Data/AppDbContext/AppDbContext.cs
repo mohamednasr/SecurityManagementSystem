@@ -52,8 +52,8 @@ namespace SecurityMS.Infrastructure.Data
                     .WithMany()
                     .HasForeignKey(e => e.CustomerId);
 
-            builder.Entity<ContractsEntity>()
-                .HasMany(e => e.ContactPerson);
+            //builder.Entity<ContractsEntity>()
+            //    .HasMany(e => e.ContactPerson);
 
             builder.Entity<CustomerContactsEntity>()
                     .HasOne(e => e.Customer)
@@ -65,15 +65,15 @@ namespace SecurityMS.Infrastructure.Data
                     .HasOne(e => e.ParentCustomers)
                     .WithMany()
                     .HasForeignKey(e => e.ParentCustomerId);
-            
+
             builder.Entity<CustomersEntity>()
                     .HasOne(e => e.CustomerType)
                     .WithMany()
                     .HasForeignKey(e => e.CustomerTypeId);
             builder.Entity<CustomersEntity>()
-                .HasOne(e => e.Zone)
+                .HasOne(e => e.Government)
                 .WithMany()
-                .HasForeignKey(e => e.ZoneId)
+                .HasForeignKey(e => e.GovernmentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<ZonesEntity>()
@@ -101,7 +101,7 @@ namespace SecurityMS.Infrastructure.Data
                 .HasOne(e => e.Site)
                 .WithMany()
                 .HasForeignKey(e => e.SiteId);
-            
+
             builder.Entity<SiteEmployeesEntity>()
                 .HasOne(e => e.Job)
                 .WithMany()
@@ -149,7 +149,7 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.EquipmentId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             builder.Entity<SiteEquipmentsAssignEntity>()
                 .HasOne(e => e.EquipmentDetails)
                 .WithMany()
@@ -211,7 +211,7 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             //builder.Entity<ItemEntity>()
             //    .HasMany(e => e.Items)
             //    .WithOne()
