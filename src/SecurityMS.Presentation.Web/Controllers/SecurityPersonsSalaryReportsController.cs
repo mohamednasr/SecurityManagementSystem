@@ -47,6 +47,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
                 var siteSalary = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).Where(x => x.EmployeeId == emp.Key || x.SiteEmployeeId == emp.FirstOrDefault().SiteId).Select(x => x.SiteEmployee.EmployeeShiftSalary).FirstOrDefaultAsync();
 
+                // 30 - abbsence + 4 - break
                 employeeStatus.FinalSalary = (employeeStatus.Attendance + employeeStatus.BreakDays + employeeStatus.Vacation + employeeStatus.Apologizes) * siteSalary;
 
                 report.Add(employeeStatus);
