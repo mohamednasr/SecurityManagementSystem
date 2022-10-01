@@ -30,10 +30,10 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> Index([FromQuery] string name, [FromQuery] string employeecode, [FromQuery] string natid, [FromQuery] string job)
         {
             var appDbContext = _context.EmployeesEntities.Include(e => e.Job)
-            .WhereIf(!string.IsNullOrEmpty(name) && !string.IsNullOrWhiteSpace(name), x => x.Name.Contains(name))
-            .WhereIf(!string.IsNullOrEmpty(employeecode) && !string.IsNullOrWhiteSpace(employeecode), x => x.EmployeeCode == employeecode)
-            .WhereIf(!string.IsNullOrEmpty(natid) && !string.IsNullOrWhiteSpace(natid), x => x.NationalId == natid)
-            .WhereIf(!string.IsNullOrEmpty(job) && !string.IsNullOrWhiteSpace(job), x => x.Job.Name.Contains(job));
+                .WhereIf(!string.IsNullOrEmpty(name) && !string.IsNullOrWhiteSpace(name), x => x.Name.Contains(name))
+                .WhereIf(!string.IsNullOrEmpty(employeecode) && !string.IsNullOrWhiteSpace(employeecode), x => x.EmployeeCode == employeecode)
+                .WhereIf(!string.IsNullOrEmpty(natid) && !string.IsNullOrWhiteSpace(natid), x => x.NationalId == natid)
+                .WhereIf(!string.IsNullOrEmpty(job) && !string.IsNullOrWhiteSpace(job), x => x.Job.Name.Contains(job));
 
             return View(await appDbContext.ToListAsync());
         }
