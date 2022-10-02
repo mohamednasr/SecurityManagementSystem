@@ -1,0 +1,35 @@
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.SupplyTypes>
+
+@{
+    ViewData["Title"] = "أنواع التوريد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>انواع التوريد</h1>
+
+<p>
+    <a asp-action="Create">إضافه نوع توريد</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                نوع التوريد
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplyName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

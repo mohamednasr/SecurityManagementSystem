@@ -1,0 +1,25 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.SupplyTypes
+
+@{
+    ViewData["Title"] = "حذف نوع توريد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>حذف نوع توريد</h1>
+
+<h3>هل تريد حذف نوع التوريد؟</h3>
+<div>
+    <h4>SitesEntity</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SupplyName)
+        </dt>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="حذف" class="btn btn-danger" /> |
+        <a asp-action="Index">رجوع</a>
+    </form>
+</div>

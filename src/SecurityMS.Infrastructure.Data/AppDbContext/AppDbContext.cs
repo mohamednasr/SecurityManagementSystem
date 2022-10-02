@@ -43,6 +43,9 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<ItemDetailsEntity> ItemDetail { get; set; }
         public DbSet<UniformEntity> Uniform { get; set; }
         public DbSet<UniformDetailsEntity> UniformDetails { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<SupplyTypes> SupplyTypes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -236,6 +239,12 @@ namespace SecurityMS.Infrastructure.Data
                .WithMany()
                .HasForeignKey(e => e.AssignedTo)
                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Supplier>()
+                .HasOne(e => e.supplyType)
+                .WithMany()
+                .HasForeignKey(e => e.Type)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221002183510_supplyType")]
+    partial class supplyType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -646,8 +648,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("IDSoftCopy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("InsuranceAmount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("InsuranceAmount")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("InsuranceEndDate")
                         .HasColumnType("datetime2");
@@ -655,8 +657,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("InsuranceNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("InsurancePercentage")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<string>("InsurancePercentage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InsurancePrintCopy")
                         .HasColumnType("nvarchar(max)");
@@ -1532,11 +1534,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupplierName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupplierNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxFileNumber")
@@ -1555,8 +1555,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Type");
 
                     b.ToTable("Suppliers");
                 });
@@ -1579,7 +1577,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SupplyName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -2066,17 +2063,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("Contracts");
 
                     b.Navigation("zone");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supplier", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SupplyTypes", "supplyType")
-                        .WithMany()
-                        .HasForeignKey("Type")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("supplyType");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformDetailsEntity", b =>

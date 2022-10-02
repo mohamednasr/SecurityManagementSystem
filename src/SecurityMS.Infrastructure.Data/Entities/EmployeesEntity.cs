@@ -28,9 +28,9 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "الرقم التأميني")]
         public string InsuranceNumber { get; set; }
         [Display(Name = "المبلغ التأميني")]
-        public string InsuranceAmount { get; set; }
+        public decimal? InsuranceAmount { get; set; }
         [Display(Name = "نسبة تحمل التأمينات")]
-        public string InsurancePercentage { get; set; }
+        public decimal? InsurancePercentage { get; set; }
         [Display(Name = "تاريخ بداية التأمين")]
         public DateTime? InsuranceStartDate { get; set; }
         [Display(Name = "تاريخ انتهاء التأمين")]
@@ -39,7 +39,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public long JobId { get; set; }
 
         [Display(Name = "رقم الملف")]
-        public string FileNumber {get;set; }
+        public string FileNumber { get; set; }
 
         [Display(Name = "تم ادراج شهاده الميلاد")]
         public bool? IsIncludeBirthCertificate { get; set; }
@@ -54,19 +54,19 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "تم ادراج شهادة المؤهل")]
         public bool? IsIncludeEducationCertificate { get; set; }
-        
+
         [Display(Name = "ارفاق صورة ضوئية لشهاده المؤهل")]
         public string EducationCertificateSoftCopy { get; set; }
 
         [Display(Name = "تم ادراج صورة البطاقة")]
         public bool IsIncludeIDCopy { get; set; }
-        
+
         [Display(Name = "ارفاق صورة ضوئية لبطاقة الرقم القومي")]
         public string IDSoftCopy { get; set; }
 
         [Display(Name = "تم ادراج صور شخصية")]
         public bool? IsIncludePersonalPhotos { get; set; }
-        
+
         [Display(Name = "ارفاق صورة شخصية")]
         public string PersonalPhotoSoftCopy { get; set; }
 
@@ -78,14 +78,14 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "تم ادراج الفيش الجنائي")]
         public bool IsIncludeCriminalCertificate { get; set; }
-        
+
         [Display(Name = "ارفاق صورة ضوئية للفيش الجنائي")]
         public string CriminalCertificateSoftCopy { get; set; }
 
         [Display(Name = "صورة التأمين")]
         public string InsurancePrintCopy { get; set; }
 
-        [Display(Name= "سبب الإنهاء")]
+        [Display(Name = "سبب الإنهاء")]
         public int? EndServiceReasonId { get; set; }
 
         [Display(Name = "ملاحظات")]
