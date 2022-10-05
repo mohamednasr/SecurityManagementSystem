@@ -22,7 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SecurityMS.Core.Models\SecurityMS.Core.Models.csproj" />
     <ProjectReference Include="..\SecurityMS.Infrastructure.Data\SecurityMS.Infrastructure.Data.csproj" />
-    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>

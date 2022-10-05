@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="container-fluid">
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="HRIndex" asp-controller="Home">أوامر شراء زي</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="FinincialManagementIndexView" asp-controller="Home">أوامر شراء معدات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="ContractsManagementIndexView" asp-controller="Home">أوامر شراء أدوات</a>
+        </div>
+    </div>
+</section>

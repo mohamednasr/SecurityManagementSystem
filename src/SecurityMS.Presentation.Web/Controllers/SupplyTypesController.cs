@@ -20,7 +20,6 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: SupplyTypeController
         public async Task<IActionResult> Index()
         {
-
             return View(await _context.SupplyTypes.Where(s => !s.IsDeleted).ToListAsync());
         }
 
