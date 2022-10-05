@@ -267,7 +267,8 @@ namespace SecurityMS.Presentation.Web.Controllers
                         AttendanceDate = attendance.AttendanceDate,
                         EmployeeId = e.EmployeeId,
                         ShiftId = e.ShiftId,
-                        AttendanceStatusId = e.AttendanceStatusId
+                        AttendanceStatusId = e.AttendanceStatusId,
+                        Penality = e.Penality
                     };
                     _list.Add(employeeStatus);
                 });

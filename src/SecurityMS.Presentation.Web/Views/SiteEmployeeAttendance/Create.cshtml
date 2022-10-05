@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group col-sm-6">
                     <label asp-for="AttendanceDate" class="control-label"></label>
-                    <input asp-for="AttendanceDate" class="form-control" id="attendanceDate" />
+                    <input type="date" asp-for="AttendanceDate" class="form-control" id="attendanceDate" />
                     <span asp-validation-for="AttendanceDate" class="text-danger"></span>
                 </div>
             </div>
@@ -53,6 +53,7 @@
             var employees = $(".employee-name");
             var shift = $(".employee-shift");
             var status = $(".employee-status");
+            var penality = $(".employee-penality");
             var siteId = $("#siteId").val();
             var attendanceDate = $("#attendanceDate").val();
             var statusList = [];
@@ -64,7 +65,8 @@
                 var e = {
                     EmployeeId: parseInt(employees[i].value),
                     AttendanceStatusId: parseInt(status[i].value),
-                    ShiftId: parseInt(shift[i].value)
+                    ShiftId: parseInt(shift[i].value),
+                    Penality: parseInt(penality[i].value)
                 }
                 statusList.push(e);
             };
@@ -101,32 +103,26 @@
         $("#addEmployee").click(function () {
             $.get("/SiteEmployeeAttendance/AddNewEmployeeStatus").done(function (response) {
                 $("#employeesStatus").append(response);
+                bindEmpPleantyScript();
             })
         })
 
-
-        //var Employees = new Bloodhound({
-        //    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-        //    queryTokenizer: Bloodhound.tokenizers.whitespace,
-        //    remote: {
-        //        url: '/Employees/GetEmployeesAsLookup',
-        //        wildcard: '%QUERY'
-        //    }
-        //});
-
-        //$('.typeahead').typeahead(null, {
-        //    name: 'Employees',
-        //    display: 'name',
-        //    source: function (query, process) {
-        //        return $.get('/Employees/GetEmployeesAsLookup', { query: query }).done(function (data) {
-        //            return process(data);
-        //        });
-        //    }
-        //});
-
-
-        //$("#save").click(function () {
-
-        //})
+        $(document).ready(function(){
+            bindEmpPleantyScript();
+        })
+        
+        function bindEmpPleantyScript(){
+            $(".employee-status").change(function(){
+                var e = $(this).val();
+                if(e == 5){
+                   $(this).parents(".employee-row").children(".penality").removeClass("d-none");
+                   $(this).parents(".employee-row").children(".penality").find("input").val(1);
+                }
+                else{
+                    $(this).parents(".employee-row").children(".penality").find("input").val(0);
+                    $(this).parents(".employee-row").children(".penality").addClass("d-none");
+                }
+            })
+        }
     </script>
 }

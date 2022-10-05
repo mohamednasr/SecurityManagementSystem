@@ -10,9 +10,13 @@
             <label asp-for="ShiftId" class="control-label"></label>
             <select asp-for="ShiftId" class="form-control employee-shift" asp-items="ViewBag.ShiftId"></select>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-2">
             <label asp-for="AttendanceStatusId" class="control-label"></label>
             <select asp-for="AttendanceStatusId" class="form-control employee-status" asp-items="ViewBag.AttendanceStatusId"></select>
+        </div>
+        <div class="form-group col-md-2 penality d-none">
+            <label asp-for="Penality" class="control-label"></label>
+            <input asp-for="Penality" type="number" class="form-control employee-penality" value="0" min="0" max="4"/>
         </div>
         <div class="form-group pt-4" col-md-1>
             <a class="btn btn-danger remove-row mt-2"><i class="fas fa-minus text-white"></i></a>
@@ -22,4 +26,5 @@
 
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
     }
