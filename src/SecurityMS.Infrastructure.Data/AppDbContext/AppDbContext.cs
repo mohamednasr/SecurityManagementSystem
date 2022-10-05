@@ -43,6 +43,10 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<ItemDetailsEntity> ItemDetail { get; set; }
         public DbSet<UniformEntity> Uniform { get; set; }
         public DbSet<UniformDetailsEntity> UniformDetails { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<SupplyTypes> SupplyTypes { get; set; }
+        public DbSet<Purchases> Purchases { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -52,8 +56,8 @@ namespace SecurityMS.Infrastructure.Data
                     .WithMany()
                     .HasForeignKey(e => e.CustomerId);
 
-            builder.Entity<ContractsEntity>()
-                .HasMany(e => e.ContactPerson);
+            //builder.Entity<ContractsEntity>()
+            //    .HasMany(e => e.ContactPerson);
 
             builder.Entity<CustomerContactsEntity>()
                     .HasOne(e => e.Customer)
@@ -65,15 +69,15 @@ namespace SecurityMS.Infrastructure.Data
                     .HasOne(e => e.ParentCustomers)
                     .WithMany()
                     .HasForeignKey(e => e.ParentCustomerId);
-            
+
             builder.Entity<CustomersEntity>()
                     .HasOne(e => e.CustomerType)
                     .WithMany()
                     .HasForeignKey(e => e.CustomerTypeId);
             builder.Entity<CustomersEntity>()
-                .HasOne(e => e.Zone)
+                .HasOne(e => e.Government)
                 .WithMany()
-                .HasForeignKey(e => e.ZoneId)
+                .HasForeignKey(e => e.GovernmentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<ZonesEntity>()
@@ -101,7 +105,7 @@ namespace SecurityMS.Infrastructure.Data
                 .HasOne(e => e.Site)
                 .WithMany()
                 .HasForeignKey(e => e.SiteId);
-            
+
             builder.Entity<SiteEmployeesEntity>()
                 .HasOne(e => e.Job)
                 .WithMany()
@@ -149,7 +153,7 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.EquipmentId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             builder.Entity<SiteEquipmentsAssignEntity>()
                 .HasOne(e => e.EquipmentDetails)
                 .WithMany()
@@ -211,7 +215,7 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
-            
+
             //builder.Entity<ItemEntity>()
             //    .HasMany(e => e.Items)
             //    .WithOne()
@@ -236,6 +240,24 @@ namespace SecurityMS.Infrastructure.Data
                .WithMany()
                .HasForeignKey(e => e.AssignedTo)
                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Supplier>()
+                .HasOne(e => e.supplyType)
+                .WithMany()
+                .HasForeignKey(e => e.Type)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Purchases>()
+                .HasOne(e => e.Supplier)
+                .WithMany()
+                .HasForeignKey(e => e.SupplierId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Purchases>()
+                .HasOne(e => e.SupplyType)
+                .WithMany()
+                .HasForeignKey(e => e.SupplyTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

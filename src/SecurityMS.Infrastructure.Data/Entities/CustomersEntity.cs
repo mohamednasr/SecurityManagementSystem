@@ -26,11 +26,11 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public string TaxFileNumber { get; set; }
         [Display(Name = "العنوان")]
         public string Address { get; set; }
-        [Display(Name = "المنطقة")]
-        public long? ZoneId { get; set; }
+        [Display(Name = "المحافظة")]
+        public long? GovernmentId { get; set; }
         public virtual CustomersEntity ParentCustomers { get; set; }
         public virtual CustomerTypesLookup CustomerType { get; set; }
-        public virtual ZonesEntity Zone { get; set; }
+        public virtual GovernmentEntity Government { get; set; }
         //[Display(Name = "جهات الاتصال")]
         //public virtual List<CustomerContactsEntity> ContactPersons { get; set; }
     }

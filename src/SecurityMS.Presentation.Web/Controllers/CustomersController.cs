@@ -25,7 +25,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.CustomersEntities.Include(c => c.CustomerType).Include(c => c.Zone).ThenInclude(z => z.Government);
+            var appDbContext = _context.CustomersEntities.Include(c => c.CustomerType).Include(z => z.Government).Include(c => c.ParentCustomers);
 
 
 
@@ -54,7 +54,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
         public async Task<IActionResult> search(CustomerModel customer)
         {
-            var appDbContext = await _context.CustomersEntities.Include(c => c.CustomerType).Include(c => c.Zone).ThenInclude(z => z.Government)
+            var appDbContext = await _context.CustomersEntities.Include(c => c.CustomerType).Include(z => z.Government)
                                         .ToListAsync();
             if (!(string.IsNullOrEmpty(customer.Name) && string.IsNullOrWhiteSpace(customer.Name)))
                 appDbContext = appDbContext.Where(c => c.Name.Contains(customer.Name)).ToList();
@@ -62,10 +62,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                 appDbContext = appDbContext.Where(c => c.CommercialNumber.Contains(customer.CommercialNumber)).ToList();
             if (!(string.IsNullOrEmpty(customer.TaxId) && string.IsNullOrWhiteSpace(customer.TaxId)))
                 appDbContext = appDbContext.Where(c => c.TaxId.Contains(customer.TaxId)).ToList();
-            if (customer.ZoneId.HasValue && customer.ZoneId.Value != 0)
-                appDbContext = appDbContext.Where(c => c.ZoneId == customer.ZoneId).ToList();
+            //if (customer.ZoneId.HasValue && customer.ZoneId.Value != 0)
+            //    appDbContext = appDbContext.Where(c => c.ZoneId == customer.ZoneId).ToList();
             if (customer.GovernmentId.HasValue && customer.GovernmentId.Value != 0)
-                appDbContext = appDbContext.Where(c => c.Zone.GovernmentId == customer.GovernmentId).ToList();
+                appDbContext = appDbContext.Where(c => c.GovernmentId == customer.GovernmentId).ToList();
             if (customer.ParentCustomerId.HasValue && customer.ParentCustomerId.Value != 0)
                 appDbContext = appDbContext.Where(c => c.ParentCustomerId == customer.ParentCustomerId).ToList();
             if (customer.CustomerTypeId != 0)
@@ -103,8 +103,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var customersEntity = await _context.CustomersEntities
                 .Include(c => c.CustomerType)
                 .Include(c => c.ParentCustomers)
-                .Include(c => c.Zone)
-                .ThenInclude(c => c.Government)
+                .Include(c => c.Government)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customersEntity == null)
             {
@@ -120,8 +119,9 @@ namespace SecurityMS.Presentation.Web.Controllers
             CustomerModel customer = new CustomerModel();
 
             customer.CustomerTypeId = (int)CustomerTypeEnum.Individual;
-
-            ViewData["ParentCustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name");
+            var CustomersList = new List<CustomersEntity>() { new CustomersEntity() { Id = 0, Name = "أختر الشركة" } };
+            CustomersList.AddRange(await _context.CustomersEntities.Where(c => c.Id != customer.Id).ToListAsync());
+            ViewData["ParentCustomerId"] = new SelectList(CustomersList, "Id", "Name");
 
             var Governments = new List<GovernmentEntity>();
             Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
@@ -147,10 +147,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                 {
                     Name = customer.Name,
                     CustomerTypeId = customer.CustomerTypeId,
-                    ParentCustomerId = customer.CustomerTypeId == (int)CustomerTypeEnum.Group ? null : customer.ParentCustomerId,
+                    ParentCustomerId = customer.CustomerTypeId == (int)CustomerTypeEnum.Group || customer.ParentCustomerId == 0 ? null : customer.ParentCustomerId,
                     CommercialNumber = customer.CommercialNumber,
                     TaxId = customer.TaxId,
-                    ZoneId = customer.ZoneId,
+                    GovernmentId = customer.GovernmentId,
                     Address = customer.Address,
                     TaxFileNumber = customer.TaxFileNumber
                 };
@@ -158,15 +158,13 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ParentCustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name", customer.ParentCustomerId);
+            var CustomersList = new List<CustomersEntity>() { new CustomersEntity() { Id = 0, Name = "أختر الشركة" } };
+            CustomersList.AddRange(await _context.CustomersEntities.Where(c => c.Id != customer.Id).ToListAsync());
+            ViewData["ParentCustomerId"] = new SelectList(CustomersList, "Id", "Name", customer.ParentCustomerId);
             var Governments = new List<GovernmentEntity>();
             Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
             Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
             ViewData["Governments"] = new SelectList(Governments, "Id", "Name", customer.GovernmentId);
-            var Zones = new List<ZonesEntity>();
-            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
-            Zones.AddRange(await _context.ZonesEntities.Where(c => c.GovernmentId == customer.GovernmentId).ToListAsync());
-            ViewData["Zones"] = new SelectList(_context.ZonesEntities, "Id", "Name", customer.ZoneId);
             return View(customer);
         }
 
@@ -178,7 +176,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
 
-            var customerEntity = await _context.CustomersEntities.Include(c => c.ParentCustomers).Include(c => c.Zone).ThenInclude(c => c.Government).Where(c => c.Id == id).FirstOrDefaultAsync();
+            var customerEntity = await _context.CustomersEntities.Include(c => c.ParentCustomers).Include(c => c.Government).Where(c => c.Id == id).FirstOrDefaultAsync();
             if (customerEntity == null)
             {
                 return NotFound();
@@ -188,24 +186,20 @@ namespace SecurityMS.Presentation.Web.Controllers
                 Id = customerEntity.Id,
                 Name = customerEntity.Name,
                 CustomerTypeId = customerEntity.CustomerTypeId,
-                ParentCustomerId = customerEntity.CustomerTypeId == (int)CustomerTypeEnum.Group ? 0 : customerEntity.ParentCustomerId,
+                ParentCustomerId = customerEntity.CustomerTypeId == (int)CustomerTypeEnum.Group || customerEntity.ParentCustomerId == 0 ? null : customerEntity.ParentCustomerId,
                 CommercialNumber = customerEntity.CommercialNumber,
                 TaxId = customerEntity.TaxId,
-                GovernmentId = customerEntity.Zone != null ? customerEntity.Zone.GovernmentId : 0,
-                ZoneId = customerEntity.ZoneId,
+                GovernmentId = customerEntity.Government != null ? customerEntity.GovernmentId : 0,
                 Address = customerEntity.Address
             };
-
-            ViewData["ParentCustomerId"] = new SelectList(await _context.CustomersEntities.Where(c => c.Id != customer.Id).ToListAsync(), "Id", "Name", customer.ParentCustomerId);
+            var CustomersList = new List<CustomersEntity>() { new CustomersEntity() { Id = 0, Name = "أختر الشركة" } };
+            CustomersList.AddRange(await _context.CustomersEntities.Where(c => c.Id != customer.Id).ToListAsync());
+            ViewData["ParentCustomerId"] = new SelectList(CustomersList, "Id", "Name", customer.ParentCustomerId);
 
             var Governments = new List<GovernmentEntity>();
             Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
             Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
             ViewData["Governments"] = new SelectList(Governments, "Id", "Name", customer.GovernmentId);
-            var Zones = new List<ZonesEntity>();
-            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
-            Zones.AddRange(await _context.ZonesEntities.Where(c => c.GovernmentId == customer.GovernmentId).ToListAsync());
-            ViewData["Zones"] = new SelectList(Zones, "Id", "Name", customer.ZoneId);
             return View(customer);
         }
 
@@ -230,10 +224,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                         Id = customer.Id,
                         Name = customer.Name,
                         CustomerTypeId = customer.CustomerTypeId,
-                        ParentCustomerId = customer.CustomerTypeId == (int)CustomerTypeEnum.Group ? null : customer.ParentCustomerId,
+                        ParentCustomerId = customer.CustomerTypeId == (int)CustomerTypeEnum.Group || customer.ParentCustomerId == 0 ? null : customer.ParentCustomerId,
                         CommercialNumber = customer.CommercialNumber,
                         TaxId = customer.TaxId,
-                        ZoneId = customer.ZoneId,
+                        GovernmentId = customer.GovernmentId,
                         Address = customer.Address,
                         TaxFileNumber = customer.TaxFileNumber
                     };
@@ -258,10 +252,6 @@ namespace SecurityMS.Presentation.Web.Controllers
             Governments.Add(new GovernmentEntity() { Id = 0, Name = "أختر المحافظة" });
             Governments.AddRange(await _context.GovernmentEntities.ToListAsync());
             ViewData["Governments"] = new SelectList(Governments, "Id", "Name", customer.GovernmentId);
-            var Zones = new List<ZonesEntity>();
-            Zones.Add(new ZonesEntity() { Id = 0, Name = "أختر المنطقة" });
-            Zones.AddRange(await _context.ZonesEntities.Where(c => c.GovernmentId == customer.GovernmentId).ToListAsync());
-            ViewData["Zones"] = new SelectList(Zones, "Id", "Name", customer.ZoneId);
             return View(customer);
         }
 
@@ -276,8 +266,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var customersEntity = await _context.CustomersEntities
               .Include(c => c.CustomerType)
                 .Include(c => c.ParentCustomers)
-                .Include(c => c.Zone)
-                .ThenInclude(c => c.Government)
+                .Include(c => c.Government)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customersEntity == null)
             {

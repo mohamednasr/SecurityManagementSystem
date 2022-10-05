@@ -35,6 +35,9 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<ItemDetailsEntity> ItemDetail { get; set; }
         DbSet<UniformEntity> Uniform { get; set; }
         DbSet<UniformDetailsEntity> UniformDetails { get; set; }
+        DbSet<Supplier> Suppliers { get; set; }
+        DbSet<SupplyTypes> SupplyTypes { get; set; }
+        DbSet<Purchases> Purchases { get; set; }
 
     }
 }

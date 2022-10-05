@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Utilities;
@@ -24,7 +25,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Contracts
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.ContractsEntities.Include(c => c.ContactPerson).Include(c => c.MainCustomer);
+            var appDbContext = _context.ContractsEntities.Include(c => c.ContactPerson).Include(c => c.MainCustomer).Include(c => c.ContractSites);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -53,7 +54,10 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Contracts/Create
         public IActionResult Create()
         {
-            ViewData["ContractContactPersonId"] = new SelectList(_context.CustomerContactsEntities, "Id", "Name");
+            var CustomersContactsList = new List<CustomerContactsEntity>();
+            CustomersContactsList.Add(new CustomerContactsEntity() { Id = 0, Name = "أختر جهة التواصل..." });
+            CustomersContactsList.AddRange(_context.CustomerContactsEntities.Include(c => c.Customer));
+            ViewData["ContractContactPersonId"] = new SelectList(CustomersContactsList, "Id", "FullName");
             ViewData["CustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name");
             return View();
         }
@@ -76,7 +80,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return RedirectToAction(nameof(Details), "Contracts", new { id = contractsEntity.Id });
                 //return RedirectToAction(nameof(Create), "Sites", contractsEntity.Id);
             }
-            ViewData["ContractContactPersonId"] = new SelectList(_context.CustomerContactsEntities, "Id", "Name", contractsEntity.ContractContactPersonId);
+            var CustomersContactsList = new List<CustomerContactsEntity>();
+            CustomersContactsList.Add(new CustomerContactsEntity() { Id = 0, Name = "أختر جهة التواصل..." });
+            CustomersContactsList.AddRange(_context.CustomerContactsEntities.Include(c => c.Customer));
+            ViewData["ContractContactPersonId"] = new SelectList(CustomersContactsList, "Id", "FullName", contractsEntity.ContractContactPersonId);
             ViewData["CustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name", contractsEntity.CustomerId);
             return View(contractsEntity);
         }
@@ -94,7 +101,10 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["ContractContactPersonId"] = new SelectList(_context.CustomerContactsEntities, "Id", "Name", contractsEntity.ContractContactPersonId);
+            var CustomersContactsList = new List<CustomerContactsEntity>();
+            CustomersContactsList.Add(new CustomerContactsEntity() { Id = 0, Name = "أختر جهة التواصل..." });
+            CustomersContactsList.AddRange(_context.CustomerContactsEntities.Include(c => c.Customer));
+            ViewData["ContractContactPersonId"] = new SelectList(CustomersContactsList, "Id", "FullName", contractsEntity.ContractContactPersonId);
             ViewData["CustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name", contractsEntity.CustomerId);
             return View(contractsEntity);
         }
@@ -134,7 +144,11 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ContractContactPersonId"] = new SelectList(_context.CustomerContactsEntities, "Id", "Name", contractsEntity.ContractContactPersonId);
+
+            var CustomersContactsList = new List<CustomerContactsEntity>();
+            CustomersContactsList.Add(new CustomerContactsEntity() { Id = 0, Name = "أختر جهة التواصل..." });
+            CustomersContactsList.AddRange(_context.CustomerContactsEntities.Include(c => c.Customer));
+            ViewData["ContractContactPersonId"] = new SelectList(CustomersContactsList, "Id", "FullName", contractsEntity.ContractContactPersonId);
             ViewData["CustomerId"] = new SelectList(_context.CustomersEntities, "Id", "Name", contractsEntity.CustomerId);
             return View(contractsEntity);
         }

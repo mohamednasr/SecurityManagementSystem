@@ -31,9 +31,9 @@ namespace SecurityMS.Core.Models
         [Display(Name = "الرقم التأميني")]
         public string InsuranceNumber { get; set; }
         [Display(Name = "المبلغ التأميني")]
-        public string InsuranceAmount { get; set; }
+        public decimal? InsuranceAmount { get; set; }
         [Display(Name = "نسبة تحمل التأمينات")]
-        public string InsurancePercentage { get; set; }
+        public decimal? InsurancePercentage { get; set; }
         [Display(Name = "تاريخ بداية التأمين")]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = false)]
         public DateTime? InsuranceStartDate { get; set; }

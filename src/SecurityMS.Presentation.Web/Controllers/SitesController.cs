@@ -24,7 +24,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Sites
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.SitesEntities.Include(s => s.zone);
+            var appDbContext = _context.SitesEntities.Include(s => s.zone).Include(s => s.Contracts).ThenInclude(c => c.MainCustomer);
             return View(await appDbContext.ToListAsync());
         }
 

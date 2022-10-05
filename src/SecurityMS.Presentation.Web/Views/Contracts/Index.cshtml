@@ -20,11 +20,14 @@
                 @Html.DisplayNameFor(model => model.MainCustomer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                @Html.DisplayNameFor(model => model.ContractSites)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayNameFor(model => model.Date)
             </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
@@ -39,11 +42,26 @@
                     @Html.DisplayFor(modelItem => item.MainCustomer.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Date)
+                    @{
+                        int i = item.ContractSites.Count;
+                        foreach(var site in item.ContractSites)
+                        {
+                            i--;
+                            @Html.DisplayFor(modelItem => site.Name)
+                            ;
+                            if(i > 0)
+                            {
+                                <br/>
+                            }
+                        }
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
+                    @Html.DisplayFor(modelItem => item.Date)
                 </td>
+               @* <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.EndDate)
                 </td>

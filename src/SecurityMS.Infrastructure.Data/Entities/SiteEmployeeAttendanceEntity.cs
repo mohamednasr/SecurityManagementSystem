@@ -15,14 +15,18 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "الموقع")]
         public long SiteId { get; set; }
 
-        [Display(Name ="التاريخ")]
-        public DateTime AttendanceDate { get; set; } 
+        [Display(Name = "التاريخ")]
+        public DateTime AttendanceDate { get; set; }
 
         [Display(Name = "الفتره")]
         public long ShiftId { get; set; }
 
         [Display(Name = "الحاله")]
         public long AttendanceStatusId { get; set; }
+
+        [Range(0, 4, ErrorMessage = "لا يمكن ادخال خصم اكثر من 4 أيام")]
+        [Display(Name = "الخصم (أيام)")]
+        public int? Penality { get; set; }
 
         [Display(Name = "أسم الموظف")]
         public virtual EmployeesEntity Employee { get; set; }

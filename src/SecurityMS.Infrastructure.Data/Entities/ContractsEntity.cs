@@ -19,7 +19,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "نسخه ضوئيه")]
         public string ContractPDF { get; set; }
-        
+
         [Display(Name = "ارباح تجاريه وصناعيه")]
         public double CommercialProfits { get; set; }
 
@@ -28,13 +28,14 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "العميل")]
         public long CustomerId { get; set; }
+        [ForeignKey(nameof(ContactPerson))]
         [Display(Name = "جهة التواصل")]
         public long? ContractContactPersonId { get; set; }
         [Display(Name = "العميل")]
         public virtual CustomersEntity MainCustomer { get; set; }
         [Display(Name = "المواقع")]
-        public virtual List<SitesEntity> ContractSites {get;set;}
+        public virtual List<SitesEntity> ContractSites { get; set; }
         [Display(Name = "جهات التواصل")]
-        public virtual List<CustomerContactsEntity> ContactPerson { get; set; } 
+        public virtual CustomerContactsEntity ContactPerson { get; set; }
     }
 }
