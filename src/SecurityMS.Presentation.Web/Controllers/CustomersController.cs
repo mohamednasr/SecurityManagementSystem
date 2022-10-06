@@ -150,7 +150,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     ParentCustomerId = customer.CustomerTypeId == (int)CustomerTypeEnum.Group || customer.ParentCustomerId == 0 ? null : customer.ParentCustomerId,
                     CommercialNumber = customer.CommercialNumber,
                     TaxId = customer.TaxId,
-                    GovernmentId = customer.GovernmentId,
+                    GovernmentId = customer.GovernmentId.GetValueOrDefault(0) > 0 ? customer.GovernmentId : null,
                     Address = customer.Address,
                     TaxFileNumber = customer.TaxFileNumber
                 };

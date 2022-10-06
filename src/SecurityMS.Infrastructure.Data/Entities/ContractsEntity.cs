@@ -21,10 +21,10 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public string ContractPDF { get; set; }
 
         [Display(Name = "ارباح تجاريه وصناعيه")]
-        public double CommercialProfits { get; set; }
+        public double? CommercialProfits { get; set; }
 
         [Display(Name = "تحمل ضرائب")]
-        public double TaxPercentage { get; set; }
+        public double? TaxPercentage { get; set; }
 
         [Display(Name = "العميل")]
         public long CustomerId { get; set; }
