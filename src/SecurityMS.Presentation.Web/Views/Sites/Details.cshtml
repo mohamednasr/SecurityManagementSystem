@@ -80,7 +80,9 @@
                                 @Html.DisplayFor(modelItem => item.ShiftValue)
                             </td>
                             <td>
-                                <a asp-action="Index" asp-controller="SiteEmployeesAssign" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a>
+                                <a asp-action="Index" asp-controller="SiteEmployeesAssign" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> | 
+                                <a asp-action="Delete" asp-controller="SiteEmployees" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a> | 
+                                <a asp-action="Edit" asp-controller="SiteEmployees" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> 
                             </td>
                         </tr>
                     }

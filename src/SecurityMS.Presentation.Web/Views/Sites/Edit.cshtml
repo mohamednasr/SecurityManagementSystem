@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<h4>تعديل الموقع</h4>
 
-<h4>SitesEntity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -42,6 +41,13 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a onclick="back">رجوع</a>
 </div>
 
+@section Scripts{ 
+    <script type="text/javascript">
+        function back(){
+            history.back();
+        }
+    </script>
+}

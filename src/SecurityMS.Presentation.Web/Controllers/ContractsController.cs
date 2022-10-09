@@ -25,7 +25,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Contracts
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.ContractsEntities.Include(c => c.ContactPerson).Include(c => c.MainCustomer).Include(c => c.ContractSites);
+            var appDbContext = _context.ContractsEntities.Include(c => c.ContactPerson).Include(c => c.MainCustomer).Include(c => c.ContractSites).Where(c => !c.IsDeleted);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -179,7 +179,8 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var contractsEntity = await _context.ContractsEntities.FindAsync(id);
-            _context.ContractsEntities.Remove(contractsEntity);
+            contractsEntity.Delete(HttpContext.User.Identity.Name);
+            _context.ContractsEntities.Update(contractsEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
