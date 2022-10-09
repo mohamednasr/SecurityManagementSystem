@@ -21,7 +21,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Items
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Items.ToListAsync());
+            return View(await _context.Items.Include(x => x.SupplyType).ToListAsync());
         }
 
         // GET: Items/Details/5

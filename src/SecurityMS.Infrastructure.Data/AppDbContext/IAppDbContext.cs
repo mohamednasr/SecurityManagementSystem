@@ -38,6 +38,7 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<Supplier> Suppliers { get; set; }
         DbSet<SupplyTypes> SupplyTypes { get; set; }
         DbSet<Purchases> Purchases { get; set; }
+        DbSet<PurchaseItem> PurchaseItems { get; set; }
 
     }
 }

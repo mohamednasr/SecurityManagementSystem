@@ -46,6 +46,7 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SupplyTypes> SupplyTypes { get; set; }
         public DbSet<Purchases> Purchases { get; set; }
+        public DbSet<PurchaseItem> PurchaseItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -258,6 +259,15 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.SupplyTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Purchases>()
+                .HasMany(e => e.Items)
+                .WithOne()
+                .HasForeignKey(e => e.PurchaseId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<PurchaseItem>()
+                .HasKey(k => new { k.PurchaseId, k.ItemId });
         }
 
     }
