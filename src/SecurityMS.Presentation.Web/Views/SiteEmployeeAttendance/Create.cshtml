@@ -104,6 +104,7 @@
             $.get("/SiteEmployeeAttendance/AddNewEmployeeStatus").done(function (response) {
                 $("#employeesStatus").append(response);
                 bindEmpPleantyScript();
+                $("select").select2();
             })
         })
 

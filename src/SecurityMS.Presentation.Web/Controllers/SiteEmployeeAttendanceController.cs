@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MNS.Repository;
 using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
@@ -24,9 +25,24 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: SiteEmployeeAttendance
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string fromDate, [FromQuery] string toDate, [FromQuery] string employeeName, [FromQuery] string siteId, [FromQuery] string shiftTypeId)
         {
-            var appDbContext = _context.SiteEmployeeAttendanceEntities.Include(s => s.AttendanceStatus).Include(s => s.Employee).Include(s => s.ShiftType).Include(s => s.Site);
+            var appDbContext = _context.SiteEmployeeAttendanceEntities
+                                    .Include(s => s.AttendanceStatus).Include(s => s.Employee).Include(s => s.ShiftType).Include(s => s.Site)
+                                    .WhereIf(!string.IsNullOrEmpty(fromDate) && !string.IsNullOrWhiteSpace(fromDate), x => x.AttendanceDate >= DateTime.Parse(fromDate))
+                                    .WhereIf(!string.IsNullOrEmpty(toDate) && !string.IsNullOrWhiteSpace(toDate), x => x.AttendanceDate <= DateTime.Parse(toDate))
+                                    .WhereIf(!string.IsNullOrEmpty(employeeName) && !string.IsNullOrWhiteSpace(employeeName), x => x.Employee.Name.Contains(employeeName))
+                                    .WhereIf(!string.IsNullOrEmpty(siteId) && !string.IsNullOrWhiteSpace(siteId), x => x.SiteId == long.Parse(siteId))
+                                    .WhereIf(!string.IsNullOrEmpty(shiftTypeId) && !string.IsNullOrWhiteSpace(shiftTypeId), x => x.ShiftId == long.Parse(shiftTypeId));
+            var ShiftTypes = new List<ShiftTypesLookup>();
+            ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
+            ShiftTypes.AddRange(await _context.ShiftTypesLookups.ToListAsync());
+            ViewData["ShiftId"] = new SelectList(ShiftTypes, "Id", "Name");
+
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["SiteId"] = new SelectList(Sites, "Id", "Name");
             return View(await appDbContext.ToListAsync());
         }
 
