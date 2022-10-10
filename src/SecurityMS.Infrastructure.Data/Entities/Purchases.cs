@@ -7,6 +7,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
 {
     public class Purchases : BaseEntity<long>
     {
+        [Display(Name = "تاريخ الشراء")]
         public DateTime PurchaseDate { get; set; }
         [Display(Name = "المورد")]
         public long SupplierId { get; set; }
