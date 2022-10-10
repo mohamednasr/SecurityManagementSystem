@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,13 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> Index()
         {
 
-            return View(await _context.Purchases.Include(x => x.Supplier).Include(x => x.SupplyType).ToListAsync());
+            return View(await _context.Purchases.Include(x => x.Supplier).Include(x => x.SupplyType).Where(x => !x.IsDeleted).ToListAsync());
+        }
+        public async Task<IActionResult> Details(long id)
+        {
+            var purchase = await _context.Purchases.Include(x => x.Supplier).Include(x => x.SupplyType).Include(x => x.Items).ThenInclude(x => x.Item).FirstOrDefaultAsync(x => x.Id == id);
+
+            return View(purchase);
         }
 
         // GET: PurchasesController/Create
@@ -85,6 +92,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                PurchaseRequest.PurchaseDate = DateTime.Now;
                 PurchaseRequest.create(HttpContext.User.Identity.Name);
                 _context.Add(PurchaseRequest);
                 await _context.SaveChangesAsync();
@@ -125,23 +133,37 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: PurchasesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(long id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var purchase = await _context.Purchases.Include(x => x.Supplier).Include(x => x.SupplyType).Include(x => x.Items).ThenInclude(x => x.Item).FirstOrDefaultAsync(x => x.Id == id);
+            if (purchase == null)
+            {
+                return NotFound();
+            }
+            return View(purchase);
         }
 
         // POST: PurchasesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(long id, IFormCollection collection)
         {
             try
             {
+                var purchase = await _context.Purchases.FindAsync(id);
+                purchase.Delete(HttpContext.User.Identity.Name);
+                _context.Purchases.Update(purchase);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                var purchase = await _context.Purchases.FindAsync(id);
+                return View(purchase);
             }
         }
     }

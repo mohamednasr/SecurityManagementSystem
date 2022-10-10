@@ -268,6 +268,11 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<PurchaseItem>()
                 .HasKey(k => new { k.PurchaseId, k.ItemId });
+            builder.Entity<PurchaseItem>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

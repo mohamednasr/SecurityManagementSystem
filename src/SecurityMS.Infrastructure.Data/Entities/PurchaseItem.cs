@@ -13,5 +13,8 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "الصنف")]
         [ForeignKey(nameof(PurchaseId))]
         public Purchases Purchase { get; set; }
+
+        [Display(Name = "الصنف")]
+        public ItemEntity Item { get; set; }
     }
 }
