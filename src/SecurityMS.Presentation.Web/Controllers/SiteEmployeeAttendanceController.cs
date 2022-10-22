@@ -79,7 +79,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var Employees = new List<EmployeesEntity>();
             Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
             Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
-            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
 
             var ShiftTypes = new List<ShiftTypesLookup>();
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
@@ -107,7 +107,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AttendanceStatusId"] = new SelectList(_context.Set<AttendanceStatusLookup>(), "Id", "Id", siteEmployeeAttendanceEntity.AttendanceStatusId);
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeeAttendanceEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeeAttendanceEntity.EmployeeId);
             ViewData["ShiftId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Id", siteEmployeeAttendanceEntity.ShiftId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Id", siteEmployeeAttendanceEntity.SiteId);
             return View(siteEmployeeAttendanceEntity);
@@ -127,7 +127,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
             ViewData["AttendanceStatusId"] = new SelectList(_context.Set<AttendanceStatusLookup>(), "Id", "Id", siteEmployeeAttendanceEntity.AttendanceStatusId);
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeeAttendanceEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeeAttendanceEntity.EmployeeId);
             ViewData["ShiftId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Id", siteEmployeeAttendanceEntity.ShiftId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Id", siteEmployeeAttendanceEntity.SiteId);
             return View(siteEmployeeAttendanceEntity);
@@ -166,7 +166,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AttendanceStatusId"] = new SelectList(_context.Set<AttendanceStatusLookup>(), "Id", "Id", siteEmployeeAttendanceEntity.AttendanceStatusId);
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeeAttendanceEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeeAttendanceEntity.EmployeeId);
             ViewData["ShiftId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Id", siteEmployeeAttendanceEntity.ShiftId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Id", siteEmployeeAttendanceEntity.SiteId);
             return View(siteEmployeeAttendanceEntity);
@@ -216,7 +216,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var Employees = new List<EmployeesEntity>();
             Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
             Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
-            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
 
             var ShiftTypes = new List<ShiftTypesLookup>();
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
@@ -237,7 +237,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var Employees = new List<EmployeesEntity>();
             Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
             Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
-            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
 
             var ShiftTypes = new List<ShiftTypesLookup>();
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });

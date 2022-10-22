@@ -95,6 +95,19 @@ namespace SecurityMS.Infrastructure.Data.Entities
 
         [Display(Name = "الوظيفة")]
         public virtual JobsEntity Job { get; set; }
+
+
+        [NotMapped]
+        public string NameCode
+        {
+            get
+            {
+                if (EmployeeCode == null)
+                    return string.Format("{0}", Name);
+
+                return string.Format("{0} - {1}", EmployeeCode, Name);
+            }
+        }
     }
 
 }

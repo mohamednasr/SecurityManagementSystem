@@ -71,7 +71,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: SiteEmployeesAssign/Create
         public IActionResult Create()
         {
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode");
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
             return View();
         }
@@ -81,7 +81,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 SiteEmployeeId = id
             };
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode");
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
             return View("Create", siteEmployee);
         }
@@ -98,7 +98,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index), new { id = siteEmployeesAssignEntity.SiteEmployeeId });
             }
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeesAssignEntity.EmployeeId);
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.SiteEmployeeId);
             return View(siteEmployeesAssignEntity);
         }
@@ -116,7 +116,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeesAssignEntity.EmployeeId);
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.SiteEmployeeId);
             return View(siteEmployeesAssignEntity);
         }
@@ -153,7 +153,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeesAssignEntity.EmployeeId);
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name", siteEmployeesAssignEntity.SiteEmployeeId);
             return View(siteEmployeesAssignEntity);
         }
