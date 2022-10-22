@@ -300,6 +300,15 @@ namespace SecurityMS.Presentation.Web.Controllers
 
         }
 
+        public async Task<IActionResult> AddNewAttendance()
+        {
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["SiteId"] = new SelectList(Sites, "Id", "Name");
+
+            return PartialView("_addAttendanceModal");
+        }
         private bool SiteEmployeeAttendanceEntityExists(long id)
         {
             return _context.SiteEmployeeAttendanceEntities.Any(e => e.Id == id);

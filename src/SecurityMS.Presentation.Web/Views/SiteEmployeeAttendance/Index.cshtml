@@ -7,9 +7,9 @@
 
 <h1>يوميات حضور قسم العمليات</h1>
 
-@*<p>
-        <a asp-action="Create">Create New</a>
-    </p>*@
+<p>
+        <a class="btn btn-link" onclick="addNewAttendanceModal()">Create New</a>
+    </p>
 <table class="table">
     <thead>
         <tr>
@@ -91,6 +91,9 @@
     </div>
 </div>
 
+<div class="modal fade" id="addAttendanceModal" tabindex="-1" role="dialog" aria-labelledby="addAttendanceModalLabel" aria-hidden="true">
+</div>
+
 @section scripts{ 
 <script charset="utf-8" >
     function searchEmployees() {
@@ -152,6 +155,20 @@
                 $("#shiftTypeId").val(decodeURIComponent(shiftTypeId));
             }
         }
-    })
+
+        $('#addAttendanceModal').on('hide.bs.modal', function (event) {
+            $("#addAttendanceModal").html('');
+        })
+    });
+
+    function addNewAttendanceModal(){
+
+
+            $.get("/SiteEmployeeAttendance/AddNewAttendance").done(function (response) {
+                $("#addAttendanceModal").append(response)
+                $("#addAttendanceModal").modal('show')
+                $("select").select2();
+            })
+    }
 </script>
 }

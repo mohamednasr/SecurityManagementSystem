@@ -61,7 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MNS.Repository\MNS.Repository.csproj" />
+    <ProjectReference Include="..\..\SecurityMS.Repository\SecurityMS.Repository.csproj" />
   </ItemGroup>
 
 </Project>
