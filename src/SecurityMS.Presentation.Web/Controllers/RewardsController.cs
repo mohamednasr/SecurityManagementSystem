@@ -57,10 +57,11 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EmployeeId,RewardType,Amount,Reason,Id")] RewardEntity rewardEntity)
+        public async Task<IActionResult> Create([Bind("EmployeeId,RewardType,Amount,Reason,Id, RewardDate")] RewardEntity rewardEntity)
         {
             if (ModelState.IsValid)
             {
+                rewardEntity.create(HttpContext.User.Identity.Name);
                 _context.Add(rewardEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Employees", new { id = rewardEntity.EmployeeId });

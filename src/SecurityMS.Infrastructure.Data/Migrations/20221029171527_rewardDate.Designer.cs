@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221029171527_rewardDate")]
+    partial class rewardDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,9 +252,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("InstallmentDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsAcceptable")
                         .HasColumnType("bit");
 
@@ -264,9 +263,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<string>("PayedBy")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -1147,9 +1143,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("PenalityDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("PenaltyType")
                         .HasColumnType("int");
