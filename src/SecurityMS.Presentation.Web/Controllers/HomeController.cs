@@ -46,6 +46,10 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             return View();
         }
+        public IActionResult TreasuryIndex()
+        {
+            return View();
+        }
 
         public IActionResult StoresManagementIndexView()
         {

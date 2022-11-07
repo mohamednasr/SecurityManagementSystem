@@ -47,6 +47,9 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<SupplyTypes> SupplyTypes { get; set; }
         public DbSet<Purchases> Purchases { get; set; }
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
+        public DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
+        public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
