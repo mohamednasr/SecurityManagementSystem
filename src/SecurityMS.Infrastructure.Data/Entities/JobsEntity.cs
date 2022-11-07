@@ -8,7 +8,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
     [Table("Jobs")]
     public class JobsEntity : BaseEntity<long>
     {
-        [Display(Name="أسم الوضيفة")]
+        [Display(Name="أسم الوظيفة")]
         [Required(ErrorMessage ="يجب كتابة اسم الوظيفة")]
         public string Name { get; set; }
         [Display(Name="القسم")]
