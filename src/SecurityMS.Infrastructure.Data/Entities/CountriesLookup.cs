@@ -1,4 +1,4 @@
-﻿using MNS.Repository;
+﻿using SecurityMS.Repository;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecurityMS.Infrastructure.Data.Entities

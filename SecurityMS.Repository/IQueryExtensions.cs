@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
-namespace MNS.Repository
+namespace SecurityMS.Repository
 {
     public static class IQueryExtensions
     {
@@ -14,7 +11,7 @@ namespace MNS.Repository
             {
                 int total = await dbQuery.CountAsync();
 
-                if(pageNumber == 0 || pageSize == 0)
+                if (pageNumber == 0 || pageSize == 0)
                 {
                     var result = await dbQuery.ToListAsync();
                     return new QueryResult<T>(result, total, 0, 0);

@@ -42,5 +42,7 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
         DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
 
+        DbSet<Supply> Supplies { get; set; }
+        DbSet<SupplyItems> SupplyItems { get; set; }
     }
 }

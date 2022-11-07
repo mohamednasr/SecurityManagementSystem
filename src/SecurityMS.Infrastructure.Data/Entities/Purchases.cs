@@ -1,4 +1,4 @@
-﻿using MNS.Repository;
+﻿using SecurityMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

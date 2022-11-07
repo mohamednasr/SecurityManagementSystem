@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
-namespace MNS.Repository
+namespace SecurityMS.Repository
 {
     public interface IRepository<TEntity, TId> where TEntity : BaseEntity<TId>
     {

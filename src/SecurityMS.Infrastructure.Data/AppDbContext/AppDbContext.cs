@@ -4,6 +4,18 @@ using SecurityMS.Infrastructure.Data.Entities;
 
 namespace SecurityMS.Infrastructure.Data
 {
+
+    //public class ContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    //{
+    //    public AppDbContext CreateDbContext(string[] args)
+    //    {
+    //        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+    //        optionsBuilder.UseSqlServer();
+
+    //        return new AppDbContext(optionsBuilder.Options);
+    //    }
+    //}
+
     public class AppDbContext : IdentityDbContext, IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -49,7 +61,8 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
         public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
-
+        public DbSet<Supply> Supplies { get; set; }
+        public DbSet<SupplyItems> SupplyItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -272,6 +285,24 @@ namespace SecurityMS.Infrastructure.Data
             builder.Entity<PurchaseItem>()
                 .HasKey(k => new { k.PurchaseId, k.ItemId });
             builder.Entity<PurchaseItem>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Supply>()
+                .HasOne(e => e.Purchase)
+                .WithMany()
+                .HasForeignKey(e => e.PurchaseId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SupplyItems>()
+                .HasOne(e => e.Supply)
+                .WithMany()
+                .HasForeignKey(e => e.SupplyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SupplyItems>()
                 .HasOne(e => e.Item)
                 .WithMany()
                 .HasForeignKey(e => e.ItemId)

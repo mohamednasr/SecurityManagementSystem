@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MNS.Repository
+namespace SecurityMS.Repository
 {
     public abstract class BaseEntity<T>
     {
