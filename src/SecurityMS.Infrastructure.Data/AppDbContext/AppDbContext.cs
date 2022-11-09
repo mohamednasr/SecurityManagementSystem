@@ -63,7 +63,8 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<SupplyItems> SupplyItems { get; set; }
-
+        public DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
+        public DbSet<SalaryReportEmployeesReport> SalariesReportEmployeesReports { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -306,6 +307,29 @@ namespace SecurityMS.Infrastructure.Data
                 .HasOne(e => e.Item)
                 .WithMany()
                 .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SalaryReportDetails>()
+                .HasMany(e => e.EmployeesSalaries)
+                .WithOne()
+                .HasForeignKey(e => e.SalaryReportId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<SalaryReportDetails>()
+                .HasOne(e => e.Site)
+                .WithMany()
+                .HasForeignKey(e => e.SiteId)
+                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<SalaryReportEmployeesReport>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SalaryReportEmployeesReport>()
+                .HasOne(e => e.SalaryReport)
+                .WithMany()
+                .HasForeignKey(e => e.SalaryReportId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
 
