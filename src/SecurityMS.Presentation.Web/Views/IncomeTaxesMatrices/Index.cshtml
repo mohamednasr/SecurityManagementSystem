@@ -1,0 +1,53 @@
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.IncomeTaxesMatrix>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>شرائح ضريبة الدخل</h1>
+
+<p>
+    <a asp-action="Create">اضافة</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RangeFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RangeTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxesPercentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxesExemption)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RangeFrom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RangeTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxesPercentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxesExemption)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-pencil-alt"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash-alt"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
