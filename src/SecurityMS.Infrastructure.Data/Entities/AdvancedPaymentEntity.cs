@@ -22,8 +22,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "حاله الموافقه")]
         public bool IsAcceptable { get; set; }
         [Display(Name = "تاريخ الصرف")]
-        public DateTime? PayedAt { get; set; }
-        public string PayedBy { get; set; }
+        public bool IsPayed { get; set; } = false;
         public string CreatedBy { get; set; }
         [Display(Name = "تاريخ الانشاء")]
         public DateTime? CreatedAt { get; set; } = DateTime.Now;
