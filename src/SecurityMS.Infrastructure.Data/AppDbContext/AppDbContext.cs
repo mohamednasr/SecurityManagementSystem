@@ -65,6 +65,9 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<SupplyItems> SupplyItems { get; set; }
         public DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
         public DbSet<SalaryReportEmployeesReport> SalariesReportEmployeesReports { get; set; }
+        public DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

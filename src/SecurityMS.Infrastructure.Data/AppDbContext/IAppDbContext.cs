@@ -45,5 +45,6 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<SalaryReportEmployeesReport> SalariesReportEmployeesReports { get; set; }
         DbSet<Supply> Supplies { get; set; }
         DbSet<SupplyItems> SupplyItems { get; set; }
+        DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
     }
 }
