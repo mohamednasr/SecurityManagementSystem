@@ -28,8 +28,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RangeFrom = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     RangeTo = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
-                    TaxesPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TaxesExemption = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    TaxesPercentage = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    TaxesExemption = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
                 {

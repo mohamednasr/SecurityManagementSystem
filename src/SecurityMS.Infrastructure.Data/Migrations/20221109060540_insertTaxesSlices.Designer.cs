@@ -12,8 +12,8 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221109041106_IncomeTaxesMatrix")]
-    partial class IncomeTaxesMatrix
+    [Migration("20221109060540_insertTaxesSlices")]
+    partial class insertTaxesSlices
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -951,10 +951,12 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("TaxesExemption")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<decimal>("TaxesPercentage")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
 
                     b.HasKey("Id");
 

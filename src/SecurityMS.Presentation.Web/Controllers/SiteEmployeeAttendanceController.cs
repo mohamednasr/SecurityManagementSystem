@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SecurityMS.Repository;
 using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using SecurityMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -222,7 +222,10 @@ namespace SecurityMS.Presentation.Web.Controllers
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
             ShiftTypes.AddRange(await _context.ShiftTypesLookups.ToListAsync());
             ViewData["ShiftId"] = new SelectList(ShiftTypes, "Id", "Name");
-            return PartialView("_attendanceStatus");
+
+            ViewData["EmployeesCount"] = Guid.NewGuid();
+
+            return PartialView("_attendanceStatus", new AttendanceModel());
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecurityMS.Infrastructure.Data.Entities
@@ -14,9 +15,11 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "إلى")]
         public decimal? RangeTo { get; set; }
         [Display(Name = "نسبه الضريبة")]
+        [Precision(18, 4)]
         public decimal TaxesPercentage { get; set; }
 
         [Display(Name = "نسبه الاعفاء")]
+        [Precision(18, 4)]
         public decimal TaxesExemption { get; set; } = 0;
     }
 }
