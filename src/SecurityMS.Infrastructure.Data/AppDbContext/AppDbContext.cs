@@ -61,6 +61,9 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
         public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
+        public DbSet<BankAccountsEntity> BankAccounts{ get; set; }
+        public DbSet<BankTransactions> BankTransactions { get; set; }
+
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<SupplyItems> SupplyItems { get; set; }
 
@@ -307,6 +310,15 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.ItemId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<BankTransactions>()
+                .HasOne(e => e.BankAccount)
+                .WithMany()
+                .HasForeignKey(e => e.BankId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
         }
 
     }

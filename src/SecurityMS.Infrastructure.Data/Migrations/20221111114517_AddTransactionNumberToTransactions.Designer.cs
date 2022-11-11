@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221111114517_AddTransactionNumberToTransactions")]
+    partial class AddTransactionNumberToTransactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2123,7 +2125,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
                         .WithMany()
                         .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("BankAccount");

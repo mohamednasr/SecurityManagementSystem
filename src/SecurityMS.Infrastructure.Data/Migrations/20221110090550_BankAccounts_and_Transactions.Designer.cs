@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221110090550_BankAccounts_and_Transactions")]
+    partial class BankAccounts_and_Transactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -390,9 +392,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("TransactionNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
@@ -402,8 +401,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Value")
-                        .HasColumnType("float");
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -2123,7 +2122,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
                         .WithMany()
                         .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("BankAccount");

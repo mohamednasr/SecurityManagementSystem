@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
+    [Authorize]
     public class TreasuryDepositPermissionsController : Controller
     {
         private readonly AppDbContext _context;
@@ -19,8 +21,10 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.TreasuryDepositPermission;
-            return View(await appDbContext.ToListAsync());
+            var appDbContext = await _context.TreasuryDepositPermission.ToListAsync();
+            ViewBag.PermissionsNumber = appDbContext.Count;
+
+            return View( appDbContext);
         }
         public IActionResult Create()
         {
