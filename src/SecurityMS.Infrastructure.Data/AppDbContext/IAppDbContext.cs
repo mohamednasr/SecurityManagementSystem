@@ -43,7 +43,10 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
         DbSet<BankAccountsEntity> BankAccounts { get; set; }
         DbSet<BankTransactions> BankTransactions { get; set; }
+        DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
+        DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
         DbSet<Supply> Supplies { get; set; }
         DbSet<SupplyItems> SupplyItems { get; set; }
+        DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
     }
 }

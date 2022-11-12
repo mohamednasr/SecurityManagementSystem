@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Linq;
@@ -61,6 +62,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                penaltyEntity.PenaltyValue = penaltyEntity.PenaltyType == (int)PenalityTypeEnum.Days ? await GetPenalityValue(penaltyEntity.EmployeeId, penaltyEntity.Amount) : penaltyEntity.Amount;
                 penaltyEntity.create(HttpContext.User.Identity.Name);
                 _context.Add(penaltyEntity);
                 await _context.SaveChangesAsync();
@@ -70,7 +72,15 @@ namespace SecurityMS.Presentation.Web.Controllers
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", penaltyEntity.EmployeeId);
             return View(penaltyEntity);
         }
-
+        private async Task<decimal> GetPenalityValue(long EmployeeId, decimal value)
+        {
+            var employee = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
+            if (employee != null)
+            {
+                return value * employee.EmployeeShiftSalary;
+            }
+            return 0;
+        }
         // GET: Penalties/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {

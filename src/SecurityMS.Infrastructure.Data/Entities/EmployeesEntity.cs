@@ -1,5 +1,6 @@
 ﻿using SecurityMS.Repository;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -92,6 +93,10 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public string Notes { get; set; }
 
         public bool IsActive { get; set; } = true;
+
+        public virtual List<RewardEntity> Rewards { get; set; }
+        public virtual List<PenaltyEntity> Penalities { get; set; }
+        public virtual List<AdvancedPaymentEntity> AdvancedPayments { get; set; }
 
         [Display(Name = "الوظيفة")]
         public virtual JobsEntity Job { get; set; }

@@ -1,0 +1,59 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.EmployeesSalaryReportDetails
+<div class="row">
+    <form asp-action="RecalculateSalaries">
+        <div class="col-md-6">
+            <label for="employeeName_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.EmployeeId)</label>
+            <select disabled asp-for="EmployeeId" class="form-control employee-name" id="employeeName_@(Model.EmployeeId)" asp-items="ViewBag.EmployeeId"></select>
+        </div>
+        <div class="col-12 pt-4">
+            <div class="row">
+                <div class="col-md-2">
+                    <label for="BaseSalary" class="control-label">@Html.DisplayNameFor(model => model.BaseSalary)</label>
+                    <input readonly asp-for="BaseSalary" class="form-control base-salary" id="baseSalary_@(Model.EmployeeId)" />
+                </div>
+                <div class="col-md-2">
+                    <label for="rewards_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.Rewards)</label>
+                    <input disabled asp-for="Rewards" class="form-control rewards" id="rewards_@(Model.EmployeeId)" />
+                </div>
+                <div class="col-md-2">
+                    <label for="insurance_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.Insurance)</label>
+                    <input readonly asp-for="Insurance" class="form-control insurance" id="insurance_@(Model.EmployeeId)" />
+                </div>
+                <div class="col-md-2">
+                    <label for="penalities_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.Penalities)</label>
+                    <input readonly asp-for="Penalities" class="form-control penalities" id="penalities_@(Model.EmployeeId)" />
+                </div>
+
+                <div class="col-md-2">
+                    <label for="advancePaymentInstallment_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.AdvancePaymentInstallment)</label>
+                    <input readonly asp-for="AdvancePaymentInstallment" class="form-control advance-payment" id="advancePaymentInstallment_@(Model.EmployeeId)" />
+                </div>
+
+                <div class="col-md-2">
+                    <label for="taxes_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.Taxes)</label>
+                    <input readonly asp-for="Taxes" class="form-control taxes" id="taxes_@(Model.EmployeeId)" />
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="extraDeductions_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.ExtraDeductions)</label>
+                    <input asp-for="ExtraDeductions" class="form-control extra-deductions" id="extraDeductions_@(Model.EmployeeId)" />
+                </div>
+                <div class="col-md-4 pt-4">
+                    <button type="submit" class="btn btn-info mt-2">حفظ</button>
+                    <input type="hidden" asp-for="Id" />
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="totalSalary_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.TotalSalary)</label>
+                    <input readonly asp-for="TotalSalary" class="form-control total-salary" id="totalSalary_@(Model.EmployeeId)" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

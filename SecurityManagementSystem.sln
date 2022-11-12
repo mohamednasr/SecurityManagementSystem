@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityMS.Repository", "SecurityMS.Repository\SecurityMS.Repository.csproj", "{FA035160-4532-45E7-9267-25FCEDD15EF8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{753ACDF0-79EA-4630-9B16-3A15985DCF09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{EBE6A257-80C9-4D77-A215-D3C6F2BD1EDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,10 @@ Global
 		{FA035160-4532-45E7-9267-25FCEDD15EF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA035160-4532-45E7-9267-25FCEDD15EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA035160-4532-45E7-9267-25FCEDD15EF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBE6A257-80C9-4D77-A215-D3C6F2BD1EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBE6A257-80C9-4D77-A215-D3C6F2BD1EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBE6A257-80C9-4D77-A215-D3C6F2BD1EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBE6A257-80C9-4D77-A215-D3C6F2BD1EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +70,7 @@ Global
 		{051163C1-59D0-4FFF-9188-59E24400936D} = {C6DF8B6E-96B2-4AFF-9DDC-D8F340062ABB}
 		{DF3DFB3B-AB42-412B-8A17-81794EA610BD} = {C6DF8B6E-96B2-4AFF-9DDC-D8F340062ABB}
 		{FA035160-4532-45E7-9267-25FCEDD15EF8} = {8019DEBE-CFBB-4B81-95CD-7E8281C2153C}
+		{EBE6A257-80C9-4D77-A215-D3C6F2BD1EDC} = {753ACDF0-79EA-4630-9B16-3A15985DCF09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DFB4DFE8-7EA4-4990-AD36-92D726661A09}

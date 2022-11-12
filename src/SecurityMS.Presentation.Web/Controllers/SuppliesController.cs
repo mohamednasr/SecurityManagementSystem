@@ -55,7 +55,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PurchaseId,Id,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsDeleted")] Supply supply)
+        public async Task<IActionResult> Create([Bind("PurchaseId,SupplyDate")] Supply supply)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Id", supply.PurchaseId);
+            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Name", supply.PurchaseId);
             return View(supply);
         }
 
@@ -89,7 +89,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("PurchaseId,Id,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsDeleted")] Supply supply)
+        public async Task<IActionResult> Edit(long id, [Bind("PurchaseId,SupplyDate")] Supply supply)
         {
             if (id != supply.Id)
             {
@@ -116,7 +116,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Id", supply.PurchaseId);
+            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Name", supply.PurchaseId);
             return View(supply);
         }
 

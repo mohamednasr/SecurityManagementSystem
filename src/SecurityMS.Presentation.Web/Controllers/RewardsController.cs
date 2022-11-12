@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Linq;
@@ -62,6 +63,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             if (ModelState.IsValid)
             {
                 rewardEntity.create(HttpContext.User.Identity.Name);
+                rewardEntity.RewardValue = rewardEntity.RewardType == (int)RewardTypeEnum.Days ? await GetRewardValue(rewardEntity.EmployeeId, rewardEntity.Amount) : rewardEntity.Amount;
                 _context.Add(rewardEntity);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Employees", new { id = rewardEntity.EmployeeId });
@@ -71,6 +73,15 @@ namespace SecurityMS.Presentation.Web.Controllers
             return View(rewardEntity);
         }
 
+        private async Task<decimal> GetRewardValue(long EmployeeId, decimal value)
+        {
+            var employee = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
+            if (employee != null)
+            {
+                return value * employee.EmployeeShiftSalary;
+            }
+            return 0;
+        }
         // GET: Rewards/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
