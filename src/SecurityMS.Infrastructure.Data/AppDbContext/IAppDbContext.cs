@@ -41,6 +41,8 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<PurchaseItem> PurchaseItems { get; set; }
         DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
         DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
+        DbSet<BankAccountsEntity> BankAccounts { get; set; }
+        DbSet<BankTransactions> BankTransactions { get; set; }
         DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
         DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
         DbSet<Supply> Supplies { get; set; }
