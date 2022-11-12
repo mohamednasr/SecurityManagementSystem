@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112194022_UpdateShiftSalaryForAssignEntity")]
+    partial class UpdateShiftSalaryForAssignEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -767,6 +769,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<decimal>("Rewards")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long?>("SalaryReportDetailsId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("SalaryReportId")
                         .HasColumnType("bigint");
 
@@ -779,6 +784,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SalaryReportDetailsId");
 
                     b.HasIndex("SalaryReportId");
 
@@ -2212,10 +2219,14 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", "SalaryReport")
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", null)
                         .WithMany("EmployeesSalaries")
+                        .HasForeignKey("SalaryReportDetailsId");
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", "SalaryReport")
+                        .WithMany()
                         .HasForeignKey("SalaryReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Employee");

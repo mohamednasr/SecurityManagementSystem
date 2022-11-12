@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SecurityMS.Infrastructure.Data.Entities
 {
-    public class SalaryReportEmployeesReport
+    public class EmployeesSalaryReportDetails
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -41,19 +41,25 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public virtual EmployeesEntity Employee { get; set; }
 
         public virtual SalaryReportDetails SalaryReport { get; set; }
-        public decimal GetTotal()
+        public decimal GetTotalWithoutTaxes()
         {
-            return BaseSalary + Rewards - (Penalities + AdvancePaymentInstallment + Insurance + Taxes);
+            return BaseSalary + Rewards - (Penalities + AdvancePaymentInstallment + Insurance + ExtraDeductions);
         }
 
-        public decimal GetInsurance()
+        public void GetTotal()
         {
-            return Employee.InsuranceAmount.GetValueOrDefault(0) * Employee.InsurancePercentage.GetValueOrDefault(0);
+            this.TotalSalary = (BaseSalary + Rewards - (Penalities + AdvancePaymentInstallment + Insurance + ExtraDeductions + Taxes));
         }
 
-        public decimal CalculateTaxes(List<IncomeTaxesMatrix> matrix)
+        public void GetInsurance()
         {
-            decimal totalSalary = GetTotal() * 12;
+            this.Insurance = Employee.InsuranceAmount.GetValueOrDefault(0) * Employee.InsurancePercentage.GetValueOrDefault(0);
+        }
+
+
+        public void CalculateTaxes(List<IncomeTaxesMatrix> matrix)
+        {
+            decimal totalSalary = GetTotalWithoutTaxes() * 12;
             decimal taxes = 0;
             foreach (var range in matrix)
             {
@@ -73,7 +79,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
                 }
             }
 
-            return taxes / 12;
+            this.Taxes = taxes / 12;
         }
     }
 }

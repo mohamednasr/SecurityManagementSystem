@@ -64,7 +64,7 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<SupplyItems> SupplyItems { get; set; }
         public DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
-        public DbSet<SalaryReportEmployeesReport> SalariesReportEmployeesReports { get; set; }
+        public DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
         public DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
 
 
@@ -166,7 +166,7 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<SiteEmployeesAssignEntity>()
                 .HasOne(e => e.SiteEmployee)
-                .WithMany()
+                .WithMany(s => s.AssignedEmployees)
                 .HasForeignKey(e => e.SiteEmployeeId);
 
             builder.Entity<EquipmentDetailsEntity>()
@@ -221,19 +221,19 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<RewardEntity>()
                 .HasOne(e => e.Employee)
-                .WithMany()
+                .WithMany(x => x.Rewards)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<PenaltyEntity>()
                 .HasOne(e => e.Employee)
-                .WithMany()
+                .WithMany(e => e.Penalities)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<AdvancedPaymentEntity>()
                 .HasOne(e => e.Employee)
-                .WithMany()
+                .WithMany(e => e.AdvancedPayments)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -314,7 +314,7 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<SalaryReportDetails>()
                 .HasMany(e => e.EmployeesSalaries)
-                .WithOne()
+                .WithOne(e => e.SalaryReport)
                 .HasForeignKey(e => e.SalaryReportId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -323,17 +323,17 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.SiteId)
                 .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<SalaryReportEmployeesReport>()
+            builder.Entity<EmployeesSalaryReportDetails>()
                 .HasOne(e => e.Employee)
                 .WithMany()
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<SalaryReportEmployeesReport>()
-                .HasOne(e => e.SalaryReport)
-                .WithMany()
-                .HasForeignKey(e => e.SalaryReportId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<EmployeesSalaryReportDetails>()
+            //    .HasOne(e => e.SalaryReport)
+            //    .WithMany()
+            //    .HasForeignKey(e => e.SalaryReportId)
+            //    .OnDelete(DeleteBehavior.NoAction);
         }
 
     }

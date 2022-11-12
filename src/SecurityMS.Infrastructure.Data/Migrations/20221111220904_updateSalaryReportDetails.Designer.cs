@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221111220904_updateSalaryReportDetails")]
+    partial class updateSalaryReportDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -740,51 +742,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesSalaryReportDetails", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("AdvancePaymentInstallment")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("BaseSalary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("EmployeeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("ExtraDeductions")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Insurance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Penalities")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("Rewards")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("SalaryReportId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Taxes")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("TotalSalary")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("SalaryReportId");
-
-                    b.ToTable("SalariesReportEmployeesReports");
-                });
-
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EndServiceReasonLookup", b =>
                 {
                     b.Property<int>("Id")
@@ -1399,6 +1356,56 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("SalariesReportDetails");
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SalaryReportEmployeesReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AdvancePaymentInstallment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("BaseSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("ExtraDeductions")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Insurance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Penalities")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Rewards")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long?>("SalaryReportDetailsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SalaryReportId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Taxes")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SalaryReportDetailsId");
+
+                    b.HasIndex("SalaryReportId");
+
+                    b.ToTable("SalariesReportEmployeesReports");
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", b =>
                 {
                     b.Property<long>("Id")
@@ -1500,9 +1507,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
-
-                    b.Property<decimal>("EmployeeShiftSalary")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -2133,7 +2137,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany("AdvancedPayments")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2202,25 +2206,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Job");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesSalaryReportDetails", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", "SalaryReport")
-                        .WithMany("EmployeesSalaries")
-                        .HasForeignKey("SalaryReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("SalaryReport");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentDetailsEntity", b =>
@@ -2298,7 +2283,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany("Penalities")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2351,7 +2336,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany("Rewards")
+                        .WithMany()
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2368,6 +2353,29 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Site");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SalaryReportEmployeesReport", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", null)
+                        .WithMany("EmployeesSalaries")
+                        .HasForeignKey("SalaryReportDetailsId");
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", "SalaryReport")
+                        .WithMany()
+                        .HasForeignKey("SalaryReportId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("SalaryReport");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeeAttendanceEntity", b =>
@@ -2414,7 +2422,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", "SiteEmployee")
-                        .WithMany("AssignedEmployees")
+                        .WithMany()
                         .HasForeignKey("SiteEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2585,15 +2593,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("ContractSites");
                 });
 
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", b =>
-                {
-                    b.Navigation("AdvancedPayments");
-
-                    b.Navigation("Penalities");
-
-                    b.Navigation("Rewards");
-                });
-
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", b =>
                 {
                     b.Navigation("items");
@@ -2607,11 +2606,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", b =>
                 {
                     b.Navigation("EmployeesSalaries");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", b =>
-                {
-                    b.Navigation("AssignedEmployees");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supply", b =>

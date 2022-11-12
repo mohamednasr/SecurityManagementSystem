@@ -412,7 +412,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             employee.Notes += model.Notes;
             employee.IsActive = false;
 
-            if (model.PenaltyAmount >= 0.0)
+            if (model.PenaltyAmount >= 0)
             {
                 var penalties = new PenaltyEntity()
                 {
