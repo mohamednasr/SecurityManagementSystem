@@ -67,45 +67,8 @@
         <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
     </div>
 </div>
-
-
-@section Scripts{
-    <script>
-        function getMonths(year = (@Model.searchModel.Year)) {
-
-            if (year == currentDate.getFullYear()) {
-                var currentMonth = currentDate.getMonth();
-                $("#monthSelect").html("");
-                for (var i = 0; i <= currentMonth; i++) {
-                    $("#monthSelect").append(new Option(monthsMap[i], i+1))
-                }
-                $("#monthSelect").val((@Model.searchModel.Month));
-                return;
-            }
-
-            else {
-                $("#monthSelect").html("");
-                var currentMonth = currentDate.getMonth();
-                for (var i = 0; i < monthsMap.length; i++) {
-                    $("#monthSelect").append(new Option(monthsMap[i], i+1))
-                }
-                $("#monthSelect").val((@Model.searchModel.Month));
-                return;
-            }
-        }
-
-        function setYears() {
-            $("#yearSelect").html("");
-            for (var i = currentDate.getFullYear(); i >= startYear; i--) {
-                $("#yearSelect").append(new Option(i, i))
-            }
-            $("#yearSelect").val((@Model.searchModel.Year));
-        };
-        getMonths();
-        setYears();
-
-        $("#yearSelect").change((e) => {
-            getMonths($("#yearSelect").val());
-        })
-    </script>
-} 
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
