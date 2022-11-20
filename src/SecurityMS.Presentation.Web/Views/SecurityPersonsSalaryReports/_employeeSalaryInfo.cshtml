@@ -8,8 +8,12 @@
         <div class="col-12 pt-4">
             <div class="row">
                 <div class="col-md-2">
-                    <label for="BaseSalary" class="control-label">@Html.DisplayNameFor(model => model.BaseSalary)</label>
+                    <label for="baseSalary_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.BaseSalary)</label>
                     <input readonly asp-for="BaseSalary" class="form-control base-salary" id="baseSalary_@(Model.EmployeeId)" />
+                </div>
+                <div class="col-md-2">
+                    <label for="monthSalary_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.MonthSalary)</label>
+                    <input readonly asp-for="MonthSalary" class="form-control month-salary" id="monthSalary_@(Model.EmployeeId)" />
                 </div>
                 <div class="col-md-2">
                     <label for="rewards_@(Model.EmployeeId)" class="control-label">@Html.DisplayNameFor(model => model.Rewards)</label>

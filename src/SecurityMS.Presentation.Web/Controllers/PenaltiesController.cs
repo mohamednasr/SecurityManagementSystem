@@ -77,7 +77,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var employee = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
             if (employee != null)
             {
-                return value * employee.EmployeeShiftSalary;
+                return value * employee.EmployeeSalary;
             }
             return 0;
         }

@@ -18,6 +18,9 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "المرتب الأساسي")]
         public decimal BaseSalary { get; set; }
 
+        [Display(Name = "المرتب المستحق")]
+        public decimal MonthSalary { get; set; }
+
         [Display(Name = "نسبه تحمل التأمينات")]
         public decimal Insurance { get; set; }
 
@@ -43,12 +46,12 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public virtual SalaryReportDetails SalaryReport { get; set; }
         public decimal GetTotalWithoutTaxes()
         {
-            return BaseSalary + Rewards - (Penalities + AdvancePaymentInstallment + Insurance + ExtraDeductions);
+            return MonthSalary + Rewards - (Penalities + Insurance + ExtraDeductions);
         }
 
         public void GetTotal()
         {
-            this.TotalSalary = (BaseSalary + Rewards - (Penalities + AdvancePaymentInstallment + Insurance + ExtraDeductions + Taxes));
+            this.TotalSalary = (MonthSalary + Rewards - (Penalities + AdvancePaymentInstallment + Insurance + ExtraDeductions + Taxes));
         }
 
         public void GetInsurance()

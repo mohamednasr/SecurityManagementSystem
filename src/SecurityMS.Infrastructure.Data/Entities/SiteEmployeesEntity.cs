@@ -17,10 +17,10 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Required]
         [Display(Name = "الفتره ")]
         public long ShiftTypeId { get; set; }
-        [Display(Name = "قيمة الفتره بالعقد ")]
-        public decimal ShiftValue { get; set; }
-        [Display(Name = "مرتب الفتره للموظف ")]
-        public decimal EmployeeShiftSalary { get; set; }
+        [Display(Name = "قيمة الفرد بالعقد ")]
+        public decimal EmployeeCost { get; set; }
+        [Display(Name = "مرتب الموظف ")]
+        public decimal EmployeeSalary { get; set; }
         [Display(Name = "عدد الأفراد")]
         public int EmployeesPerShift { get; set; }
         [Display(Name = "الموقع ")]

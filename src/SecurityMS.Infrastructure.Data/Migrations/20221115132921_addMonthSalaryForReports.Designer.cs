@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221115132921_addMonthSalaryForReports")]
+    partial class addMonthSalaryForReports
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1603,7 +1605,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("EmployeeSalary")
+                    b.Property<decimal>("EmployeeShiftSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsActive")
@@ -1644,10 +1646,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("EmployeeCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EmployeeSalary")
+                    b.Property<decimal>("EmployeeShiftSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeesPerShift")
@@ -1661,6 +1660,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<long>("ShiftTypeId")
                         .HasColumnType("bigint");
+
+                    b.Property<decimal>("ShiftValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("SiteId")
                         .HasColumnType("bigint");

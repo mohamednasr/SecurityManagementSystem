@@ -110,7 +110,8 @@ namespace SecurityMS.Presentation.Web.Controllers
                             Id = Guid.NewGuid(),
                             EmployeeId = e.EmployeeId,
                             Employee = e.Employee,
-                            BaseSalary = e.EmployeeShiftSalary * ((30 - absence) + (4 - breakDays)),
+                            BaseSalary = e.EmployeeSalary,
+                            MonthSalary = (e.EmployeeSalary / 30) * ((30 - absence) + (4 - breakDays)),
                             Rewards = e.Employee.Rewards.Where(x => x.RewardDate >= salaryReport.SalaryDateFrom && x.RewardDate <= salaryReport.SalaryDateTo).Sum(x => x.RewardValue).GetValueOrDefault(0),
                             Penalities = e.Employee.Penalities.Where(x => x.PenalityDate >= salaryReport.SalaryDateFrom && x.PenalityDate <= salaryReport.SalaryDateTo).Sum(x => x.PenaltyValue).GetValueOrDefault(0),
                             AdvancePaymentInstallment = advancedPayments.Select(s => (decimal)(s.Amount / s.installments)).Sum()
@@ -146,7 +147,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RecalculateSalaries([Bind("Id, EmployeeId, SalaryReportId, BaseSalary, Insurance, Penalities, Rewards, AdvancePaymentInstallment, Taxes, ExtraDeductions, TotalSalary")] EmployeesSalaryReportDetails salaryReport)
+        public async Task<IActionResult> RecalculateSalaries([Bind("Id, EmployeeId, SalaryReportId, BaseSalary,MonthSalary, Insurance, Penalities, Rewards, AdvancePaymentInstallment, Taxes, ExtraDeductions, TotalSalary")] EmployeesSalaryReportDetails salaryReport)
         {
             var TaxesMatrix = await _context.IncomeTaxesMatrix.ToListAsync();
 
