@@ -21,13 +21,24 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            return View();
+        }
+
+        public async Task<IActionResult> BankAccountList()
+        {
             var appDbContext = await _context.BankAccounts.ToListAsync();
             ViewBag.AccountsNumber = appDbContext.Count;
             ViewBag.total = appDbContext.Sum(a => a.CurrentBalance);
-        
+
             return View(appDbContext);
         }
 
+        public IActionResult CreateTransaction(int id)
+        {
+            ViewBag.Id = id;
+
+            return View();
+        }
         public IActionResult Create()
         {
              return View();

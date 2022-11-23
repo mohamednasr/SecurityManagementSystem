@@ -1,0 +1,48 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.BankCashDepositTransaction
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>تفاصيل االمعاملة</h1>
+
+<div>
+    <hr />
+    <div >
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Value)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+                <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Direction)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Direction)
+        </dd>
+                <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TransactionNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TransactionNumber)
+        </dd>
+    </div>
+</div>
+
+<div>
+@*    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">تعديل</a>
+*@</div>
