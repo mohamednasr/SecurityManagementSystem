@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121185050_AddExchangeEntity")]
+    partial class AddExchangeEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1067,10 +1069,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<DateTime>("ExchangeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ExchangeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("ExchangeTo")
+                    b.Property<long>("ExchangeTo")
                         .HasColumnType("bigint");
 
                     b.Property<int>("ExchangeTypeId")
@@ -1078,6 +1077,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<long>("SupplyId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -1088,6 +1090,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ExchangeTypeId");
+
+                    b.HasIndex("SupplyId");
 
                     b.ToTable("ExchangeEntity");
                 });
@@ -2478,7 +2482,15 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.Supply", "Supply")
+                        .WithMany()
+                        .HasForeignKey("SupplyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("ExchangeType");
+
+                    b.Navigation("Supply");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeItems", b =>

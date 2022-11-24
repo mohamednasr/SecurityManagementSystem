@@ -1,14 +1,13 @@
-﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.EquipmentTypesLookup>
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.ExchangeTypesLookups>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>إنشاء نوع معده</h1>
+<h1> أنواع الصرف</h1>
 
 <p>
-    <a asp-action="Create">اضافه نوع معده</a>
+    <a asp-action="Create">اضافه نوع صرف</a>
 </p>
 <table class="table">
     <thead>
@@ -16,7 +15,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th></th>
+           @* <th></th>*@
         </tr>
     </thead>
     <tbody>
@@ -25,11 +24,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+           @* <td>
                 <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |
                 <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
                 <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i></a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>

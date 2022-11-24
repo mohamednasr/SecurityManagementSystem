@@ -1,0 +1,194 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.ExchangeEntity
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ItemsCount = 0;
+}
+
+<h1>Create</h1>
+
+<h4>ExchangeEntity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ExchangeDate" class="control-label"></label>
+                <input asp-for="ExchangeDate" class="form-control" id="exchangeDate" />
+                <span asp-validation-for="ExchangeDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExchangeTypeId" class="control-label"></label>
+                <select asp-for="ExchangeTypeId" class ="form-control" asp-items="ViewBag.ExchangeTypeId" id="exchangeType"></select>
+            </div>
+            <div class="form-group" id="exchangeToRow">
+                <label asp-for="ExchangeTo" class="control-label"></label>
+                <select asp-for="ExchangeTo" class="form-control" id="exchangeTo" asp-items="ViewBag.ExchangeToIds"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExchangeName" class="control-label"></label>
+                <input asp-for="ExchangeName" class="form-control" id="exchangeName" readonly="readonly"/>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="CreatedBy" class="control-label"></label>
+                <input asp-for="CreatedBy" class="form-control" />
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="UpdatedAt" class="control-label"></label>
+                <input asp-for="UpdatedAt" class="form-control" />
+                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="UpdatedBy" class="control-label"></label>
+                <input asp-for="UpdatedBy" class="form-control" />
+                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                </label>
+            </div>
+            <div id="exchangeItems">
+            @foreach (var item in Model.ExchangeItems)
+            {
+                ViewBag.ItemsCount++;
+                <partial name="_ExchangedItemCreate" model="item" />
+            }
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" id="addItem">إضافة بند</a>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" id="SaveExchange"> حفظ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع</a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+
+        $("#exchangeType").change(function () {
+            getExchangeTargetIds($(this).val());
+        })
+
+        $("#exchangeTo").change(function () {
+
+            var name = $(this).find('option[value='+$(this).val() + ']').html();
+            $("#exchangeName").val(name);
+            debugger;
+        })
+
+        function getExchangeTargetIds(exchangeTo) {
+            switch (exchangeTo){
+                case "1":
+                case "2":
+                    $.get("/Exchanges/GetExchangeTargetIds/" + exchangeTo).done(function (response) {
+                        $("#exchangeTo").html("");
+                        $("#exchangeTo").append(new Option("أختر جهه الصرف", ""))
+
+                        response.forEach(item => {
+                            $("#exchangeTo").append(new Option(item.name, item.id))
+                        });
+
+                        $("#exchangeToRow").removeClass('d-none');
+                        $("#exchangeTo").select2();
+                    });
+                    $("#exchangeName").attr('readonly', 'readonly');
+                break;
+                default:
+                    $("#exchangeTo").html("");
+                    $("#exchangeTo").val(0);
+                    $("#exchangeToRow").addClass('d-none');
+                    $("#exchangeName").attr('readonly', false);
+                break;
+            }
+            $("#exchangeName").val('');
+        }
+
+        $("#addItem").click(function () {
+            var count = 0;
+            var items = $(".items-count");
+
+            if(items.length <= 0){
+                count = 0;
+            }
+            else{
+                count = items[items.length - 1].value
+            }
+            $.get("/Exchanges/AddNewItem?ItemCount=" + count).done(function (response) {
+                $("#exchangeItems").append(response);
+                
+                $("select").select2();
+                $(".remove-row").click(function () {
+                    $(this).parents('.exchange-item-row')[0].remove();
+                })
+            })
+        })
+        $(".remove-row").click(function () {
+            $(this).parents('.exchange-item-row')[0].remove();
+        })
+
+        $("#SaveExchange").click(function () {
+            var items = $(".item-name");
+            var quantites = $(".item-quantity");
+            var exchangeDate = $("#exchangeDate").val();
+            var exchangeType = $("#exchangeType").val();
+            var exchangeTo = $("#exchangeTo").val();
+            var exchangeName = $("#exchangeName").val();
+            var ExchangeList = [];
+
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].value == 0 || quantites[i].value <= 0 || ((exchangeTo == '0' || exchangeTo == null) && exchangeName == '')) {
+                    alert("يرجي التأكد من البيانات المدخلة");
+                    return;
+                }
+                var e = {
+                    ItemId: parseInt(items[i].value),
+                    Quantity: parseInt(quantites[i].value),
+                }
+                ExchangeList.push(e);
+            };
+            var _exchange = {
+                ExchangeDate: exchangeDate,
+                ExchangeType: parseInt(exchangeType),
+                ExchangeTo: parseInt(exchangeTo),
+                ExchangeName: exchangeName,
+                ExchangeItems: [...ExchangeList]
+            }
+
+            $.ajax({
+                url: "/Exchanges/SaveExchange",
+                type: "POST",
+                data: JSON.stringify(_exchange),
+                dataType: 'json', // lowercase is always preferered though jQuery does it, too.
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log(res);
+                    if (res == true){
+                        window.history.back();
+                    }
+                    else{
+                        alert("هناك صنف غير متوفر");
+                    }
+                }
+            });
+        })
+    </script>
+}

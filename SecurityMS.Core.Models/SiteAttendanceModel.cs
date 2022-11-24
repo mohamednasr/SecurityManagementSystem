@@ -12,6 +12,6 @@ namespace SecurityMS.Core.Models
         [Display(Name = "التاريخ")]
         public DateTime AttendanceDate { get; set; }
 
-        public List<AttendanceModel> EmployeesStatus { get;set; } 
+        public List<AttendanceModel> EmployeesStatus { get; set; }
     }
 }

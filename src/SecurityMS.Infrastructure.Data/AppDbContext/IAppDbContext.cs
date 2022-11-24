@@ -48,5 +48,8 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<Supply> Supplies { get; set; }
         DbSet<SupplyItems> SupplyItems { get; set; }
         DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
+        DbSet<ExchangeTypesLookups> ExchangeTypesLookup { get; set; }
+        DbSet<ExchangeEntity> ExchangeEntity { get; set; }
+        DbSet<ExchangeItems> ExhangeItems { get; set; }
     }
 }

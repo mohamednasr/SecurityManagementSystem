@@ -129,7 +129,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("SiteEmployeeId,EmployeeId,EmployeeSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,EmployeeSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
         {
             if (id != siteEmployeesAssignEntity.Id)
             {
@@ -140,8 +140,11 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
-                    _context.Update(siteEmployeesAssignEntity);
+                    var siteEmployeeEntity = await _context.SiteEmployeesAssignEntities.FindAsync(siteEmployeesAssignEntity.Id);
+                    siteEmployeeEntity.EmployeeSalary = siteEmployeesAssignEntity.EmployeeSalary;
+                    _context.Update(siteEmployeeEntity);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index), new { id = siteEmployeeEntity.SiteEmployeeId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
