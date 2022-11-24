@@ -22,7 +22,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: CustomerContacts
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.CustomerContactsEntities.Include(c => c.Customer);
+            var appDbContext = _context.CustomerContactsEntities.Include(c => c.Customer).Where(c => !c.IsDeleted);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -147,7 +147,8 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var customerContactsEntity = await _context.CustomerContactsEntities.FindAsync(id);
-            _context.CustomerContactsEntities.Remove(customerContactsEntity);
+            customerContactsEntity.Delete(HttpContext.User.Identity.Name);
+            _context.CustomerContactsEntities.Update(customerContactsEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

@@ -38,6 +38,18 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<Supplier> Suppliers { get; set; }
         DbSet<SupplyTypes> SupplyTypes { get; set; }
         DbSet<Purchases> Purchases { get; set; }
-
+        DbSet<PurchaseItem> PurchaseItems { get; set; }
+        DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
+        DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
+        DbSet<BankAccountsEntity> BankAccounts { get; set; }
+        DbSet<BankTransactions> BankTransactions { get; set; }
+        DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
+        DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
+        DbSet<Supply> Supplies { get; set; }
+        DbSet<SupplyItems> SupplyItems { get; set; }
+        DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
+        DbSet<ExchangeTypesLookups> ExchangeTypesLookup { get; set; }
+        DbSet<ExchangeEntity> ExchangeEntity { get; set; }
+        DbSet<ExchangeItems> ExhangeItems { get; set; }
     }
 }

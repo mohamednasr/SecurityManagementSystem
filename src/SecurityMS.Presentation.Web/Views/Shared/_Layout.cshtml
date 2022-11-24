@@ -54,14 +54,16 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="~/js/Typeahead.js" asp-append-version="true"></script>
     <script src="~/js/print.min.js" asp-append-version="true"></script>
 <script type="text/javascript" src="~/js/select2.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript">
-        $(function () {
+        $(document).ready(function () {
                 $("select").select2();
             });
+        function back(){
+            history.back();
+        }
     </script>
     @RenderSection("Scripts", required: false)
 </body>

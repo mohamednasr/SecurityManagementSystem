@@ -25,7 +25,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.CustomersEntities.Include(c => c.CustomerType).Include(z => z.Government).Include(c => c.ParentCustomers);
+            var appDbContext = _context.CustomersEntities.Include(c => c.CustomerType).Include(z => z.Government).Include(c => c.ParentCustomers).Where(c => !c.IsDeleted);
 
 
 
@@ -150,7 +150,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     ParentCustomerId = customer.CustomerTypeId == (int)CustomerTypeEnum.Group || customer.ParentCustomerId == 0 ? null : customer.ParentCustomerId,
                     CommercialNumber = customer.CommercialNumber,
                     TaxId = customer.TaxId,
-                    GovernmentId = customer.GovernmentId,
+                    GovernmentId = customer.GovernmentId.GetValueOrDefault(0) > 0 ? customer.GovernmentId : null,
                     Address = customer.Address,
                     TaxFileNumber = customer.TaxFileNumber
                 };
@@ -282,7 +282,8 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var customersEntity = await _context.CustomersEntities.FindAsync(id);
-            _context.CustomersEntities.Remove(customersEntity);
+            customersEntity.Delete(HttpContext.User.Identity.Name);
+            _context.CustomersEntities.Update(customersEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

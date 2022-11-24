@@ -168,3 +168,6 @@ body {
         margin: 0;
     }
 
+.w-100 .select2-container{
+    width: 100% !important;
+}

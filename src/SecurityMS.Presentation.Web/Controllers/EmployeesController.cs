@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MNS.Repository;
 using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using SecurityMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -412,7 +412,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             employee.Notes += model.Notes;
             employee.IsActive = false;
 
-            if (model.PenaltyAmount >= 0.0)
+            if (model.PenaltyAmount >= 0)
             {
                 var penalties = new PenaltyEntity()
                 {

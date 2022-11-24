@@ -56,12 +56,11 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.9" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MNS.Repository\MNS.Repository.csproj" />
+    <ProjectReference Include="..\..\SecurityMS.Repository\SecurityMS.Repository.csproj" />
   </ItemGroup>
 
 </Project>

@@ -44,7 +44,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     SitesCount = company.Count()
                 };
 
-                var ContractIncome = _context.SiteEmployeesEntities.Where(x => x.Site.Contracts.CustomerId == company.Key).Sum(x => x.EmployeesPerShift * x.ShiftValue);
+                var ContractIncome = _context.SiteEmployeesEntities.Where(x => x.Site.Contracts.CustomerId == company.Key).Sum(x => x.EmployeesPerShift * (x.EmployeeCost / 30));
 
                 employeeStatus.FinalIncome = ContractIncome;
 
@@ -69,15 +69,15 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 Count = x.EmployeesPerShift,
                 ItemName = x.Job.Name,
-                Price = x.ShiftValue,
-                Total = x.EmployeesPerShift * x.ShiftValue
+                Price = x.EmployeeCost,
+                Total = x.EmployeesPerShift * x.EmployeeCost
             }).ToList();
             InvoiceEntity invoice = new InvoiceEntity()
             {
                 CompanyId = id,
                 CompanyName = ContractIncome.FirstOrDefault().Site.Contracts.MainCustomer.ParentCustomers.Name,
                 InvoiceDate = DateTime.Now,
-                FinalIncome = ContractIncome.Sum(x => x.EmployeesPerShift * x.ShiftValue),
+                FinalIncome = ContractIncome.Sum(x => x.EmployeesPerShift * x.EmployeeCost),
                 items = items
             };
 

@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MNS.Repository;
 using SecurityMS.Infrastructure.Data;
+using SecurityMS.Repository;
 
 namespace SecurityMS.Presentation.Web
 {
@@ -22,14 +22,14 @@ namespace SecurityMS.Presentation.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
+            services.AddDbContext<IAppDbContext, AppDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>()
                  .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddScoped<DbContext, AppDbContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             services.AddControllersWithViews();

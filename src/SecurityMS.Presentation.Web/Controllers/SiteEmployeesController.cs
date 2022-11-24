@@ -73,13 +73,14 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SiteId,JobId,ShiftTypeId,ShiftValue,EmployeeShiftSalary,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
+        public async Task<IActionResult> Create([Bind("SiteId,JobId,ShiftTypeId,EmployeeCost,EmployeeSalary,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(siteEmployeesEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Sites", new { id = siteEmployeesEntity.SiteId });
+
             }
             ViewData["JobId"] = new SelectList(_context.JobsEntities.Where(x => x.DepartmentId == (int)DepartmentsEnum.Operations).ToList(), "Id", "Name", siteEmployeesEntity.JobId);
             ViewData["ShiftTypeId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Name", siteEmployeesEntity.ShiftTypeId);
@@ -111,7 +112,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("SiteId,JobId,ShiftTypeId,ShiftValue,EmployeeShiftSalary,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("SiteId,JobId,ShiftTypeId,EmployeeCost,EmployeeSalary,EmployeesPerShift,Id")] SiteEmployeesEntity siteEmployeesEntity)
         {
             if (id != siteEmployeesEntity.Id)
             {
@@ -124,6 +125,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 {
                     _context.Update(siteEmployeesEntity);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction("Details", "Sites", new { id = siteEmployeesEntity.SiteId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -173,7 +175,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var siteEmployeesEntity = await _context.SiteEmployeesEntities.FindAsync(id);
             _context.SiteEmployeesEntities.Remove(siteEmployeesEntity);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Sites", new { id = siteEmployeesEntity.SiteId });
         }
 
         private bool SiteEmployeesEntityExists(long id)

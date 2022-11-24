@@ -1,0 +1,27 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails;
+
+<div class="text text-center font-weight-bold h2">
+    مراجعة تقرير المرتبات
+</div>
+
+<hr />
+
+
+@foreach (var employee in Model.EmployeesSalaries)
+{
+    <partial name="_employeeSalaryInfo" model="employee" />
+    <hr/>
+}
+
+<div class="row">
+    <div class="col-12 mt-3">
+        <a asp-controller="SecurityPersonsSalaryReports" asp-action="SalaryReportData" asp-route-id="@Model.Id" class="btn btn-primary mt-3 mx-2">حفظ المرتبات</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mt-3 text-right">
+        <a asp-action="CreateSalaryReport" class="btn btn-default mt-3 mx-2">رجوع</a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>

@@ -6,6 +6,7 @@ using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using SecurityMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,24 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: SiteEmployeeAttendance
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string fromDate, [FromQuery] string toDate, [FromQuery] string employeeName, [FromQuery] string siteId, [FromQuery] string shiftTypeId)
         {
-            var appDbContext = _context.SiteEmployeeAttendanceEntities.Include(s => s.AttendanceStatus).Include(s => s.Employee).Include(s => s.ShiftType).Include(s => s.Site);
+            var appDbContext = _context.SiteEmployeeAttendanceEntities
+                                    .Include(s => s.AttendanceStatus).Include(s => s.Employee).Include(s => s.ShiftType).Include(s => s.Site)
+                                    .WhereIf(!string.IsNullOrEmpty(fromDate) && !string.IsNullOrWhiteSpace(fromDate), x => x.AttendanceDate >= DateTime.Parse(fromDate))
+                                    .WhereIf(!string.IsNullOrEmpty(toDate) && !string.IsNullOrWhiteSpace(toDate), x => x.AttendanceDate <= DateTime.Parse(toDate))
+                                    .WhereIf(!string.IsNullOrEmpty(employeeName) && !string.IsNullOrWhiteSpace(employeeName), x => x.Employee.Name.Contains(employeeName))
+                                    .WhereIf(!string.IsNullOrEmpty(siteId) && !string.IsNullOrWhiteSpace(siteId), x => x.SiteId == long.Parse(siteId))
+                                    .WhereIf(!string.IsNullOrEmpty(shiftTypeId) && !string.IsNullOrWhiteSpace(shiftTypeId), x => x.ShiftId == long.Parse(shiftTypeId));
+            var ShiftTypes = new List<ShiftTypesLookup>();
+            ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
+            ShiftTypes.AddRange(await _context.ShiftTypesLookups.ToListAsync());
+            ViewData["ShiftId"] = new SelectList(ShiftTypes, "Id", "Name");
+
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["SiteId"] = new SelectList(Sites, "Id", "Name");
             return View(await appDbContext.ToListAsync());
         }
 
@@ -63,7 +79,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var Employees = new List<EmployeesEntity>();
             Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
             Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
-            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
 
             var ShiftTypes = new List<ShiftTypesLookup>();
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
@@ -91,7 +107,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AttendanceStatusId"] = new SelectList(_context.Set<AttendanceStatusLookup>(), "Id", "Id", siteEmployeeAttendanceEntity.AttendanceStatusId);
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeeAttendanceEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeeAttendanceEntity.EmployeeId);
             ViewData["ShiftId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Id", siteEmployeeAttendanceEntity.ShiftId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Id", siteEmployeeAttendanceEntity.SiteId);
             return View(siteEmployeeAttendanceEntity);
@@ -111,7 +127,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
             ViewData["AttendanceStatusId"] = new SelectList(_context.Set<AttendanceStatusLookup>(), "Id", "Id", siteEmployeeAttendanceEntity.AttendanceStatusId);
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeeAttendanceEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeeAttendanceEntity.EmployeeId);
             ViewData["ShiftId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Id", siteEmployeeAttendanceEntity.ShiftId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Id", siteEmployeeAttendanceEntity.SiteId);
             return View(siteEmployeeAttendanceEntity);
@@ -150,7 +166,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AttendanceStatusId"] = new SelectList(_context.Set<AttendanceStatusLookup>(), "Id", "Id", siteEmployeeAttendanceEntity.AttendanceStatusId);
-            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name", siteEmployeeAttendanceEntity.EmployeeId);
+            ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode", siteEmployeeAttendanceEntity.EmployeeId);
             ViewData["ShiftId"] = new SelectList(_context.ShiftTypesLookups, "Id", "Id", siteEmployeeAttendanceEntity.ShiftId);
             ViewData["SiteId"] = new SelectList(_context.SitesEntities, "Id", "Id", siteEmployeeAttendanceEntity.SiteId);
             return View(siteEmployeeAttendanceEntity);
@@ -200,13 +216,16 @@ namespace SecurityMS.Presentation.Web.Controllers
             var Employees = new List<EmployeesEntity>();
             Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
             Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
-            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
 
             var ShiftTypes = new List<ShiftTypesLookup>();
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
             ShiftTypes.AddRange(await _context.ShiftTypesLookups.ToListAsync());
             ViewData["ShiftId"] = new SelectList(ShiftTypes, "Id", "Name");
-            return PartialView("_attendanceStatus");
+
+            ViewData["EmployeesCount"] = Guid.NewGuid();
+
+            return PartialView("_attendanceStatus", new AttendanceModel());
         }
 
 
@@ -221,7 +240,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var Employees = new List<EmployeesEntity>();
             Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
             Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
-            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "Name");
+            ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
 
             var ShiftTypes = new List<ShiftTypesLookup>();
             ShiftTypes.Add(new ShiftTypesLookup() { Id = 0, Name = "أختر الفترة" });
@@ -284,6 +303,15 @@ namespace SecurityMS.Presentation.Web.Controllers
 
         }
 
+        public async Task<IActionResult> AddNewAttendance()
+        {
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["SiteId"] = new SelectList(Sites, "Id", "Name");
+
+            return PartialView("_addAttendanceModal");
+        }
         private bool SiteEmployeeAttendanceEntityExists(long id)
         {
             return _context.SiteEmployeeAttendanceEntities.Any(e => e.Id == id);

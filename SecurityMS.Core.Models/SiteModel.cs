@@ -17,8 +17,8 @@ namespace SecurityMS.Core.Models
 
         [Display(Name = "الانتقالات الشهريه")]
         public double? Transportations { get; set; }
-        [Display(Name="المنطقة")]
-        public ZonesEntity zone { get; set; }
+        [Display(Name = "المنطقة")]
+        public ZonesEntity? zone { get; set; }
 
         public List<SiteEmployeesEntity> SiteEmployees { get; set; }
         public List<SiteEquipmentsEntity> SiteEquipments { get; set; }

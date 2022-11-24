@@ -12,16 +12,14 @@ namespace SecurityMS.Core.Models
 
         [Display(Name = "الشركه التابع لها")]
         public long? ParentCustomerId { get; set; }
-        //[Required]
         [Display(Name = "السجل التجاري")]
-        public string CommercialNumber { get; set; }
-        //[Required]
+        public string? CommercialNumber { get; set; }
         [Display(Name = "رقم التسجيل الضريبي")]
-        public string TaxId { get; set; }
+        public string? TaxId { get; set; }
         [Display(Name = "رقم الملف الضريبي")]
-        public string TaxFileNumber { get; set; }
+        public string? TaxFileNumber { get; set; }
         [Display(Name = "العنوان")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
         //[Display(Name = "المنطقة")]
         //public long? ZoneId { get; set; }
         [Display(Name = "المحافظه")]

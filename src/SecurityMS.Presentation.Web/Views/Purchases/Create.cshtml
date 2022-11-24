@@ -1,4 +1,5 @@
-﻿@model SecurityMS.Infrastructure.Data.Entities.Purchases
+﻿@using  SecurityMS.Infrastructure.Data.Entities;
+@model Purchases
 
 @{
     ViewData["Title"] = "إضافة مورد";
@@ -8,8 +9,8 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-12">
+        <form>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
              <div class="form-group d-none">
                 <label asp-for="PurchaseDate" class="control-label"></label>
@@ -26,18 +27,17 @@
                 <select asp-for="SupplyTypeId" class ="form-control" asp-items="ViewBag.SupplyTypes"></select>
                 <span asp-validation-for="SupplyTypeId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ItemId" class="control-label"></label>
-                <select asp-for="ItemId" class ="form-control" asp-items="ViewBag.Suppliers"></select>
-                <span asp-validation-for="ItemId" class="text-danger"></span>
+            @foreach (var item in Model.Items)
+            {
+                <div id="purchaseItemsList">
+                    <partial name="_addPurchaseItem" model="item" />
+                </div>
+            }
+             <div class="col-12 my-3">
+                <a class="btn btn-primary" id="addItem">إضافة صنف</a>
             </div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="حفظ" class="btn btn-primary" />
+                <input value="حفظ" class="btn btn-primary" id="SavePurchase"/>
             </div>
         </form>
     </div>
@@ -47,6 +47,67 @@
     <a asp-action="Index">رجوع الي القائمة</a>
 </div>
 
-@section Scripts {
+@section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("#SavePurchase").click(function () {
+            
+            debugger
+            var itemsIds = $(".itemsId");
+            var quantities = $(".quantities");
+            var itemsList = [];
+            for (var i = 0; i < itemsIds.length; i++) {
+                if (itemsIds[i].value == 0 || quantities[i].value <= 0) {
+                    alert("يرجي التأكد من البيانات المدخلة");
+                    return;
+                }
+                var e = {
+                    ItemId: parseInt(itemsIds[i].value),
+                    Quantity: parseInt(quantities[i].value),
+                    
+                }
+                itemsList.push(e);
+            };
+            var SupplierId = $("#SupplierId").val();
+            var SupplyTypeId = $("#SupplyTypeId").val();
+            if (SupplierId == 0 || SupplyTypeId <= 0) {
+                alert("يرجي التأكد من البيانات المدخلة");
+                return;
+            }
+            var _list = {
+                SupplierId: parseInt(SupplierId),
+                SupplyTypeId: parseInt(SupplyTypeId),
+                Items: [...itemsList]
+            }
+
+            $.ajax({
+                url: "/Purchases/CreatePurchase",
+                type: "POST",
+                data: JSON.stringify(_list),
+                dataType: 'json', // lowercase is always preferered though jQuery does it, too.
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log(res);
+                    if (res == true); {
+                        window.history.back();
+                    }
+                }
+            });
+        })
+
+        $(".remove-row").click(function () {
+            $(this).parents('.item-row')[0].remove();
+        })
+
+        $("#addItem").click(function () {
+            $.get("/Purchases/AddNewPurchaseItem").done(function (response) {
+                $("#purchaseItemsList").append(response);
+                $("select").select2();
+                 $(".remove-row").click(function () {
+                    $(this).parents('.item-row')[0].remove();
+                })
+            })
+        })
+
+    </script>
 }

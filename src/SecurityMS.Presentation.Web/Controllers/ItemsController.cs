@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,7 +23,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Items
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Items.ToListAsync());
+            return View(await _context.Items.Include(x => x.SupplyType).ToListAsync());
         }
 
         // GET: Items/Details/5
@@ -32,7 +34,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
 
-            var itemEntity = await _context.Items
+            var itemEntity = await _context.Items.Include(x => x.SupplyType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (itemEntity == null)
             {
@@ -43,8 +45,13 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: Items/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var supplyTypes = new List<SupplyTypes>();
+            supplyTypes.Add(new SupplyTypes() { SupplyName = "أختر نوع الصنف" });
+            supplyTypes.AddRange(await _context.SupplyTypes.Where(x => !x.IsDeleted).ToListAsync());
+            ViewData["SupplyTypes"] = new SelectList(supplyTypes, "Id", "SupplyName");
+
             return View();
         }
 
@@ -53,7 +60,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Code,Name,TotalCount,AvailableTotalCount,MinimumAlert,Id")] ItemEntity itemEntity)
+        public async Task<IActionResult> Create([Bind("Code,Name,TypeId,TotalCount,AvailableTotalCount,MinimumAlert,Id")] ItemEntity itemEntity)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +68,11 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            var supplyTypes = new List<SupplyTypes>();
+            supplyTypes.Add(new SupplyTypes() { SupplyName = "أختر نوع الصنف" });
+            supplyTypes.AddRange(await _context.SupplyTypes.Where(x => !x.IsDeleted).ToListAsync());
+            ViewData["SupplyTypes"] = new SelectList(supplyTypes, "Id", "SupplyName");
+
             return View(itemEntity);
         }
 
@@ -77,6 +89,11 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
+            var supplyTypes = new List<SupplyTypes>();
+            supplyTypes.Add(new SupplyTypes() { SupplyName = "أختر نوع الصنف" });
+            supplyTypes.AddRange(await _context.SupplyTypes.Where(x => !x.IsDeleted).ToListAsync());
+            ViewData["SupplyTypes"] = new SelectList(supplyTypes, "Id", "SupplyName");
+
             return View(itemEntity);
         }
 
@@ -85,7 +102,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Code,Name,TotalCount,AvailableTotalCount,MinimumAlert,Id")] ItemEntity itemEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("Code,Name,TypeId,TotalCount,AvailableTotalCount,MinimumAlert,Id")] ItemEntity itemEntity)
         {
             if (id != itemEntity.Id)
             {
@@ -112,6 +129,11 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            var supplyTypes = new List<SupplyTypes>();
+            supplyTypes.Add(new SupplyTypes() { SupplyName = "أختر نوع الصنف" });
+            supplyTypes.AddRange(await _context.SupplyTypes.Where(x => !x.IsDeleted).ToListAsync());
+            ViewData["SupplyTypes"] = new SelectList(supplyTypes, "Id", "SupplyName");
+
             return View(itemEntity);
         }
 
@@ -123,7 +145,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return NotFound();
             }
 
-            var itemEntity = await _context.Items
+            var itemEntity = await _context.Items.Include(x => x.SupplyType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (itemEntity == null)
             {
@@ -139,7 +161,8 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var itemEntity = await _context.Items.FindAsync(id);
-            _context.Items.Remove(itemEntity);
+            itemEntity.Delete(HttpContext.User.Identity.Name);
+            _context.Items.Update(itemEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

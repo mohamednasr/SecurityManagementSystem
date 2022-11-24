@@ -4,6 +4,18 @@ using SecurityMS.Infrastructure.Data.Entities;
 
 namespace SecurityMS.Infrastructure.Data
 {
+
+    //public class ContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    //{
+    //    public AppDbContext CreateDbContext(string[] args)
+    //    {
+    //        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+    //        optionsBuilder.UseSqlServer();
+
+    //        return new AppDbContext(optionsBuilder.Options);
+    //    }
+    //}
+
     public class AppDbContext : IdentityDbContext, IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
@@ -46,6 +58,20 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SupplyTypes> SupplyTypes { get; set; }
         public DbSet<Purchases> Purchases { get; set; }
+        public DbSet<PurchaseItem> PurchaseItems { get; set; }
+        public DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
+        public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
+        public DbSet<BankAccountsEntity> BankAccounts { get; set; }
+        public DbSet<BankTransactions> BankTransactions { get; set; }
+
+        public DbSet<Supply> Supplies { get; set; }
+        public DbSet<SupplyItems> SupplyItems { get; set; }
+        public DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
+        public DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
+        public DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
+        public DbSet<ExchangeTypesLookups> ExchangeTypesLookup { get; set; }
+        public DbSet<ExchangeEntity> ExchangeEntity { get; set; }
+        public DbSet<ExchangeItems> ExhangeItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -145,7 +171,7 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<SiteEmployeesAssignEntity>()
                 .HasOne(e => e.SiteEmployee)
-                .WithMany()
+                .WithMany(s => s.AssignedEmployees)
                 .HasForeignKey(e => e.SiteEmployeeId);
 
             builder.Entity<EquipmentDetailsEntity>()
@@ -200,19 +226,19 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<RewardEntity>()
                 .HasOne(e => e.Employee)
-                .WithMany()
+                .WithMany(x => x.Rewards)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<PenaltyEntity>()
                 .HasOne(e => e.Employee)
-                .WithMany()
+                .WithMany(e => e.Penalities)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<AdvancedPaymentEntity>()
                 .HasOne(e => e.Employee)
-                .WithMany()
+                .WithMany(e => e.AdvancedPayments)
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -258,6 +284,83 @@ namespace SecurityMS.Infrastructure.Data
                 .WithMany()
                 .HasForeignKey(e => e.SupplyTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Purchases>()
+                .HasMany(e => e.Items)
+                .WithOne()
+                .HasForeignKey(e => e.PurchaseId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<PurchaseItem>()
+                .HasKey(k => new { k.PurchaseId, k.ItemId });
+            builder.Entity<PurchaseItem>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Supply>()
+                .HasOne(e => e.Purchase)
+                .WithMany()
+                .HasForeignKey(e => e.PurchaseId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SupplyItems>()
+                .HasOne(e => e.Supply)
+                .WithMany()
+                .HasForeignKey(e => e.SupplyId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<SupplyItems>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<BankTransactions>()
+                .HasOne(e => e.BankAccount)
+                .WithMany()
+                .HasForeignKey(e => e.BankId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+
+
+            builder.Entity<SalaryReportDetails>()
+                .HasMany(e => e.EmployeesSalaries)
+                .WithOne(e => e.SalaryReport)
+                .HasForeignKey(e => e.SalaryReportId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<SalaryReportDetails>()
+                .HasOne(e => e.Site)
+                .WithMany()
+                .HasForeignKey(e => e.SiteId)
+                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<EmployeesSalaryReportDetails>()
+                .HasOne(e => e.Employee)
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ExchangeEntity>()
+                .HasOne(e => e.ExchangeType)
+                .WithMany()
+                .HasForeignKey(e => e.ExchangeTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ExchangeItems>()
+                .HasOne(e => e.Exchange)
+                .WithMany(e => e.ExchangeItems)
+                .HasForeignKey(e => e.ExchangeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ExchangeItems>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
 
     }
