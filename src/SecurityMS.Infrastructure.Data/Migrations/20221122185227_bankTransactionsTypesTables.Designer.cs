@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221122185227_bankTransactionsTypesTables")]
+    partial class bankTransactionsTypesTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -677,9 +679,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BankAccountsEntityId");
-
-                    b.HasIndex("BankId");
                     b.HasIndex("BankAccountId");
 
                     b.ToTable("BankTransactions");
@@ -1134,9 +1133,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<decimal>("Insurance")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("MonthSalary")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("Penalities")
                         .HasColumnType("decimal(18,2)");
 
@@ -1322,106 +1318,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("EquipmentTypesLookup");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ExchangeDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ExchangeName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("ExchangeTo")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ExchangeTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExchangeTypeId");
-
-                    b.ToTable("ExchangeEntity");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeItems", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<long>("ExchangeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ItemId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("ItemQuantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExchangeId");
-
-                    b.HasIndex("ItemId");
-
-                    b.ToTable("ExhangeItems");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeTypesLookups", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExchangeTypesLookup");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExpensesLookup", b =>
@@ -2184,7 +2080,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
 
-                    b.Property<decimal>("EmployeeSalary")
+                    b.Property<decimal>("EmployeeShiftSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<bool>("IsActive")
@@ -2225,10 +2121,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("EmployeeCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("EmployeeSalary")
+                    b.Property<decimal>("EmployeeShiftSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeesPerShift")
@@ -2242,6 +2135,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<long>("ShiftTypeId")
                         .HasColumnType("bigint");
+
+                    b.Property<decimal>("ShiftValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("SiteId")
                         .HasColumnType("bigint");
@@ -3140,36 +3036,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("Manufacturing");
                 });
 
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ExchangeTypesLookups", "ExchangeType")
-                        .WithMany()
-                        .HasForeignKey("ExchangeTypeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("ExchangeType");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeItems", b =>
-                {
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", "Exchange")
-                        .WithMany("ExchangeItems")
-                        .HasForeignKey("ExchangeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ItemEntity", "Item")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Exchange");
-
-                    b.Navigation("Item");
-                });
-
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceDetails", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", "invoice")
@@ -3536,11 +3402,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("Penalities");
 
                     b.Navigation("Rewards");
-                });
-
-            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", b =>
-                {
-                    b.Navigation("ExchangeItems");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", b =>

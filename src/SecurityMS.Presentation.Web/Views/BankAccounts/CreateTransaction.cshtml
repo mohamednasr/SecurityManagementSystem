@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "اضافة معاملة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="container-fluid">
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Create" asp-controller="BankCashDepositTransaction" asp-route-id="@ViewBag.Id">ايداع نقدي جديد</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Create" asp-controller="BankCashWithdrawTransaction" asp-route-id="@ViewBag.Id">سحب كاش جديد</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Create" asp-controller="BankChequeDepositTransaction" asp-route-id="@ViewBag.Id">ايداع شيك جديد</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Create" asp-controller="BankChequeWithdrawTransaction" asp-route-id="@ViewBag.Id">  سحب شيك جديد</a>
+        </div>
+
+    </div>
+</section>

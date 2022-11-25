@@ -73,9 +73,82 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<ExchangeEntity> ExchangeEntity { get; set; }
         public DbSet<ExchangeItems> ExhangeItems { get; set; }
 
+        public DbSet<TreasuryWithdrawPermissionTypesLookup> TreasuryWithdrawPermissionTypesLookup { get; set; }
+        public DbSet<TreasuryDepositPermissionTypesLookup> TreasuryDepositPermissionTypesLookup { get; set; }
+        public DbSet<ExpensesLookup> ExpensesLookup { get; set; }
+
+        public DbSet<AssetsLookup> AssetsLookup { get; set; }
+        public DbSet<BankCashDepositTransaction> BankCashDepositTransaction { get; set; }
+        public DbSet<BankCashWithdrawTransaction> BankCashWithdrawTransaction { get; set; }
+        public DbSet<BankChequeDepositTransaction> BankChequeDepositTransaction { get; set; }
+        public DbSet<BankChequeWithdrawTransaction> BankChequeWithdrawTransaction { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<AssetsLookup>().HasData(
+                new AssetsLookup { Id = 1, Name = "أثاث" },
+                new AssetsLookup { Id = 2, Name = "أجهزة كمبيوتر و نظم حسابيه" },
+                new AssetsLookup { Id = 3, Name = "اجهزة كهربائية" },
+                new AssetsLookup { Id = 4, Name = "تشطيبات و ديكورات" },
+                new AssetsLookup { Id = 5, Name = "أجهزة تكييف" },
+                new AssetsLookup { Id = 6, Name = "وسائل نقل و انتقال" },
+                new AssetsLookup { Id = 7, Name = "أسلحة" },
+                new AssetsLookup { Id = 8, Name = "أجهزة لاسلكي" }
+                );
+
+            builder.Entity<ExpensesLookup>().HasData(
+                new ExpensesLookup { Id = 1 , Name = "بوفيه و ضيافة"},
+                new ExpensesLookup { Id = 2 , Name = "اجور و مرتبات"},
+                new ExpensesLookup { Id = 3, Name = "م.بنكية" },
+                new ExpensesLookup { Id = 4, Name = "رسوم" },
+                new ExpensesLookup { Id = 5, Name = "نثريات" },
+                new ExpensesLookup { Id = 6, Name = "انتقالات" },
+                new ExpensesLookup { Id = 7, Name = "اعانة وفاة" },
+                new ExpensesLookup { Id = 8, Name = "اصلاح و صيانة" },
+                new ExpensesLookup { Id = 9, Name = "تليفونات" },
+                new ExpensesLookup { Id = 10, Name = "ادوات مكتبية" },
+                new ExpensesLookup { Id = 11, Name = "ايجار" },
+                new ExpensesLookup { Id = 12, Name = "اكراميات" },
+                new ExpensesLookup { Id = 13, Name = "اتعاب مهنية" },
+                new ExpensesLookup { Id = 14, Name = "تامينات اجتماعية" },
+                new ExpensesLookup { Id = 15, Name = "تامينات مقاولات" },
+                new ExpensesLookup { Id = 16, Name = "تحصيل عملاء" },
+                new ExpensesLookup { Id = 17, Name = "نت مقر الشركة" },
+                new ExpensesLookup { Id = 18, Name = "ادوات كهربائية" },
+                new ExpensesLookup { Id = 19, Name = "بنزين" },
+                new ExpensesLookup { Id = 20, Name = "غاز و كهرباءومياه" },
+                new ExpensesLookup { Id = 21, Name = "غرامات" },
+                new ExpensesLookup { Id = 22, Name = "غرامات موقع" },
+                new ExpensesLookup { Id = 23, Name = "مساهمة تكافلية" },
+                new ExpensesLookup { Id = 24, Name = "ايجار سيارات" },
+                new ExpensesLookup { Id = 25, Name = "غسيل و مكوى" },
+                new ExpensesLookup { Id = 26, Name = "زي امن" },
+                new ExpensesLookup { Id = 27, Name = "وثائق تامين" },
+                new ExpensesLookup { Id = 28, Name = "تبرعات" },
+                new ExpensesLookup { Id = 29, Name = "علاج" }
+                );
+
+
+            builder.Entity<TreasuryDepositPermissionTypesLookup>().HasData(
+                new ExpensesLookup { Id = 1, Name = "جاري شريك" },
+                new ExpensesLookup { Id = 2, Name = "عهد" },
+                new ExpensesLookup { Id = 3, Name = "بنك" },
+                new ExpensesLookup { Id = 4, Name = "سلف" },
+                new ExpensesLookup { Id = 5, Name = "عملاء" }
+                );
+
+            builder.Entity<TreasuryWithdrawPermissionTypesLookup>().HasData(
+                new ExpensesLookup { Id = 1, Name = "مصاريف تشغيل" },
+                new ExpensesLookup { Id = 2, Name = "مصاريف عمومية" },
+                new ExpensesLookup { Id = 3, Name = "موردين" },
+                new ExpensesLookup { Id = 4, Name = "الاصول" },
+                new ExpensesLookup { Id = 5, Name = "العهد" },
+                new ExpensesLookup { Id = 6, Name = "سلف" },
+                new ExpensesLookup { Id = 7, Name = "جاري شريك" }
+                );
+
 
             builder.Entity<ContractsEntity>()
                     .HasOne(e => e.MainCustomer)
@@ -317,13 +390,51 @@ namespace SecurityMS.Infrastructure.Data
                 .HasForeignKey(e => e.ItemId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<BankTransactions>()
+
+
+            builder.Entity<BankCashDepositTransaction>()
                 .HasOne(e => e.BankAccount)
                 .WithMany()
                 .HasForeignKey(e => e.BankId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<BankCashWithdrawTransaction>()
+                .HasOne(e => e.BankAccount)
+                .WithMany()
+                .HasForeignKey(e => e.BankId)
+                .OnDelete(DeleteBehavior.Cascade);
 
+            builder.Entity<BankChequeDepositTransaction>()
+                .HasOne(e => e.BankAccount)
+                .WithMany()
+                .HasForeignKey(e => e.BankId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<BankChequeWithdrawTransaction>()
+                .HasOne(e => e.BankAccount)
+                .WithMany()
+                .HasForeignKey(e => e.BankId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<TreasuryWithdrawPermissionEntity>()
+                .HasOne(e => e.Type)
+                .WithMany()
+                .HasForeignKey(e => e.TypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<TreasuryDepositPermissionEntity>()
+                .HasOne(e => e.Type)
+                .WithMany()
+                .HasForeignKey(e => e.TypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+
+            builder.Entity<SalaryReportDetails>()
+                .HasMany(e => e.EmployeesSalaries)
+                .WithOne(e => e.SalaryReport)
+                .HasForeignKey(e => e.SalaryReportId)
+                .OnDelete(DeleteBehavior.Cascade);
 
 
             builder.Entity<SalaryReportDetails>()

@@ -1,17 +1,13 @@
-﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.TreasuryDepositPermissionEntity>
+﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.BankCashWithdrawTransaction>
 
 @{
-    ViewData["Title"] = "اذونات الاستلام";
+    ViewData["Title"] = "معاملات الحساب";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>قائمة اذونات الاستلام</h1>
-<h4>عدد الاذونات : @ViewBag.PermissionsNumber</h4>
+<h4>عدد المعاملات : @ViewBag.Transactions</h4>
 
 
-<p>
-    <a asp-action="Create">اذن جديد</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -25,10 +21,14 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Type.Name)
+                @Html.DisplayNameFor(model => model.Direction)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionNumber)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BenificiaryCode)
+                @Html.DisplayNameFor(model => model.BankAccount.Name)
             </th>
             <th></th>
         </tr>
@@ -48,16 +48,20 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Type.Name)
+                @Html.DisplayFor(modelItem => item.Direction)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BenificiaryCode)
+                @Html.DisplayFor(model => item.BankAccount.Name)
             </td>
             <td>
 @*                <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a>
 *@                <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> 
-                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
-
+@*                <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+*@
             </td>
         </tr>
 }
