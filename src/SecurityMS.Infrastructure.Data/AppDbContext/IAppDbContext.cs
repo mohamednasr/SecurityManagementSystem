@@ -57,5 +57,8 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<BankChequeDepositTransaction> BankChequeDepositTransaction { get; set; }
         DbSet<BankChequeWithdrawTransaction> BankChequeWithdrawTransaction { get; set; }
 
+        DbSet<ExchangeTypesLookups> ExchangeTypesLookup { get; set; }
+        DbSet<ExchangeEntity> ExchangeEntity { get; set; }
+        DbSet<ExchangeItems> ExhangeItems { get; set; }
     }
 }

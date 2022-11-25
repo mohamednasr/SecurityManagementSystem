@@ -35,7 +35,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     Id = s.Id,
                     EmployeeId = s.EmployeeId,
                     Employee = s.Employee,
-                    EmployeeShiftSalary = s.EmployeeShiftSalary,
+                    EmployeeSalary = s.EmployeeSalary,
                     IsActive = s.IsActive
                 }).ToList()
             };
@@ -82,7 +82,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             SiteEmployeesAssignEntity siteEmployee = new SiteEmployeesAssignEntity()
             {
                 SiteEmployeeId = id,
-                EmployeeShiftSalary = siteInfo.EmployeeShiftSalary
+                EmployeeSalary = siteInfo.EmployeeSalary
             };
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode");
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
@@ -93,7 +93,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SiteEmployeeId,EmployeeId,EmployeeShiftSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
+        public async Task<IActionResult> Create([Bind("SiteEmployeeId,EmployeeId,EmployeeSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
         {
             if (ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("SiteEmployeeId,EmployeeId,EmployeeShiftSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,EmployeeSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
         {
             if (id != siteEmployeesAssignEntity.Id)
             {
@@ -140,8 +140,11 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
-                    _context.Update(siteEmployeesAssignEntity);
+                    var siteEmployeeEntity = await _context.SiteEmployeesAssignEntities.FindAsync(siteEmployeesAssignEntity.Id);
+                    siteEmployeeEntity.EmployeeSalary = siteEmployeesAssignEntity.EmployeeSalary;
+                    _context.Update(siteEmployeeEntity);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index), new { id = siteEmployeeEntity.SiteEmployeeId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -204,7 +207,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var assignees = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).ToListAsync();
             assignees.ForEach(async assignee =>
             {
-                assignee.EmployeeShiftSalary = assignee.SiteEmployee.EmployeeShiftSalary;
+                assignee.EmployeeSalary = assignee.SiteEmployee.EmployeeSalary;
                 _context.Update(assignee);
             });
             await _context.SaveChangesAsync();

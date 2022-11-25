@@ -65,7 +65,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
                 var ExistedReport = await _context.SalariesReportDetails.Include(x => x.EmployeesSalaries).ThenInclude(e => e.Employee)
                     .Include(e => e.Site)
-                    .Where(r => r.SiteId == searchModel.SiteId && r.SalaryDateFrom == searchModel.SalaryFrom.Value && r.SalaryDateTo == searchModel.SalaryTo.Value)
+                    .Where(r => r.SiteId == searchModel.SiteId && r.SalaryDateFrom == searchModel.SalaryFrom.Value && r.SalaryDateTo == searchModel.SalaryTo.Value && !r.IsDeleted)
                     .FirstOrDefaultAsync();
                 if (ExistedReport != null)
                 {
@@ -78,11 +78,11 @@ namespace SecurityMS.Presentation.Web.Controllers
                     .Include(s => s.AssignedEmployees).ThenInclude(x => x.Employee).ThenInclude(e => e.Rewards)
                     .Include(s => s.AssignedEmployees).ThenInclude(x => x.Employee).ThenInclude(e => e.Penalities)
                     .Include(s => s.AssignedEmployees).ThenInclude(x => x.Employee).ThenInclude(e => e.AdvancedPayments)
-                                .Where(s => s.SiteId == searchModel.SiteId).ToListAsync();
+                                .Where(s => s.SiteId == searchModel.SiteId && !s.IsDeleted).ToListAsync();
 
                 var siteAttendance = await _context.SiteEmployeeAttendanceEntities
                     .Where(a => a.AttendanceDate >= searchModel.SalaryFrom.Value && a.AttendanceDate <= searchModel.SalaryTo.Value)
-                    .Where(a => a.SiteId == searchModel.SiteId.Value)
+                    .Where(a => a.SiteId == searchModel.SiteId.Value && !a.IsDeleted)
                     .ToListAsync();
 
                 SalaryReportDetails salaryReport = new SalaryReportDetails()
@@ -99,10 +99,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                     sitemEmployee.AssignedEmployees.ForEach(async e =>
                     {
                         var attendanceSheet = siteAttendance.Where(s => s.EmployeeId == e.EmployeeId).ToList();
-                        var absence = attendanceSheet.Where(a => a.AttendanceStatusId == (long)AttendanceStatusEnum.Absence).Sum(x => x.Penality.GetValueOrDefault(1));
-                        var breakDays = attendanceSheet.Count(a => a.AttendanceStatusId == (long)AttendanceStatusEnum.Break);
+                        var absence = attendanceSheet.Where(a => a.AttendanceStatusId == (long)AttendanceStatusEnum.Absence && !a.IsDeleted).Sum(x => x.Penality.GetValueOrDefault(1));
+                        var breakDays = attendanceSheet.Count(a => a.AttendanceStatusId == (long)AttendanceStatusEnum.Break && !a.IsDeleted);
 
-                        var advancedPayments = e.Employee.AdvancedPayments.Where(x => !x.IsPayed && x.InstallmentDate <= searchModel.SalaryFrom).ToList();
+                        var advancedPayments = e.Employee.AdvancedPayments.Where(x => !x.IsPayed && x.InstallmentDate <= searchModel.SalaryFrom && !x.IsDeleted).ToList();
 
 
                         var employee = new EmployeesSalaryReportDetails()
@@ -110,9 +110,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                             Id = Guid.NewGuid(),
                             EmployeeId = e.EmployeeId,
                             Employee = e.Employee,
-                            BaseSalary = e.EmployeeShiftSalary * ((30 - absence) + (4 - breakDays)),
-                            Rewards = e.Employee.Rewards.Where(x => x.RewardDate >= salaryReport.SalaryDateFrom && x.RewardDate <= salaryReport.SalaryDateTo).Sum(x => x.RewardValue).GetValueOrDefault(0),
-                            Penalities = e.Employee.Penalities.Where(x => x.PenalityDate >= salaryReport.SalaryDateFrom && x.PenalityDate <= salaryReport.SalaryDateTo).Sum(x => x.PenaltyValue).GetValueOrDefault(0),
+                            BaseSalary = e.EmployeeSalary,
+                            MonthSalary = (e.EmployeeSalary / 30) * ((30 - absence) + (4 - breakDays)),
+                            Rewards = e.Employee.Rewards.Where(x => x.RewardDate >= salaryReport.SalaryDateFrom && x.RewardDate <= salaryReport.SalaryDateTo && !x.IsDeleted).Sum(x => x.RewardValue).GetValueOrDefault(0),
+                            Penalities = e.Employee.Penalities.Where(x => x.PenalityDate >= salaryReport.SalaryDateFrom && x.PenalityDate <= salaryReport.SalaryDateTo && !x.IsDeleted).Sum(x => x.PenaltyValue).GetValueOrDefault(0),
                             AdvancePaymentInstallment = advancedPayments.Select(s => (decimal)(s.Amount / s.installments)).Sum()
                         };
                         employee.GetInsurance();
@@ -146,7 +147,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RecalculateSalaries([Bind("Id, EmployeeId, SalaryReportId, BaseSalary, Insurance, Penalities, Rewards, AdvancePaymentInstallment, Taxes, ExtraDeductions, TotalSalary")] EmployeesSalaryReportDetails salaryReport)
+        public async Task<IActionResult> RecalculateSalaries([Bind("Id, EmployeeId, SalaryReportId, BaseSalary,MonthSalary, Insurance, Penalities, Rewards, AdvancePaymentInstallment, Taxes, ExtraDeductions, TotalSalary")] EmployeesSalaryReportDetails salaryReport)
         {
             var TaxesMatrix = await _context.IncomeTaxesMatrix.ToListAsync();
 

@@ -61,7 +61,7 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<PurchaseItem> PurchaseItems { get; set; }
         public DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
         public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
-        public DbSet<BankAccountsEntity> BankAccounts{ get; set; }
+        public DbSet<BankAccountsEntity> BankAccounts { get; set; }
         public DbSet<BankTransactions> BankTransactions { get; set; }
 
         public DbSet<Supply> Supplies { get; set; }
@@ -69,6 +69,9 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
         public DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
         public DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
+        public DbSet<ExchangeTypesLookups> ExchangeTypesLookup { get; set; }
+        public DbSet<ExchangeEntity> ExchangeEntity { get; set; }
+        public DbSet<ExchangeItems> ExhangeItems { get; set; }
 
         public DbSet<TreasuryWithdrawPermissionTypesLookup> TreasuryWithdrawPermissionTypesLookup { get; set; }
         public DbSet<TreasuryDepositPermissionTypesLookup> TreasuryDepositPermissionTypesLookup { get; set; }
@@ -451,11 +454,24 @@ namespace SecurityMS.Infrastructure.Data
                 .HasForeignKey(e => e.EmployeeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.Entity<EmployeesSalaryReportDetails>()
-            //    .HasOne(e => e.SalaryReport)
-            //    .WithMany()
-            //    .HasForeignKey(e => e.SalaryReportId)
-            //    .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<ExchangeEntity>()
+                .HasOne(e => e.ExchangeType)
+                .WithMany()
+                .HasForeignKey(e => e.ExchangeTypeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ExchangeItems>()
+                .HasOne(e => e.Exchange)
+                .WithMany(e => e.ExchangeItems)
+                .HasForeignKey(e => e.ExchangeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<ExchangeItems>()
+                .HasOne(e => e.Item)
+                .WithMany()
+                .HasForeignKey(e => e.ItemId)
+                .OnDelete(DeleteBehavior.NoAction);
+
         }
 
     }

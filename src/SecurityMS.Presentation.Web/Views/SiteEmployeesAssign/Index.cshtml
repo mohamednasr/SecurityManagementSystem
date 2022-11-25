@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().EmployeeShiftSalary)
+                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().EmployeeSalary)
             </th>
             <th>
                 
@@ -36,7 +36,7 @@
                 @Html.DisplayFor(modelItem => item.Employee.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeShiftSalary)
+                    @Html.DisplayFor(modelItem => item.EmployeeSalary)
             </td>
             <td>
                 @if (!item.IsActive)

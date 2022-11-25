@@ -23,5 +23,11 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [ForeignKey("TypeId")]
         public virtual SupplyTypes SupplyType { get; set; }
         //public virtual List<ItemDetailsEntity> Items { get; set; }
+
+
+        public string GetSelectName()
+        {
+            return Code + " - " + Name + " (" + AvailableTotalCount + ")";
+        }
     }
 }

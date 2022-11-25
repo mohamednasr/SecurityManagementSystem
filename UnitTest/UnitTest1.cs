@@ -5,11 +5,13 @@ namespace UnitTest
     public class UnitTest1
     {
         private readonly List<IncomeTaxesMatrix> _incomeTaxesMatrix = new List<IncomeTaxesMatrix>() {
-            new IncomeTaxesMatrix() {Id = 1, RangeFrom = 0, RangeTo = 15000, TaxesPercentage = 0, TaxesExemption = 1},
-            new IncomeTaxesMatrix() {Id = 2, RangeFrom = 8000, RangeTo = 30000, TaxesPercentage = 0.1M, TaxesExemption = 0.85M },
-            new IncomeTaxesMatrix() {Id = 2, RangeFrom = 30000, RangeTo = 45000, TaxesPercentage = 0.15M, TaxesExemption = 0.45M },
-            new IncomeTaxesMatrix() {Id = 2, RangeFrom = 45000, RangeTo = 200000, TaxesPercentage = 0.2M, TaxesExemption =  0.075M},
-            new IncomeTaxesMatrix() {Id = 2, RangeFrom = 200000, TaxesPercentage = 0.225M, TaxesExemption = 0 },
+            new IncomeTaxesMatrix() {Id = 1, RangeFrom = 0, RangeTo = 30000, TaxesPercentage = 0, TaxesExemption = 0},
+            new IncomeTaxesMatrix() {Id = 2, RangeFrom = 15000, RangeTo = 30000, TaxesPercentage = 0.025M, TaxesExemption = 0M },
+            new IncomeTaxesMatrix() {Id = 3, RangeFrom = 30000, RangeTo = 45000, TaxesPercentage = 0.1M, TaxesExemption = 0M },
+            new IncomeTaxesMatrix() {Id = 4, RangeFrom = 45000, RangeTo = 60000, TaxesPercentage = 0.15M, TaxesExemption =  0M},
+            new IncomeTaxesMatrix() {Id = 4, RangeFrom = 60000, RangeTo = 200000, TaxesPercentage = 0.2M, TaxesExemption =  0M},
+            new IncomeTaxesMatrix() {Id = 4, RangeFrom = 200000, RangeTo = 600000, TaxesPercentage = 0.225M, TaxesExemption =  0M},
+            new IncomeTaxesMatrix() {Id = 5, RangeFrom = 600000, TaxesPercentage = 0.25M, TaxesExemption = 0 },
         };
         [Fact]
         public void calculateTaxes()
@@ -17,16 +19,16 @@ namespace UnitTest
             EmployeesSalaryReportDetails employeeSalary = new EmployeesSalaryReportDetails()
             {
                 Id = Guid.NewGuid(),
-                BaseSalary = 63735,
+                BaseSalary = 3286.67M,
                 AdvancePaymentInstallment = 0,
-                Insurance = 406,
+                Insurance = 0,
                 Penalities = 0,
                 ExtraDeductions = 0,
                 Rewards = 0
             };
             employeeSalary.CalculateTaxes(_incomeTaxesMatrix);
             var taxes = Math.Round(employeeSalary.Taxes);
-            Assert.Equal("13322", taxes.ToString());
+            Assert.Equal("20", taxes.ToString());
         }
 
         [Fact]
