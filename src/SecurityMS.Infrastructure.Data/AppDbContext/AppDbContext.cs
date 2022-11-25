@@ -65,6 +65,7 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<BankTransactions> BankTransactions { get; set; }
 
         public DbSet<Supply> Supplies { get; set; }
+        public DbSet<SupplierTypesLookups> SuppliersTypes { get; set; }
         public DbSet<SupplyItems> SupplyItems { get; set; }
         public DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
         public DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
@@ -99,8 +100,8 @@ namespace SecurityMS.Infrastructure.Data
                 );
 
             builder.Entity<ExpensesLookup>().HasData(
-                new ExpensesLookup { Id = 1 , Name = "بوفيه و ضيافة"},
-                new ExpensesLookup { Id = 2 , Name = "اجور و مرتبات"},
+                new ExpensesLookup { Id = 1, Name = "بوفيه و ضيافة" },
+                new ExpensesLookup { Id = 2, Name = "اجور و مرتبات" },
                 new ExpensesLookup { Id = 3, Name = "م.بنكية" },
                 new ExpensesLookup { Id = 4, Name = "رسوم" },
                 new ExpensesLookup { Id = 5, Name = "نثريات" },
@@ -376,6 +377,12 @@ namespace SecurityMS.Infrastructure.Data
                 .HasOne(e => e.Purchase)
                 .WithMany()
                 .HasForeignKey(e => e.PurchaseId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Supply>()
+                .HasOne(e => e.SupplierType)
+                .WithMany()
+                .HasForeignKey(e => e.SupplierTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<SupplyItems>()
