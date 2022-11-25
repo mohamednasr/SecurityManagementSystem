@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ItemsCount = 0;
 }
 
 <h1>Create</h1>
@@ -18,28 +19,7 @@
                 <select asp-for="PurchaseId" class ="form-control" asp-items="ViewBag.PurchaseId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="SupplyCode" class="control-label"></label>
-                <input asp-for="SupplyCode" class="form-control" />
-                <span asp-validation-for="SupplyCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupplyDate" class="control-label"></label>
-                <input asp-for="SupplyDate" type="date" class="form-control text-left" />
-                <span asp-validation-for="SupplyDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SupplierTypeId" class="control-label"></label>
-                <select asp-for="SupplierTypeId" class ="form-control" asp-items="ViewBag.SupplierTypeId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuppliedFromId" class="control-label"></label>
-                <input asp-for="SuppliedFromId" class="form-control" />
-                <span asp-validation-for="SuppliedFromId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SuppliedFromName" class="control-label"></label>
-                <input asp-for="SuppliedFromName" class="form-control" />
-                <span asp-validation-for="SuppliedFromName" class="text-danger"></span>
+
             </div>
             <div class="form-group d-none">
                 <label asp-for="CreatedAt" class="control-label"></label>
@@ -66,8 +46,9 @@
                     <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
                 </label>
             </div>
+            
             <div class="form-group">
-                <input type="submit" value="حفظ" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

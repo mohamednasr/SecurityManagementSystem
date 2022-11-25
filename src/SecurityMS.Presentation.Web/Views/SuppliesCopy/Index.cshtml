@@ -14,24 +14,9 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SupplyCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupplyDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SuppliedFromId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SuppliedFromName)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Purchase)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SupplierType)
-            </th>
-           @* <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
             </th>
             <th>
@@ -45,7 +30,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>*@
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -53,24 +38,9 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.SupplyCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplyDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SuppliedFromId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SuppliedFromName)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Purchase.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SupplierType.Name)
-            </td>
-@*            <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
@@ -84,7 +54,7 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>*@
+            </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

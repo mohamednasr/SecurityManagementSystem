@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
-    public class SuppliesController : Controller
+    public class SuppliesCopyController : Controller
     {
         private readonly AppDbContext _context;
 
-        public SuppliesController(AppDbContext context)
+        public SuppliesCopyController(AppDbContext context)
         {
             _context = context;
         }
@@ -20,7 +20,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Supplies
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Supplies.Include(s => s.Purchase).Include(s => s.SupplierType);
+            var appDbContext = _context.Supplies.Include(s => s.Purchase);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -34,7 +34,6 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             var supply = await _context.Supplies
                 .Include(s => s.Purchase)
-                .Include(s => s.SupplierType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (supply == null)
             {
@@ -47,8 +46,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Supplies/Create
         public IActionResult Create()
         {
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "PurchaseCode");
-            ViewData["SupplierTypeId"] = new SelectList(_context.SuppliersTypes, "Id", "Name");
+            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Id");
             return View();
         }
 
@@ -57,7 +55,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PurchaseId,SupplyCode,SupplyDate,SupplierTypeId,SuppliedFromId,SuppliedFromName,Id,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsDeleted")] Supply supply)
+        public async Task<IActionResult> Create([Bind("PurchaseId,SupplyDate")] Supply supply)
         {
             if (ModelState.IsValid)
             {
@@ -65,8 +63,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "PurchaseCode", supply.PurchaseId);
-            ViewData["SupplierTypeId"] = new SelectList(_context.SuppliersTypes, "Id", "Name", supply.SupplierTypeId);
+            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Id", supply.PurchaseId);
             return View(supply);
         }
 
@@ -83,8 +80,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "PurchaseCode", supply.PurchaseId);
-            ViewData["SupplierTypeId"] = new SelectList(_context.SuppliersTypes, "Id", "Name", supply.SupplierTypeId);
+            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Name", supply.PurchaseId);
             return View(supply);
         }
 
@@ -93,7 +89,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("PurchaseId,SupplyCode,SupplyDate,SupplierTypeId,SuppliedFromId,SuppliedFromName,Id,CreatedAt,CreatedBy,UpdatedAt,UpdatedBy,IsDeleted")] Supply supply)
+        public async Task<IActionResult> Edit(long id, [Bind("PurchaseId,SupplyDate")] Supply supply)
         {
             if (id != supply.Id)
             {
@@ -120,8 +116,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "PurchaseCode", supply.PurchaseId);
-            ViewData["SupplierTypeId"] = new SelectList(_context.SuppliersTypes, "Id", "Name", supply.SupplierTypeId);
+            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "Name", supply.PurchaseId);
             return View(supply);
         }
 
@@ -135,7 +130,6 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             var supply = await _context.Supplies
                 .Include(s => s.Purchase)
-                .Include(s => s.SupplierType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (supply == null)
             {
