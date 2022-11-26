@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
+using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +23,9 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Supplies
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Supplies.Include(s => s.Purchase).Include(s => s.SupplierType);
+            var appDbContext = _context.Supplies
+                //.Include(s => s.Purchase)
+                .Include(s => s.SupplierType);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -33,7 +38,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             }
 
             var supply = await _context.Supplies
-                .Include(s => s.Purchase)
+                //.Include(s => s.Purchase)
                 .Include(s => s.SupplierType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (supply == null)
@@ -45,10 +50,29 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: Supplies/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "PurchaseCode");
+            var PurchasesIds = new List<SelectModel>();
+            PurchasesIds.Add(new SelectModel() { Id = 0, Name = "أختر أمر الشراء" });
+            PurchasesIds.AddRange(await _context.Purchases.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+            {
+                Id = e.Id,
+                Name = e.PurchaseCode
+            }).ToListAsync());
+
+            ViewData["PurchaseId"] = new SelectList(PurchasesIds, "Id", "Name");
+
             ViewData["SupplierTypeId"] = new SelectList(_context.SuppliersTypes, "Id", "Name");
+
+            var SupplyFromIds = new List<SelectModel>();
+            SupplyFromIds.Add(new SelectModel() { Id = 0, Name = "أختر جهه التوريد" });
+            SupplyFromIds.AddRange(await _context.Suppliers.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+            {
+                Id = e.Id,
+                Name = e.SupplierName
+            }).ToListAsync());
+            ViewData["SuppliedFromId"] = new SelectList(SupplyFromIds, "Id", "Name");
+
             return View();
         }
 
@@ -65,8 +89,28 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PurchaseId"] = new SelectList(_context.Purchases, "Id", "PurchaseCode", supply.PurchaseId);
+
+            var PurchasesIds = new List<SelectModel>();
+            PurchasesIds.Add(new SelectModel() { Id = 0, Name = "أختر أمر الشراء" });
+            PurchasesIds.AddRange(await _context.Purchases.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+            {
+                Id = e.Id,
+                Name = e.PurchaseCode
+            }).ToListAsync());
+
+            ViewData["PurchaseId"] = new SelectList(PurchasesIds, "Id", "Name", supply.PurchaseId);
             ViewData["SupplierTypeId"] = new SelectList(_context.SuppliersTypes, "Id", "Name", supply.SupplierTypeId);
+
+            var SupplyFromIds = new List<SelectModel>();
+            SupplyFromIds.Add(new SelectModel() { Id = 0, Name = "أختر جهه التوريد" });
+            SupplyFromIds.AddRange(await _context.Suppliers.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+            {
+                Id = e.Id,
+                Name = e.SupplierName
+            }).ToListAsync());
+            ViewData["SuppliedFromId"] = new SelectList(SupplyFromIds, "Id", "Name");
+
+
             return View(supply);
         }
 
@@ -134,7 +178,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             }
 
             var supply = await _context.Supplies
-                .Include(s => s.Purchase)
+                //.Include(s => s.Purchase)
                 .Include(s => s.SupplierType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (supply == null)
@@ -162,6 +206,34 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<List<SelectModel>> GetsupplyFromIds(int id)
+        {
+            switch (id)
+            {
+                case (int)SupplierTypeEnum.Supplier:
+                    return await _context.Suppliers.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+                    {
+                        Id = e.Id,
+                        Name = e.SupplierName
+                    }).ToListAsync();
+                case (int)SupplierTypeEnum.Site:
+                    return await _context.SitesEntities.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+                    {
+                        Id = e.Id,
+                        Name = e.Name
+                    }).ToListAsync();
+                case (int)SupplierTypeEnum.Personal:
+                    return await _context.EmployeesEntities.Where(s => !s.IsDeleted).Select(e => new SelectModel()
+                    {
+                        Id = e.Id,
+                        Name = e.Name
+                    }).ToListAsync();
+                default:
+                    return new List<SelectModel>();
+
+            }
         }
 
         private bool SupplyExists(long id)

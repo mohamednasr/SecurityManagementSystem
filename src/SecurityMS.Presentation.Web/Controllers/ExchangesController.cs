@@ -87,7 +87,22 @@ namespace SecurityMS.Presentation.Web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExchangeTypeId"] = new SelectList(_context.ExchangeTypesLookup, "Id", "Name", exchangeEntity.ExchangeTypeId);
+            ViewData["ExchangeTypeId"] = new SelectList(_context.ExchangeTypesLookup, "Id", "Name");
+            ViewData["Items"] = new SelectList(await _context.Items.Select(i => new SelectModel()
+            {
+                Id = i.Id,
+                Name = i.GetSelectName()
+            }).ToListAsync(), "Id", "Name");
+
+            var ExchangeTargetIds = new List<SelectModel>();
+            ExchangeTargetIds.Add(new SelectModel() { Id = 0, Name = "أختر جهه الصرف" });
+            ExchangeTargetIds.AddRange(await _context.EmployeesEntities.Select(e => new SelectModel()
+            {
+                Id = e.Id,
+                Name = e.Name
+            }).ToListAsync());
+            ViewData["ExchangeToIds"] = new SelectList(ExchangeTargetIds, "Id", "Name");
+
             return View(exchangeEntity);
         }
 
@@ -252,13 +267,13 @@ namespace SecurityMS.Presentation.Web.Controllers
             switch (id)
             {
                 case (int)ExchangeTypeEnum.Personal:
-                    return await _context.EmployeesEntities.Select(e => new SelectModel()
+                    return await _context.EmployeesEntities.Where(s => !s.IsDeleted).Select(e => new SelectModel()
                     {
                         Id = e.Id,
                         Name = e.Name
                     }).ToListAsync();
                 case (int)ExchangeTypeEnum.Site:
-                    return await _context.SitesEntities.Select(e => new SelectModel()
+                    return await _context.SitesEntities.Where(s => !s.IsDeleted).Select(e => new SelectModel()
                     {
                         Id = e.Id,
                         Name = e.Name

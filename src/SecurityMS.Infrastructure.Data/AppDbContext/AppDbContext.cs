@@ -373,11 +373,11 @@ namespace SecurityMS.Infrastructure.Data
                 .HasForeignKey(e => e.ItemId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Supply>()
-                .HasOne(e => e.Purchase)
-                .WithMany()
-                .HasForeignKey(e => e.PurchaseId)
-                .OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<Supply>()
+            //    .HasOne(e => e.Purchase)
+            //    .WithMany()
+            //    .HasForeignKey(e => e.PurchaseId)
+            //    .OnDelete(DeleteBehavior.NoAction);
 
             builder.Entity<Supply>()
                 .HasOne(e => e.SupplierType)

@@ -92,7 +92,6 @@
 
             var name = $(this).find('option[value='+$(this).val() + ']').html();
             $("#exchangeName").val(name);
-            debugger;
         })
 
         function getExchangeTargetIds(exchangeTo) {
@@ -180,7 +179,6 @@
                 dataType: 'json', // lowercase is always preferered though jQuery does it, too.
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
-                    console.log(res);
                     if (res == true){
                         window.history.back();
                     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SecurityMS.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using SecurityMS.Infrastructure.Data;
 namespace SecurityMS.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221125234821_insertSuppliesFromType")]
+    partial class insertSuppliesFromType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2500,10 +2502,10 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<long?>("PurchaseId")
+                    b.Property<long>("PurchaseId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("SuppliedFromId")
+                    b.Property<long>("SuppliedFromId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("SuppliedFromName")
@@ -2525,6 +2527,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PurchaseId");
 
                     b.HasIndex("SupplierTypeId");
 
@@ -3477,11 +3481,19 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supply", b =>
                 {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.Purchases", "Purchase")
+                        .WithMany()
+                        .HasForeignKey("PurchaseId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.SupplierTypesLookups", "SupplierType")
                         .WithMany()
                         .HasForeignKey("SupplierTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Purchase");
 
                     b.Navigation("SupplierType");
                 });

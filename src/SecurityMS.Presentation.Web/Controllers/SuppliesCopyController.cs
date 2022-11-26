@@ -20,7 +20,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: Supplies
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Supplies.Include(s => s.Purchase);
+            var appDbContext = _context.Supplies;//.Include(s => s.Purchase);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             }
 
             var supply = await _context.Supplies
-                .Include(s => s.Purchase)
+                //.Include(s => s.Purchase)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (supply == null)
             {
@@ -129,7 +129,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             }
 
             var supply = await _context.Supplies
-                .Include(s => s.Purchase)
+                //.Include(s => s.Purchase)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (supply == null)
             {
