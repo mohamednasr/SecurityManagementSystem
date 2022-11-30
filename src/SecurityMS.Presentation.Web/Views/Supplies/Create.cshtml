@@ -5,9 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>اضافه توريد</h1>
 
-<h4>Supply</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="SupplyCode" class="control-label"></label>
-                <input asp-for="SupplyCode" class="form-control" />
+                <input asp-for="SupplyCode" readonly class="form-control" />
                 <span asp-validation-for="SupplyCode" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -28,8 +27,8 @@
                 <select asp-for="SupplierTypeId" class ="form-control" asp-items="ViewBag.SupplierTypeId"></select>
             </div>
             <div class="form-group" id="PurchaseIdRow">
-                <label asp-for="PurchaseId" class="control-label"></label>
-                <select asp-for="PurchaseId" class ="form-control" asp-items="ViewBag.PurchaseId"></select>
+                <label asp-for="PurchaseCode" class="control-label"></label>
+                <select asp-for="PurchaseCode" class ="form-control" asp-items="ViewBag.PurchaseCode"></select>
             </div>
             <div class="form-group" id="suppliedFromRow">
                 <label asp-for="SuppliedFromId" class="control-label"></label>
@@ -73,8 +72,9 @@
     </div>
 </div>
 
+
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">رجوع الي القائمة</a>
 </div>
 
             

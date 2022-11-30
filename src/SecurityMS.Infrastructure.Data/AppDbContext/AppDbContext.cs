@@ -361,23 +361,24 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<Purchases>()
                 .HasMany(e => e.Items)
-                .WithOne()
+                .WithOne(e => e.Purchase)
                 .HasForeignKey(e => e.PurchaseId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<Purchases>()
+                .HasIndex(e => e.PurchaseCode)
+                .IsUnique();
+
             builder.Entity<PurchaseItem>()
                 .HasKey(k => new { k.PurchaseId, k.ItemId });
+
             builder.Entity<PurchaseItem>()
                 .HasOne(e => e.Item)
                 .WithMany()
                 .HasForeignKey(e => e.ItemId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //builder.Entity<Supply>()
-            //    .HasOne(e => e.Purchase)
-            //    .WithMany()
-            //    .HasForeignKey(e => e.PurchaseId)
-            //    .OnDelete(DeleteBehavior.NoAction);
+
 
             builder.Entity<Supply>()
                 .HasOne(e => e.SupplierType)
@@ -387,7 +388,7 @@ namespace SecurityMS.Infrastructure.Data
 
             builder.Entity<SupplyItems>()
                 .HasOne(e => e.Supply)
-                .WithMany()
+                .WithMany(e => e.SupplyItems)
                 .HasForeignKey(e => e.SupplyId)
                 .OnDelete(DeleteBehavior.NoAction);
 

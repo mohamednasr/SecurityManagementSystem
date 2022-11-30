@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.Supply>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "التوريدات";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>التوريدات</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">اضافة توريد</a>
 </p>
 <table class="table">
     <thead>
@@ -20,77 +20,41 @@
                 @Html.DisplayNameFor(model => model.SupplyDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SuppliedFromId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.SuppliedFromName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PurchaseId)
+                @Html.DisplayNameFor(model => model.PurchaseCode)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SupplierType)
             </th>
-           @* <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsDeleted)
-            </th>*@
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplyCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplyDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SuppliedFromId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SuppliedFromName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PurchaseId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierType.Name)
-            </td>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDeleted)
-            </td>*@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplyCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplyDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SuppliedFromName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PurchaseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierType.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

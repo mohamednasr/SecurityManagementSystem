@@ -38,6 +38,8 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             var exchangeEntity = await _context.ExchangeEntity
                 .Include(e => e.ExchangeType)
+                .Include(e => e.ExchangeItems)
+                .ThenInclude(i => i.Item)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (exchangeEntity == null)
             {
@@ -243,6 +245,10 @@ namespace SecurityMS.Presentation.Web.Controllers
                             throw new Exception("الكمية المطلوبة غير متوفره");
                         }
                         SelectedItem.AvailableTotalCount = SelectedItem.AvailableTotalCount - e.Quantity;
+                        if (ExchangeData.ExchangeTypeId == (int)ExchangeTypeEnum.Destroyed)
+                        {
+                            SelectedItem.TotalCount = SelectedItem.TotalCount - e.Quantity;
+                        }
                         _context.Items.Update(SelectedItem);
                         ExchangeData.ExchangeItems.Add(ExchangeItem);
                     });

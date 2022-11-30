@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "إداره المخازن";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,41 +9,41 @@
         <div class="col-lg-3 col-md-4 col-sm-6">
             <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Supplies">التوريدات</a>
         </div>
-       @* <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">المعدات</a>
+        @* <div class="col-lg-3 col-md-4 col-sm-6">
+        <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">المعدات</a>
         </div>*@
 
         <div class="col-lg-3 col-md-4 col-sm-6">
             <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Items">الأصناف</a>
         </div>
 
-      @*  <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Uniforms">الملابس</a>
+        @*  <div class="col-lg-3 col-md-4 col-sm-6">
+        <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Uniforms">الملابس</a>
         </div>*@
 
         <div class="col-lg-3 col-md-4 col-sm-6">
             <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Exchanges">صرف</a>
         </div>
-@*
+        @*
         <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">صرف موقع</a>
+        <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">صرف موقع</a>
         </div>
-*@
-  @*      <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">طلبات صيانه</a>
+        *@
+        @*      <div class="col-lg-3 col-md-4 col-sm-6">
+        <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">طلبات صيانه</a>
         </div>*@
     </div>
     <hr />
     <div class="row">
         <h4 class="col-12">تقارير</h4>
-       @* <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">إعاده الطلب</a>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="UnderMinimumItems" asp-controller="Items">إعاده الطلب</a>
+        </div>
+        @* <div class="col-lg-3 col-md-4 col-sm-6">
+        <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">اصناف بالصيانه</a>
         </div>
         <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">اصناف بالصيانه</a>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-6">
-            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">هالك</a>
+        <a class="btn btn-dark w-100" asp-action="Index" asp-controller="Equipments">هالك</a>
         </div>*@
     </div>
 </section>

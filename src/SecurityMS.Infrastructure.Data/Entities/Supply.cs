@@ -7,14 +7,14 @@ namespace SecurityMS.Infrastructure.Data.Entities
 {
     public class Supply : BaseEntity<long>
     {
-        [Display(Name = "رقم امر الشراء")]
-        public long? PurchaseId { get; set; }
+        [Display(Name = "كود امر الشراء")]
+        public string PurchaseCode { get; set; }
 
-        [Display(Name = "كود فاتورة التوريد")]
+        [Display(Name = "كود اذن التوريد")]
         public string SupplyCode { get; set; }
 
         [Display(Name = "تاريخ التوريد")]
-        public DateTime SupplyDate { get; set; }
+        public DateTime SupplyDate { get; set; } = DateTime.Now;
 
         [Display(Name = "نوع التوريد")]
         public int SupplierTypeId { get; set; }

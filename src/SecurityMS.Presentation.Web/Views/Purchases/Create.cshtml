@@ -2,10 +2,10 @@
 @model Purchases
 
 @{
-    ViewData["Title"] = "إضافة مورد";
+    ViewData["Title"] = "إضافة أمر شراء";
 }
 
-<h1>إضافة مورد</h1>
+<h1>إضافة أمر شراء</h1>
 
 <hr />
 <div class="row">
@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-6">
                 <label asp-for="PurchaseCode" class="control-label"></label>
-                <input asp-for="PurchaseCode" class="form-control" />
+                <input asp-for="PurchaseCode" readonly class="form-control" />
                 <span asp-validation-for="PurchaseCode" class="text-danger"></span>
             </div>
              <div class="form-group col-6">
@@ -97,9 +97,16 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     console.log(res);
-                    if (res == true); {
+                    if (res == true) {
                         window.history.back();
                     }
+                    else{
+                        alert(res)
+                    }
+                },
+                
+                error: function (res){
+                        alert("كود الصنف موجود مسبقا")
                 }
             });
         })
