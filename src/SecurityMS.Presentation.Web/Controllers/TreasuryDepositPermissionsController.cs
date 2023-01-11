@@ -223,7 +223,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return Json(BankAccounts);
 
             }
-            else if (id == 4)
+            else if (id == 5)
             {
                 Customers = _context.CustomersEntities.ToList();
                 return Json(Customers);
