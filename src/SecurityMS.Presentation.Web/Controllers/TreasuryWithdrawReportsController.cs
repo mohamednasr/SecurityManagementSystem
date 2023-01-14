@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,7 +55,7 @@ namespace SecurityMS.Presentation.Web.Controllers
 
 
             }
-                return Json(reports);
+            return Json(reports);
 
 
         }

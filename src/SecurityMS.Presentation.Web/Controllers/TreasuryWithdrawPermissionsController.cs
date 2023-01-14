@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
@@ -22,7 +21,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appDbContext = await _context.TreasuryWithdrawPermission.Include(t=>t.Type).ToListAsync();
+            var appDbContext = await _context.TreasuryWithdrawPermission.Include(t => t.Type).ToListAsync();
             ViewBag.PermissionsNumber = appDbContext.Count;
             return View(appDbContext);
 
@@ -140,7 +139,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
-                    
+
                     _context.Update(withdrawentity);
                     await _context.SaveChangesAsync();
                 }
@@ -202,7 +201,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         [HttpPost]
-        public  JsonResult PopulateBenfCode(int id)
+        public JsonResult PopulateBenfCode(int id)
         {
 
             var SuppliersList = new List<Supplier>();
@@ -210,7 +209,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var AssetsList = new List<AssetsLookup>();
             var Employees = new List<EmployeesEntity>();
 
-            if(id == 0) return Json(new object[] { "why is it coming in with zero" });
+            if (id == 0) return Json(new object[] { "why is it coming in with zero" });
 
             if (id == 1 || id == 2)
             {
@@ -224,7 +223,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return Json(SuppliersList);
 
             }
-            else if (id == 4) 
+            else if (id == 4)
             {
                 AssetsList = _context.AssetsLookup.ToList();
                 return Json(AssetsList);

@@ -1,15 +1,9 @@
-﻿using MNS.Repository;
-using System;
-using System.Collections.Generic;
+﻿using SecurityMS.Repository;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace SecurityMS.Infrastructure.Data.Entities
 {
-    public class CompanyInfo: BaseEntity<int>
+    public class CompanyInfo : BaseEntity<int>
     {
         [Display(Name = "الأسم")]
         public string Name { get; set; }

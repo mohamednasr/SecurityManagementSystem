@@ -26,7 +26,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             BankAccountsEntity Bank = _context.BankAccounts.FindAsync(id).Result;
             ViewBag.Bank = Bank;
             ViewBag.Transactions = appDbContext.Count;
-            return View( appDbContext);
+            return View(appDbContext);
         }
         public IActionResult Create(int? id)
         {

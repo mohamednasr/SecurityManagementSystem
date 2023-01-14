@@ -10,7 +10,7 @@ namespace SecurityMS.Core.Models
         public long SiteEmployeeId { get; set; }
         [Display(Name = "الموقع")]
         public SiteEmployeesEntity SiteEmployee { get; set; }
-        
+
         public List<SiteEmployeesAssignListModel> SiteAssignedEmployees { get; set; }
     }
 }

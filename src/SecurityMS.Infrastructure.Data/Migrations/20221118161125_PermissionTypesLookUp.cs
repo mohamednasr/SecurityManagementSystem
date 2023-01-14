@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 #nullable disable
 
@@ -65,7 +65,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     table.PrimaryKey("PK_AssetsLookup", x => x.Id);
                 });
 
-          
+
 
             migrationBuilder.CreateTable(
                 name: "ExpensesLookup",
@@ -208,7 +208,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                 table: "TreasuryDepositPermission",
                 column: "TypeId");
 
-      
+
             migrationBuilder.AddForeignKey(
                 name: "FK_TreasuryDepositPermission_TreasuryDepositPermissionTypesLookup_TypeId",
                 table: "TreasuryDepositPermission",

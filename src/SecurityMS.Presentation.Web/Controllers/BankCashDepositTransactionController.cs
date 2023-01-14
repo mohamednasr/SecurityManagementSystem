@@ -19,7 +19,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appDbContext = await _context.BankCashDepositTransaction.Include(e=>e.BankAccount).ToListAsync();
+            var appDbContext = await _context.BankCashDepositTransaction.Include(e => e.BankAccount).ToListAsync();
 
             ViewBag.Transactions = appDbContext.Count;
             return View(appDbContext);

@@ -2,6 +2,6 @@
 {
     public abstract class BaseModel<T>
     {
-       public long Id { get; set; }
+        public long Id { get; set; }
     }
 }
