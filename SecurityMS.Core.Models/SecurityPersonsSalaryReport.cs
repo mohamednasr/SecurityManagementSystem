@@ -12,33 +12,45 @@ namespace SecurityMS.Core.Models
 
     public class SecurityPersonsSalaryReport
     {
-        [Display(Name ="الأسم")]
+        [Display(Name = "الأسم")]
         public string EmployeeName { get; set; }
 
-        [Display(Name ="حضور")]
+        [Display(Name = "حضور")]
         public int Attendance { get; set; }
 
-        [Display(Name ="غياب")]
+        [Display(Name = "غياب")]
         public int Absence { get; set; }
 
-        [Display(Name ="اذن")]
+        [Display(Name = "اذن")]
         public int Apologizes { get; set; }
 
-        [Display(Name ="راحه")]
+        [Display(Name = "راحه")]
         public int BreakDays { get; set; }
 
-        [Display(Name ="أجازه")]
+        [Display(Name = "أجازه")]
         public int Vacation { get; set; }
 
-        [Display(Name ="صافى الراتب")]
+        [Display(Name = "صافى الراتب")]
         public decimal FinalSalary { get; set; }
     }
 
     public class SalarySearchModel
     {
+        [Display(Name = "أسم الموظف")]
         public string EmployeeName { get; set; }
-        public int Month { get; set; } = DateTime.Now.Month;
 
-        public int Year { get; set; } = DateTime.Now.Year;
+        [Display(Name = "الموقع")]
+        public long? SiteId { get; set; }
+
+        [Display(Name = "من")]
+        public DateTime? SalaryFrom { get; set; }
+
+        [Display(Name = "إلي")]
+        public DateTime? SalaryTo { get; set; }
+        public int? Month { get; set; } = DateTime.Now.Month;
+
+        public int? Year { get; set; } = DateTime.Now.Year;
+
+
     }
 }

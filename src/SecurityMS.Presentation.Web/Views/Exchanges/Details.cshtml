@@ -1,0 +1,53 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.ExchangeEntity
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>تفاصيل اذن صرف</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ExchangeDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.ExchangeDate.ToShortDateString()
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ExchangeTo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ExchangeName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ExchangeType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ExchangeType.Name)
+        </dd>
+    </dl>
+    @if (Model.ExchangeItems != null)
+    {
+        <h5>الأصناف</h5>
+        @foreach (var item in Model.ExchangeItems)
+        {
+            <div class="col-12">
+                <div class="row">
+                    <dt class="col-sm-2">
+                        @item.Item.Name
+                    </dt>
+                    <dd class="col-sm-10">
+                        @item.ItemQuantity
+                    </dd>
+                </div>
+            </div>
+
+        }
+    }
+</div>
+<div>
+    <a asp-action="Index">رجوع</a>
+</div>

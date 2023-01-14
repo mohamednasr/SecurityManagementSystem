@@ -1,0 +1,129 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.Supply
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>اضافه توريد</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SupplyCode" class="control-label"></label>
+                <input asp-for="SupplyCode" readonly class="form-control" />
+                <span asp-validation-for="SupplyCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplyDate" class="control-label"></label>
+                <input asp-for="SupplyDate" type="date" class="form-control text-left" />
+                <span asp-validation-for="SupplyDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierTypeId" class="control-label"></label>
+                <select asp-for="SupplierTypeId" class ="form-control" asp-items="ViewBag.SupplierTypeId"></select>
+            </div>
+            <div class="form-group" id="PurchaseIdRow">
+                <label asp-for="PurchaseCode" class="control-label"></label>
+                <select asp-for="PurchaseCode" class ="form-control" asp-items="ViewBag.PurchaseCode"></select>
+            </div>
+            <div class="form-group" id="suppliedFromRow">
+                <label asp-for="SuppliedFromId" class="control-label"></label>
+                <select asp-for="SuppliedFromId" class="form-control" id="SuppliedFromId" asp-items="ViewBag.SuppliedFromId"></select>
+                <span asp-validation-for="SuppliedFromId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuppliedFromName" class="control-label"></label>
+                <input asp-for="SuppliedFromName" class="form-control" readonly="true"/>
+                <span asp-validation-for="SuppliedFromName" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" />
+                <span asp-validation-for="CreatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="CreatedBy" class="control-label"></label>
+                <input asp-for="CreatedBy" class="form-control" />
+                <span asp-validation-for="CreatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="UpdatedAt" class="control-label"></label>
+                <input asp-for="UpdatedAt" class="form-control" />
+                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group d-none">
+                <label asp-for="UpdatedBy" class="control-label"></label>
+                <input asp-for="UpdatedBy" class="form-control" />
+                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="حفظ" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">رجوع الي القائمة</a>
+</div>
+
+            
+@section Scripts{
+    <script>
+
+        $("#SupplierTypeId").change(function () {
+            getSupplyFromIds($(this).val());
+        })
+
+        $("#SuppliedFromId").change(function () {
+
+            var name = $(this).find('option[value='+$(this).val() + ']').html();
+            $("#SuppliedFromName").val(name);
+        })
+
+        function getSupplyFromIds(supplyFromId) {
+            switch (supplyFromId){
+                case "1":
+                case "2":
+                case "3":
+                    if(supplyFromId == 1)
+                        $("#PurchaseIdRow").removeClass('d-none');
+                    else
+                        $("#PurchaseIdRow").addClass('d-none');
+
+                    $.get("/Supplies/GetsupplyFromIds/" + supplyFromId).done(function (response) {
+                        $("#SuppliedFromId").html("");
+                        $("#SuppliedFromId").append(new Option("أختر جهه التوريد", ""))
+
+                        response.forEach(item => {
+                            $("#SuppliedFromId").append(new Option(item.name, item.id))
+                        });
+
+                        $("#suppliedFromRow").removeClass('d-none');
+                        $("#SuppliedFromId").select2();
+                    });
+                    $("#SuppliedFromName").attr('readonly', 'readonly');
+                break;
+                default:
+                    $("#SuppliedFromId").html("");
+                    $("#SuppliedFromId").val(0);
+                    $("#suppliedFromRow").addClass('d-none');
+                    $("#SuppliedFromName").attr('readonly', false);
+                break;
+            }
+            $("#SuppliedFromName").val('');
+        }
+
+        
+    </script>
+}

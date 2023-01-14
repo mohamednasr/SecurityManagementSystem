@@ -1,0 +1,36 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.TreasuryDepositPermissionEntity
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>تفاصيل اذن الاستلام</h1>
+
+<div>
+    <hr />
+    <div >
+        <div>
+            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayFor(model => model.Date)
+        </div>
+        <div >
+
+            @Html.DisplayNameFor(model => model.Value)
+            @Html.DisplayFor(model => model.Value)
+        </div>
+        <div >
+            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayFor(model => model.Description)
+        </div>
+        <div >
+            @Html.DisplayNameFor(model => model.TypeId)
+            @Html.DisplayFor(model => model.TypeId)
+        </div>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">تعديل</a>
+</div>
+*@

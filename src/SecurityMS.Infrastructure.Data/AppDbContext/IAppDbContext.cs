@@ -39,7 +39,27 @@ namespace SecurityMS.Infrastructure.Data
         DbSet<SupplyTypes> SupplyTypes { get; set; }
         DbSet<Purchases> Purchases { get; set; }
         DbSet<PurchaseItem> PurchaseItems { get; set; }
+        DbSet<TreasuryDepositPermissionEntity> TreasuryDepositPermission { get; set; }
+        DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
+        DbSet<BankAccountsEntity> BankAccounts { get; set; }
+        DbSet<BankTransactions> BankTransactions { get; set; }
+        DbSet<SalaryReportDetails> SalariesReportDetails { get; set; }
+        DbSet<EmployeesSalaryReportDetails> SalariesReportEmployeesReports { get; set; }
+        DbSet<Supply> Supplies { get; set; }
+        DbSet<SupplyItems> SupplyItems { get; set; }
+        DbSet<IncomeTaxesMatrix> IncomeTaxesMatrix { get; set; }
+        DbSet<TreasuryWithdrawPermissionTypesLookup> TreasuryWithdrawPermissionTypesLookup { get; set; }
+        DbSet<TreasuryDepositPermissionTypesLookup> TreasuryDepositPermissionTypesLookup { get; set; }
+        DbSet<ExpensesLookup> ExpensesLookup { get; set; }
+        DbSet<AssetsLookup> AssetsLookup { get; set; }
+        DbSet<BankCashDepositTransaction> BankCashDepositTransaction { get; set; }
+        DbSet<BankCashWithdrawTransaction> BankCashWithdrawTransaction { get; set; }
+        DbSet<BankChequeDepositTransaction> BankChequeDepositTransaction { get; set; }
+        DbSet<BankChequeWithdrawTransaction> BankChequeWithdrawTransaction { get; set; }
         DbSet<CompanyInfo> CompanyInfo { get; set; }
 
+        DbSet<ExchangeTypesLookups> ExchangeTypesLookup { get; set; }
+        DbSet<ExchangeEntity> ExchangeEntity { get; set; }
+        DbSet<ExchangeItems> ExhangeItems { get; set; }
     }
 }

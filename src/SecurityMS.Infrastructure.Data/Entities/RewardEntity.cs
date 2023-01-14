@@ -1,4 +1,4 @@
-﻿using MNS.Repository;
+﻿using SecurityMS.Repository;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,9 +14,11 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "نوع الحافز")]
         public int RewardType { get; set; }
         [Display(Name = "القيمه / الأيام")]
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         [Display(Name = "السبب")]
         public string Reason { get; set; }
+
+        public decimal? RewardValue { get; set; }
 
         [Display(Name = "الموظف")]
         public virtual EmployeesEntity Employee { get; set; }

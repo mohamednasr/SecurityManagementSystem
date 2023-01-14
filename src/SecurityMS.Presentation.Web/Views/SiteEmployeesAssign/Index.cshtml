@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().EmployeeShiftSalary)
+                @Html.DisplayNameFor(model => model.SiteAssignedEmployees.FirstOrDefault().EmployeeSalary)
             </th>
             <th>
                 
@@ -36,7 +36,7 @@
                 @Html.DisplayFor(modelItem => item.Employee.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeShiftSalary)
+                    @Html.DisplayFor(modelItem => item.EmployeeSalary)
             </td>
             <td>
                 @if (!item.IsActive)
@@ -46,9 +46,9 @@
                 @*@Html.DisplayFor(modelItem => item.IsActive)*@
             </td>
             <td>
-                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Deactive</a>*@
+                    <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-eye"></i></a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         }

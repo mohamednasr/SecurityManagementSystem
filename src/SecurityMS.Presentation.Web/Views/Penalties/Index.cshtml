@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>الجزائات</h1>
+<h2>الجزائات</h2>
 
-@*<p>
+@*<p">
     <a asp-action="Create">Create New</a>
 </p>*@
 <table class="table">
@@ -55,3 +55,9 @@
         }
     </tbody>
 </table>
+        <div class="row">
+    <div class="col-12 mt-3 text-right">
+        
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>

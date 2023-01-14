@@ -259,11 +259,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("PayedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PayedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsPayed")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
@@ -282,6 +279,87 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("AdvancedPayments", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AssetsLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssetsLookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "أثاث"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "أجهزة كمبيوتر و نظم حسابيه"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDeleted = false,
+                            Name = "اجهزة كهربائية"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDeleted = false,
+                            Name = "تشطيبات و ديكورات"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsDeleted = false,
+                            Name = "أجهزة تكييف"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IsDeleted = false,
+                            Name = "وسائل نقل و انتقال"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            IsDeleted = false,
+                            Name = "أسلحة"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            IsDeleted = false,
+                            Name = "أجهزة لاسلكي"
+                        });
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AttendanceStatusLookup", b =>
@@ -313,6 +391,295 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AttendanceStatusLookup", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Currency")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("CurrentBalance")
+                        .HasColumnType("float");
+
+                    b.Property<string>("IBAN")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("OpeningBalance")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BankAccounts", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankCashDepositTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("BankCashDepositTransaction", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankCashWithdrawTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("BankCashWithdrawTransaction", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankChequeDepositTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("BankChequeDepositTransaction", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankChequeWithdrawTransaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("BankChequeWithdrawTransaction", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankTransactions", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<int?>("BankAccountId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TransactionNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankAccountId");
+
+                    b.ToTable("BankTransactions", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BlackListEntity", b =>
@@ -743,6 +1110,54 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("Employees", (string)null);
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesSalaryReportDetails", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AdvancePaymentInstallment")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("BaseSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("ExtraDeductions")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Insurance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MonthSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Penalities")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("Rewards")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<long>("SalaryReportId")
+                        .HasColumnType("bigint");
+
+                    b.Property<decimal>("Taxes")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SalaryReportId");
+
+                    b.ToTable("SalariesReportEmployeesReports", (string)null);
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EndServiceReasonLookup", b =>
                 {
                     b.Property<int>("Id")
@@ -906,6 +1321,313 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("EquipmentTypesLookup", (string)null);
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ExchangeDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExchangeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("ExchangeTo")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ExchangeTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExchangeTypeId");
+
+                    b.ToTable("ExchangeEntity", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeItems", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ExchangeId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ItemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ItemQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExchangeId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ExhangeItems", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeTypesLookups", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExchangeTypesLookup", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExpensesLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpensesLookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "بوفيه و ضيافة"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "اجور و مرتبات"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDeleted = false,
+                            Name = "م.بنكية"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDeleted = false,
+                            Name = "رسوم"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsDeleted = false,
+                            Name = "نثريات"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IsDeleted = false,
+                            Name = "انتقالات"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            IsDeleted = false,
+                            Name = "اعانة وفاة"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            IsDeleted = false,
+                            Name = "اصلاح و صيانة"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            IsDeleted = false,
+                            Name = "تليفونات"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            IsDeleted = false,
+                            Name = "ادوات مكتبية"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            IsDeleted = false,
+                            Name = "ايجار"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            IsDeleted = false,
+                            Name = "اكراميات"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            IsDeleted = false,
+                            Name = "اتعاب مهنية"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            IsDeleted = false,
+                            Name = "تامينات اجتماعية"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            IsDeleted = false,
+                            Name = "تامينات مقاولات"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            IsDeleted = false,
+                            Name = "تحصيل عملاء"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            IsDeleted = false,
+                            Name = "نت مقر الشركة"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            IsDeleted = false,
+                            Name = "ادوات كهربائية"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            IsDeleted = false,
+                            Name = "بنزين"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            IsDeleted = false,
+                            Name = "غاز و كهرباءومياه"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            IsDeleted = false,
+                            Name = "غرامات"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            IsDeleted = false,
+                            Name = "غرامات موقع"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            IsDeleted = false,
+                            Name = "مساهمة تكافلية"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            IsDeleted = false,
+                            Name = "ايجار سيارات"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            IsDeleted = false,
+                            Name = "غسيل و مكوى"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            IsDeleted = false,
+                            Name = "زي امن"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            IsDeleted = false,
+                            Name = "وثائق تامين"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            IsDeleted = false,
+                            Name = "تبرعات"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            IsDeleted = false,
+                            Name = "علاج"
+                        });
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.GovernmentEntity", b =>
                 {
                     b.Property<long>("Id")
@@ -935,6 +1657,33 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Government", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.IncomeTaxesMatrix", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<decimal>("RangeFrom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("RangeTo")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TaxesExemption")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<decimal>("TaxesPercentage")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("decimal(18,4)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IncomeTaxesMatrix", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceDetails", b =>
@@ -1133,8 +1882,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1153,6 +1902,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<int>("PenaltyType")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("PenaltyValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Reason")
                         .HasColumnType("nvarchar(max)");
@@ -1178,20 +1930,15 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<long>("ItemId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("PurchaseId1")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("PurchasesId")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SuppliedQuantity")
                         .HasColumnType("int");
 
                     b.HasKey("PurchaseId", "ItemId");
 
                     b.HasIndex("ItemId");
-
-                    b.HasIndex("PurchaseId1");
 
                     b.ToTable("PurchaseItems", (string)null);
                 });
@@ -1213,6 +1960,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PurchaseCode")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("datetime2");
 
@@ -1230,6 +1980,10 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("PurchaseCode")
+                        .IsUnique()
+                        .HasFilter("[PurchaseCode] IS NOT NULL");
+
                     b.HasIndex("SupplierId");
 
                     b.HasIndex("SupplyTypeId");
@@ -1245,8 +1999,8 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -1269,6 +2023,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<int>("RewardType")
                         .HasColumnType("int");
 
+                    b.Property<decimal?>("RewardValue")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -1280,6 +2037,48 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Rewards", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("SalaryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SalaryDateFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SalaryDateTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("SiteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SiteId");
+
+                    b.ToTable("SalariesReportDetails", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", b =>
@@ -1384,6 +2183,9 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<long>("EmployeeId")
                         .HasColumnType("bigint");
 
+                    b.Property<decimal>("EmployeeSalary")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1422,7 +2224,10 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("EmployeeShiftSalary")
+                    b.Property<decimal>("EmployeeCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("EmployeeSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("EmployeesPerShift")
@@ -1436,9 +2241,6 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.Property<long>("ShiftTypeId")
                         .HasColumnType("bigint");
-
-                    b.Property<decimal>("ShiftValue")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<long>("SiteId")
                         .HasColumnType("bigint");
@@ -1648,6 +2450,112 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.ToTable("Suppliers", (string)null);
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SupplierTypesLookups", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SuppliersTypes", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supply", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PurchaseCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("SuppliedFromId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("SuppliedFromName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SupplierTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SupplyCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SupplyDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierTypeId");
+
+                    b.ToTable("Supplies", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SupplyItems", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long>("ItemId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ItemQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SupplyId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("SupplyId");
+
+                    b.ToTable("SupplyItems", (string)null);
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SupplyTypes", b =>
                 {
                     b.Property<int>("Id")
@@ -1678,6 +2586,237 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SupplyTypes", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.TreasuryDepositPermissionEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long?>("BenificiaryCode")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("TreasuryDepositPermission", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.TreasuryDepositPermissionTypesLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TreasuryDepositPermissionTypesLookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "جاري شريك"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "عهد"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDeleted = false,
+                            Name = "بنك"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDeleted = false,
+                            Name = "سلف"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsDeleted = false,
+                            Name = "عملاء"
+                        });
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.TreasuryWithdrawPermissionEntity", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<long?>("BenificiaryCode")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Listed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Value")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TypeId");
+
+                    b.ToTable("TreasuryWithdrawPermission", (string)null);
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.TreasuryWithdrawPermissionTypesLookup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TreasuryWithdrawPermissionTypesLookup", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsDeleted = false,
+                            Name = "مصاريف تشغيل"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDeleted = false,
+                            Name = "مصاريف عمومية"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDeleted = false,
+                            Name = "موردين"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            IsDeleted = false,
+                            Name = "الاصول"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            IsDeleted = false,
+                            Name = "العهد"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            IsDeleted = false,
+                            Name = "سلف"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            IsDeleted = false,
+                            Name = "جاري شريك"
+                        });
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformDetailsEntity", b =>
@@ -1863,12 +3002,65 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
+                        .WithMany("AdvancedPayments")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankCashDepositTransaction", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BankAccount");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankCashWithdrawTransaction", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BankAccount");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankChequeDepositTransaction", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BankAccount");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankChequeWithdrawTransaction", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BankAccount");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankTransactions", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", "BankAccount")
+                        .WithMany("BankTransactions")
+                        .HasForeignKey("BankAccountId");
+
+                    b.Navigation("BankAccount");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", b =>
@@ -1934,6 +3126,25 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("Job");
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesSalaryReportDetails", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", "SalaryReport")
+                        .WithMany("EmployeesSalaries")
+                        .HasForeignKey("SalaryReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("SalaryReport");
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentDetailsEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity", "Equipment")
@@ -1962,6 +3173,36 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("EquipmentType");
 
                     b.Navigation("Manufacturing");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ExchangeTypesLookups", "ExchangeType")
+                        .WithMany()
+                        .HasForeignKey("ExchangeTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ExchangeType");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeItems", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", "Exchange")
+                        .WithMany("ExchangeItems")
+                        .HasForeignKey("ExchangeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ItemEntity", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Exchange");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceDetails", b =>
@@ -2009,7 +3250,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
+                        .WithMany("Penalities")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -2025,15 +3266,11 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.Purchases", null)
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.Purchases", "Purchase")
                         .WithMany("Items")
                         .HasForeignKey("PurchaseId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
-
-                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.Purchases", "Purchase")
-                        .WithMany()
-                        .HasForeignKey("PurchaseId1");
 
                     b.Navigation("Item");
 
@@ -2062,12 +3299,23 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
-                        .WithMany()
+                        .WithMany("Rewards")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SitesEntity", "Site")
+                        .WithMany()
+                        .HasForeignKey("SiteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Site");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeeAttendanceEntity", b =>
@@ -2114,7 +3362,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", "SiteEmployee")
-                        .WithMany()
+                        .WithMany("AssignedEmployees")
                         .HasForeignKey("SiteEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2217,6 +3465,58 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("supplyType");
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supply", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.SupplierTypesLookups", "SupplierType")
+                        .WithMany()
+                        .HasForeignKey("SupplierTypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("SupplierType");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SupplyItems", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.ItemEntity", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.Supply", "Supply")
+                        .WithMany("SupplyItems")
+                        .HasForeignKey("SupplyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Supply");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.TreasuryDepositPermissionEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.TreasuryDepositPermissionTypesLookup", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.TreasuryWithdrawPermissionEntity", b =>
+                {
+                    b.HasOne("SecurityMS.Infrastructure.Data.Entities.TreasuryWithdrawPermissionTypesLookup", "Type")
+                        .WithMany()
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Type");
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformDetailsEntity", b =>
                 {
                     b.HasOne("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", "Employee")
@@ -2246,9 +3546,28 @@ namespace SecurityMS.Infrastructure.Data.Migrations
                     b.Navigation("Government");
                 });
 
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BankAccountsEntity", b =>
+                {
+                    b.Navigation("BankTransactions");
+                });
+
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", b =>
                 {
                     b.Navigation("ContractSites");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", b =>
+                {
+                    b.Navigation("AdvancedPayments");
+
+                    b.Navigation("Penalities");
+
+                    b.Navigation("Rewards");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ExchangeEntity", b =>
+                {
+                    b.Navigation("ExchangeItems");
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", b =>
@@ -2259,6 +3578,21 @@ namespace SecurityMS.Infrastructure.Data.Migrations
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Purchases", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SalaryReportDetails", b =>
+                {
+                    b.Navigation("EmployeesSalaries");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", b =>
+                {
+                    b.Navigation("AssignedEmployees");
+                });
+
+            modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supply", b =>
+                {
+                    b.Navigation("SupplyItems");
                 });
 #pragma warning restore 612, 618
         }

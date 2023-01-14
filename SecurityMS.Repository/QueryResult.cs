@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace MNS.Repository
+﻿namespace SecurityMS.Repository
 {
     public class QueryResult<T> where T : class
     {

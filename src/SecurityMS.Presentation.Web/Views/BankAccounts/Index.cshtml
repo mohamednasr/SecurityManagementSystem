@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "حسابات البنوك";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="container-fluid">
+    <div class="row site-main-navigation">
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="BankAccountList" asp-controller="BankAccounts">قائمة الحسابات</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BankCashDepositTransaction">ايداع نقدي</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BankCashWithdrawTransaction">سحب كاش</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BankChequeDepositTransaction">ايداع شيك</a>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BankChequeWithdrawTransaction">سحب شيك</a>
+        </div>
+        
+       <div class="col-lg-3 col-md-4 col-sm-6">
+            <a class="btn btn-dark w-100" asp-action="Index" asp-controller="BankTransactionReports">تقارير المعاملات</a>
+        </div>
+        
+
+    </div>
+</section>

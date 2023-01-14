@@ -21,11 +21,11 @@
                 <label asp-for="EmployeeId" class="control-label"></label>
                 <select asp-for="EmployeeId" class ="form-control" asp-items="ViewBag.EmployeeId"></select>
             </div>
-            @*<div class="form-group">
-                <label asp-for="EmployeeShiftSalary" class="control-label"></label>
-                <input asp-for="EmployeeShiftSalary" class="form-control" />
-                <span asp-validation-for="EmployeeShiftSalary" class="text-danger"></span>
-            </div>*@
+            <div class="form-group">
+                <label asp-for="EmployeeSalary" class="control-label"></label>
+                <input asp-for="EmployeeSalary" class="form-control" />
+                <span asp-validation-for="EmployeeSalary" class="text-danger"></span>
+            </div>
             @*<div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)

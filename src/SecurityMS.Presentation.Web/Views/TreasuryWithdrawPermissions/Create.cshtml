@@ -1,0 +1,99 @@
+﻿@model SecurityMS.Core.Models.WithdrawPermissionsModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1>اذن صرف جديد</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.permission.Date" class="control-label"></label>
+                <input asp-for="@Model.permission.Date" class="form-control" type="date" />
+                <span asp-validation-for="@Model.permission.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.permission.Value" class="control-label"></label>
+                <input asp-for="@Model.permission.Value" class="form-control" />
+                <span asp-validation-for="@Model.permission.Value" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.permission.Description" class="control-label"></label>
+                <input asp-for="@Model.permission.Description" class="form-control" />
+                <span asp-validation-for="@Model.permission.Description" class="text-danger"></span>
+            </div>
+                
+           <div class="form-group">
+                <label asp-for="@Model.permission.Type" class="control-label"></label>
+                <select asp-for="@Model.permission.TypeId" class="form-control"  onchange="onChangeType()" id="TypesList">
+                    <option value="">من فضلك اختر نوع الحركة</option>
+                    @foreach(var item in @Model.TypesList)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+                </select>
+            </div>
+
+
+
+            <div class="form-group">
+                 <label asp-for="@Model.permission.BenificiaryCode" class="control-label"></label>
+                 <select asp-for="@Model.permission.BenificiaryCode" class="form-control" id="BenfCode" >
+                 </select>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div>
+        <a asp-action="Index" class="btn btn-default mt-3 mx-2">رجوع </a>
+        <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
+    </div>
+</div>
+
+<script>
+    function onChangeType(){
+        var e = document.getElementById("TypesList");
+        var value = e.value;
+        var text = e.options[e.selectedIndex].text;
+        $.ajax({
+            url: '/TreasuryWithdrawPermissions/PopulateBenfCode/' + value,
+            type: "POST",
+            dataType: 'json',
+            cache: false,
+            contentType: "application/jsonrequest; charset=utf-8",
+            success: function (data) {
+
+                    $('#BenfCode option').remove();
+
+                    data.forEach(populate);
+
+                    function populate(item) {
+                        console.log(item);
+                        if(item.name != undefined){
+                             $('#BenfCode').append(`<option value="${item.id}">
+                                    ${item.name}
+                                  </option>`) 
+                        }else{
+                            $('#BenfCode').append(`<option value="${item.id}">
+                                       ${item.supplierName}
+                                  </option>`)
+                        }
+  
+                    }
+            }
+
+        });
+    }
+</script>

@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SecurityMS.Infrastructure.Data;
 using SecurityMS.Presentation.Web.Models;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
@@ -10,9 +13,11 @@ namespace SecurityMS.Presentation.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+
         }
 
         public IActionResult Index()
@@ -43,6 +48,10 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         public IActionResult OperationsManagementIndexView()
+        {
+            return View();
+        }
+        public IActionResult TreasuryIndex()
         {
             return View();
         }

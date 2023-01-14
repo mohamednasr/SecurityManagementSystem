@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System;
@@ -45,14 +46,19 @@ namespace SecurityMS.Presentation.Web.Controllers
             supplyTypes.AddRange(await _context.SupplyTypes.Where(x => !x.IsDeleted).ToListAsync());
             ViewData["SupplyTypes"] = new SelectList(supplyTypes, "Id", "SupplyName");
 
-            var Items = new List<ItemEntity>();
-            Items.Add(new ItemEntity() { Code = "أختر كود الصنف" });
-            Items.AddRange(await _context.Items.Where(x => !x.IsDeleted).ToListAsync());
-            ViewData["Items"] = new SelectList(Items, "Id", "Code");
+            var Items = new List<SelectModel>();
+            Items.Add(new SelectModel() { Name = "أختر كود الصنف" });
+            Items.AddRange(await _context.Items.Where(x => !x.IsDeleted).Select(i => new SelectModel()
+            {
+                Id = i.Id,
+                Name = i.GetSelectName()
+            }).ToListAsync());
+            ViewData["Items"] = new SelectList(Items, "Id", "Name");
 
             Purchases purchase = new Purchases()
             {
-                Items = new List<PurchaseItem>() { new PurchaseItem() }
+                Items = new List<PurchaseItem>() { new PurchaseItem() },
+                PurchaseCode = (_context.Purchases.Max(x => x.Id) + 1).ToString()
             };
 
             return View(purchase);
@@ -79,11 +85,16 @@ namespace SecurityMS.Presentation.Web.Controllers
             supplyTypes.AddRange(await _context.SupplyTypes.Where(x => !x.IsDeleted).ToListAsync());
             ViewData["SupplyTypes"] = new SelectList(supplyTypes, "Id", "SupplyName");
 
-            var Items = new List<ItemEntity>();
-            Items.Add(new ItemEntity() { Code = "أختر كود الصنف" });
-            Items.AddRange(await _context.Items.Where(x => !x.IsDeleted).ToListAsync());
-            ViewData["Items"] = new SelectList(Items, "Id", "Code");
+            var Items = new List<SelectModel>();
+            Items.Add(new SelectModel() { Name = "أختر كود الصنف" });
+            Items.AddRange(await _context.Items.Where(x => !x.IsDeleted).Select(i => new SelectModel()
+            {
+                Id = i.Id,
+                Name = i.GetSelectName()
+            }).ToListAsync());
+            ViewData["Items"] = new SelectList(Items, "Id", "Name");
 
+            PurchaseRequest.PurchaseCode = (_context.Purchases.Max(x => x.Id) + 1).ToString();
             return View(PurchaseRequest);
         }
 
@@ -92,7 +103,11 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                PurchaseRequest.PurchaseDate = DateTime.Now;
+                if (IsExist(PurchaseRequest))
+                {
+                    throw new Exception("كود الشراء موجود مسبقا");
+                }
+                // PurchaseRequest.PurchaseDate = DateTime.Now;
                 PurchaseRequest.create(HttpContext.User.Identity.Name);
                 _context.Add(PurchaseRequest);
                 await _context.SaveChangesAsync();
@@ -104,10 +119,14 @@ namespace SecurityMS.Presentation.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> AddNewPurchaseItem()
         {
-            var Items = new List<ItemEntity>();
-            Items.Add(new ItemEntity() { Code = "أختر كود الصنف" });
-            Items.AddRange(await _context.Items.Where(x => !x.IsDeleted).ToListAsync());
-            ViewData["Items"] = new SelectList(Items, "Id", "Code");
+            var Items = new List<SelectModel>();
+            Items.Add(new SelectModel() { Name = "أختر كود الصنف" });
+            Items.AddRange(await _context.Items.Where(x => !x.IsDeleted).Select(i => new SelectModel()
+            {
+                Id = i.Id,
+                Name = i.GetSelectName()
+            }).ToListAsync());
+            ViewData["Items"] = new SelectList(Items, "Id", "Name");
 
             return PartialView("_addPurchaseItem");
         }
@@ -165,6 +184,17 @@ namespace SecurityMS.Presentation.Web.Controllers
                 var purchase = await _context.Purchases.FindAsync(id);
                 return View(purchase);
             }
+        }
+
+        public async Task<IActionResult> PurchasesUnderProgress()
+        {
+            var result = await _context.Purchases.Include(p => p.Supplier).Include(p => p.SupplyType).Where(p => !p.IsDeleted && p.Items.Any(i => i.Quantity > i.SuppliedQuantity)).ToListAsync();
+            return View(result);
+        }
+
+        private bool IsExist(Purchases purchase)
+        {
+            return _context.Purchases.Any(p => p.PurchaseCode == purchase.PurchaseCode);
         }
     }
 }

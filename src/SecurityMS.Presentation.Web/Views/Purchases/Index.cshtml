@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.PurchaseCode)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.PurchaseDate)
             </th>
             <th>
@@ -28,7 +31,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PurchaseDate)
+                @Html.DisplayFor(modelItem => item.PurchaseCode)
+            </td>
+            <td>
+                @item.PurchaseDate.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Supplier.SupplierName)

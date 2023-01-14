@@ -35,7 +35,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                     Id = s.Id,
                     EmployeeId = s.EmployeeId,
                     Employee = s.Employee,
-                    //EmployeeShiftSalary = s.EmployeeShiftSalary,
+                    EmployeeSalary = s.EmployeeSalary,
                     IsActive = s.IsActive
                 }).ToList()
             };
@@ -73,13 +73,16 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode");
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
+
             return View();
         }
-        public IActionResult AssignSiteEmployee(long id)
+        public async Task<IActionResult> AssignSiteEmployee(long id)
         {
+            var siteInfo = await _context.SiteEmployeesEntities.FirstOrDefaultAsync(x => x.Id == id);
             SiteEmployeesAssignEntity siteEmployee = new SiteEmployeesAssignEntity()
             {
-                SiteEmployeeId = id
+                SiteEmployeeId = id,
+                EmployeeSalary = siteInfo.EmployeeSalary
             };
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "NameCode");
             ViewData["SiteEmployeeId"] = new SelectList(_context.SiteEmployeesEntities, "Id", "Name");
@@ -90,7 +93,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SiteEmployeeId,EmployeeId,EmployeeShiftSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
+        public async Task<IActionResult> Create([Bind("SiteEmployeeId,EmployeeId,EmployeeSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
         {
             if (ModelState.IsValid)
             {
@@ -126,7 +129,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("SiteEmployeeId,EmployeeId,EmployeeShiftSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
+        public async Task<IActionResult> Edit(long id, [Bind("EmployeeId,EmployeeSalary,IsActive,Id")] SiteEmployeesAssignEntity siteEmployeesAssignEntity)
         {
             if (id != siteEmployeesAssignEntity.Id)
             {
@@ -137,8 +140,11 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
-                    _context.Update(siteEmployeesAssignEntity);
+                    var siteEmployeeEntity = await _context.SiteEmployeesAssignEntities.FindAsync(siteEmployeesAssignEntity.Id);
+                    siteEmployeeEntity.EmployeeSalary = siteEmployeesAssignEntity.EmployeeSalary;
+                    _context.Update(siteEmployeeEntity);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index), new { id = siteEmployeeEntity.SiteEmployeeId });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -184,7 +190,8 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var siteEmployeesAssignEntity = await _context.SiteEmployeesAssignEntities.FindAsync(id);
-            _context.SiteEmployeesAssignEntities.Remove(siteEmployeesAssignEntity);
+            siteEmployeesAssignEntity.Delete(HttpContext.User.Identity.Name);
+            _context.SiteEmployeesAssignEntities.Update(siteEmployeesAssignEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -192,6 +199,19 @@ namespace SecurityMS.Presentation.Web.Controllers
         private bool SiteEmployeesAssignEntityExists(long id)
         {
             return _context.SiteEmployeesAssignEntities.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateInfo()
+        {
+            var assignees = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).ToListAsync();
+            assignees.ForEach(async assignee =>
+            {
+                assignee.EmployeeSalary = assignee.SiteEmployee.EmployeeSalary;
+                _context.Update(assignee);
+            });
+            await _context.SaveChangesAsync();
+            return View(nameof(Index));
         }
     }
 }

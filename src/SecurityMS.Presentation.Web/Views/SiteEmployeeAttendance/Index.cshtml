@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>يوميات حضور قسم العمليات</h1>
+<h2>يوميات حضور قسم العمليات</h2>
 
-<p>
-        <a class="btn btn-link" onclick="addNewAttendanceModal()">Create New</a>
+<p class="mt-3">
+        <a class="btn btn-primary" onclick="addNewAttendanceModal()">تسجيل يومية</a>
     </p>
 <table class="table">
     <thead>
@@ -34,7 +34,7 @@
         </tr>
         <tr class="noprint d-none" id="searchBar">
             <th>
-                <input placeholder="من..." type="date" class="form-control" id="fromDate"/>
+                <input placeholder="من..." type="date" class="form-control mb-1" id="fromDate"/>
                 <input placeholder="إلى..." type="date" class="form-control" id="toDate"/>
             </th>
             <th>

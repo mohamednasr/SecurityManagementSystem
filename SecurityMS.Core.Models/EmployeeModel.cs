@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using MNS.Repository;
 using SecurityMS.Infrastructure.Data.Entities;
+using SecurityMS.Repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
