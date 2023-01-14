@@ -86,5 +86,11 @@ namespace SecurityMS.Presentation.Web.Controllers
 
             return RedirectToAction("CreateCustomerInvoice", "Invoices", new { invoiceId = invoice.Id });
         }
+
+        [HttpGet]
+        public IActionResult Invoice()
+        {
+            return View();
+        }
     }
 }

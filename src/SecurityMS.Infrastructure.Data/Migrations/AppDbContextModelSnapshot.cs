@@ -281,7 +281,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("AdvancedPayments");
+                    b.ToTable("AdvancedPayments", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.AttendanceStatusLookup", b =>
@@ -312,7 +312,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AttendanceStatusLookup");
+                    b.ToTable("AttendanceStatusLookup", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.BlackListEntity", b =>
@@ -358,7 +358,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BlackListEntity");
+                    b.ToTable("BlackListEntity", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ContractsEntity", b =>
@@ -414,7 +414,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Contracts");
+                    b.ToTable("Contracts", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CountriesLookup", b =>
@@ -445,7 +445,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CountriesLookup");
+                    b.ToTable("CountriesLookup", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomerContactsEntity", b =>
@@ -490,7 +490,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerContacts");
+                    b.ToTable("CustomerContacts", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomersEntity", b =>
@@ -548,7 +548,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("ParentCustomerId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.CustomerTypesLookup", b =>
@@ -579,7 +579,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerTypeLookup");
+                    b.ToTable("CustomerTypeLookup", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.DepartmentsEntity", b =>
@@ -611,7 +611,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EmployeesEntity", b =>
@@ -740,7 +740,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EndServiceReasonLookup", b =>
@@ -771,7 +771,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EndServiceReasonLookup");
+                    b.ToTable("EndServiceReasonLookup", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentDetailsEntity", b =>
@@ -819,7 +819,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("EquipmentId");
 
-                    b.ToTable("EquipmentDetails");
+                    b.ToTable("EquipmentDetails", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentsEntity", b =>
@@ -872,7 +872,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("ManufactureId");
 
-                    b.ToTable("Equipments");
+                    b.ToTable("Equipments", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.EquipmentTypesLookup", b =>
@@ -903,7 +903,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EquipmentTypesLookup");
+                    b.ToTable("EquipmentTypesLookup", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.GovernmentEntity", b =>
@@ -934,7 +934,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Government");
+                    b.ToTable("Government", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceDetails", b =>
@@ -964,7 +964,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("InvoiceId");
 
-                    b.ToTable("InvoicesDetails");
+                    b.ToTable("InvoicesDetails", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.InvoiceEntity", b =>
@@ -989,7 +989,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ItemDetailsEntity", b =>
@@ -1037,7 +1037,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("ItemId");
 
-                    b.ToTable("ItemDetail");
+                    b.ToTable("ItemDetail", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ItemEntity", b =>
@@ -1085,7 +1085,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Items");
+                    b.ToTable("Items", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.JobsEntity", b =>
@@ -1122,7 +1122,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PenaltyEntity", b =>
@@ -1167,7 +1167,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Penalties");
+                    b.ToTable("Penalties", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.PurchaseItem", b =>
@@ -1193,7 +1193,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("PurchaseId1");
 
-                    b.ToTable("PurchaseItems");
+                    b.ToTable("PurchaseItems", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Purchases", b =>
@@ -1234,7 +1234,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("SupplyTypeId");
 
-                    b.ToTable("Purchases");
+                    b.ToTable("Purchases", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.RewardEntity", b =>
@@ -1279,7 +1279,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Rewards");
+                    b.ToTable("Rewards", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ShiftTypesLookup", b =>
@@ -1310,7 +1310,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShiftTypesLookup");
+                    b.ToTable("ShiftTypesLookup", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeeAttendanceEntity", b =>
@@ -1364,7 +1364,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("SiteEmployeesAttendance");
+                    b.ToTable("SiteEmployeesAttendance", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesAssignEntity", b =>
@@ -1405,7 +1405,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("SiteEmployeeId");
 
-                    b.ToTable("SiteEmployeesAssign");
+                    b.ToTable("SiteEmployeesAssign", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEmployeesEntity", b =>
@@ -1457,7 +1457,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("SiteEmployees");
+                    b.ToTable("SiteEmployees", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsAssignEntity", b =>
@@ -1498,7 +1498,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("SiteEquipmenteId");
 
-                    b.ToTable("SiteEquipmentsAssign");
+                    b.ToTable("SiteEquipmentsAssign", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SiteEquipmentsEntity", b =>
@@ -1542,7 +1542,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("SiteEquipments");
+                    b.ToTable("SiteEquipments", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SitesEntity", b =>
@@ -1589,7 +1589,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("ZoneId");
 
-                    b.ToTable("Sites");
+                    b.ToTable("Sites", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.Supplier", b =>
@@ -1645,7 +1645,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("Type");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.SupplyTypes", b =>
@@ -1677,7 +1677,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SupplyTypes");
+                    b.ToTable("SupplyTypes", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformDetailsEntity", b =>
@@ -1724,7 +1724,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("UniformId");
 
-                    b.ToTable("UniformDetails");
+                    b.ToTable("UniformDetails", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.UniformEntity", b =>
@@ -1770,7 +1770,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Uniform");
+                    b.ToTable("Uniform", (string)null);
                 });
 
             modelBuilder.Entity("SecurityMS.Infrastructure.Data.Entities.ZonesEntity", b =>
@@ -1806,7 +1806,7 @@ namespace SecurityMS.Infrastructure.Data.Migrations
 
                     b.HasIndex("GovernmentId");
 
-                    b.ToTable("Zones");
+                    b.ToTable("Zones", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

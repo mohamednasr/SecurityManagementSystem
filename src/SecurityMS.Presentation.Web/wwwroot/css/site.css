@@ -168,3 +168,20 @@ body {
         margin: 0;
     }
 
+.w-100 .select2-container{
+    width: 100% !important;
+}
+
+    .print-paper {
+        min-width: 210mm;
+        max-width: 210mm;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+        .col-6.print {
+            flex: 0 0 48% !important;
+            max-width: 48% !important;
+        }
+@media print {
+}
