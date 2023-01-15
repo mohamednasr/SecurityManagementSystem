@@ -7,7 +7,7 @@ namespace Utilities
 {
     public class Uploader
     {
-        public Dictionary<string,string> uploadFile(HttpContext context, string storingPath)
+        public Dictionary<string, string> uploadFile(HttpContext context, string storingPath)
         {
             try
             {

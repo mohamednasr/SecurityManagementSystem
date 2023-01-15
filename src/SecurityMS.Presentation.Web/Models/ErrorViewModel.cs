@@ -1,5 +1,3 @@
-using System;
-
 namespace SecurityMS.Presentation.Web.Models
 {
     public class ErrorViewModel

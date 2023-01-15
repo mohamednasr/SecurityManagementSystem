@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {
@@ -22,7 +19,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: IncomeTaxesMatrices
         public async Task<IActionResult> Index()
         {
-              return View(await _context.IncomeTaxesMatrix.ToListAsync());
+            return View(await _context.IncomeTaxesMatrix.ToListAsync());
         }
 
         // GET: IncomeTaxesMatrices/Details/5
@@ -148,14 +145,14 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 _context.IncomeTaxesMatrix.Remove(incomeTaxesMatrix);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool IncomeTaxesMatrixExists(int id)
         {
-          return _context.IncomeTaxesMatrix.Any(e => e.Id == id);
+            return _context.IncomeTaxesMatrix.Any(e => e.Id == id);
         }
     }
 }

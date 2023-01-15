@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace SecurityMS.Presentation.Web.Controllers
     {
         private readonly AppDbContext _context;
 
-        public BankAccountsController( AppDbContext context)
+        public BankAccountsController(AppDbContext context)
         {
             _context = context;
 
@@ -41,7 +40,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public IActionResult Create()
         {
-             return View();
+            return View();
         }
 
         [HttpPost]

@@ -10,12 +10,12 @@
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
-        <div class="form-group col-sm-12">
+        <div class="form-group col-4">
             <label asp-for="Name" class="control-label"></label>
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
         </div>
-        <div class="form-group col-lg-6 col-md-6 col-sm-12">
+        <div class="form-group col-4">
             <div class="row">
                 <div class="col-12">
                     <label asp-for="CustomerTypeId" class="control-label"></label>
@@ -33,9 +33,9 @@
                 </label>
             </div>
         </div>
-            <div class="form-group col-lg-6 col-md-6 col-sm-12" id="ParentCustomer">
+            <div class="form-group col-4" id="ParentCustomer">
                 <label asp-for="ParentCustomerId" class="control-label"></label>
-                <select asp-for="ParentCustomerId" class="form-control" asp-items="ViewBag.ParentCustomerId"></select>
+                <select asp-for="ParentCustomerId" class="form-control col-12" asp-items="ViewBag.ParentCustomerId"></select>
             </div>
     </div>
     <div class="row" id="taxesInfo">
@@ -56,17 +56,17 @@
             <span asp-validation-for="TaxFileNumber" class="text-danger"></span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12  ">
-            <label class="control-label">المحافظة</label>
-            <select class="form-control" asp-for="GovernmentId" asp-items="ViewBag.Governments" id="government"></select>
+    <div class="row mt-2">
+            <p class="control-label px-3">المحافظة</p>
+        <div class="col-lg-12 col-md-12 col-sm-12  ">
+            <select class="form-control col-3" asp-for="GovernmentId" asp-items="ViewBag.Governments" id="government"></select>
         </div>
        @* <div class="col-lg-6 col-md-6 col-sm-12  ">
             <label asp-for="ZoneId" class="control-label"></label>
             <select asp-for="ZoneId" class="form-control" asp-items="ViewBag.Zones" id="zone"></select>
         </div>*@
     </div>
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-lg-12 col-md-12 col-sm-12  ">
             <label asp-for="Address" class="control-label"></label>
             <input asp-for="Address" class="form-control" placeholder="العنوان">

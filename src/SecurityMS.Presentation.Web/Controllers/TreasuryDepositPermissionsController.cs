@@ -25,7 +25,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var appDbContext = await _context.TreasuryDepositPermission.Include(t => t.Type).ToListAsync();
             ViewBag.PermissionsNumber = appDbContext.Count;
 
-            return View( appDbContext);
+            return View(appDbContext);
         }
         public async Task<IActionResult> Create()
         {
@@ -37,8 +37,8 @@ namespace SecurityMS.Presentation.Web.Controllers
             };
 
             return View(model);
-}
-            [HttpPost]
+        }
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Date,Value,Description,Id,TypeId,BenificiaryCode")] TreasuryDepositPermissionEntity permission)
         {
@@ -223,7 +223,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return Json(BankAccounts);
 
             }
-            else if (id == 4)
+            else if (id == 5)
             {
                 Customers = _context.CustomersEntities.ToList();
                 return Json(Customers);

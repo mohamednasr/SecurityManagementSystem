@@ -63,6 +63,7 @@ namespace SecurityMS.Infrastructure.Data
         public DbSet<TreasuryWithdrawPermissionEntity> TreasuryWithdrawPermission { get; set; }
         public DbSet<BankAccountsEntity> BankAccounts { get; set; }
         public DbSet<BankTransactions> BankTransactions { get; set; }
+        public DbSet<CompanyInfo> CompanyInfo { get; set; }
 
         public DbSet<Supply> Supplies { get; set; }
         public DbSet<SupplierTypesLookups> SuppliersTypes { get; set; }

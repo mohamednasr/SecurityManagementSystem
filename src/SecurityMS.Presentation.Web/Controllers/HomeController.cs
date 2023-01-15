@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SecurityMS.Infrastructure.Data;
 using SecurityMS.Presentation.Web.Models;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
 {

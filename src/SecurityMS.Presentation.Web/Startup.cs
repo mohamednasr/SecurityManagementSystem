@@ -22,7 +22,7 @@ namespace SecurityMS.Presentation.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<IAppDbContext, AppDbContext>(options =>
+            services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
@@ -30,6 +30,7 @@ namespace SecurityMS.Presentation.Web
                  .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
+            services.AddScoped<DbContext, AppDbContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             services.AddControllersWithViews();
