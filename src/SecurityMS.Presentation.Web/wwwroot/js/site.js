@@ -42,3 +42,7 @@ function reportPrint(elId) {
     })
     $(".noprint").removeClass("d-none");
 }
+
+function toggleSearch() {
+    $("#searchBar").toggleClass("d-none");
+}
