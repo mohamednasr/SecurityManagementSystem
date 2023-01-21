@@ -276,6 +276,10 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             try
             {
+                if (await ValidateAttandance(attendance))
+                {
+                    return false;
+                }
                 List<SiteEmployeeAttendanceEntity> _list = new List<SiteEmployeeAttendanceEntity>();
 
                 attendance.EmployeesStatus.ForEach(e =>
@@ -303,6 +307,17 @@ namespace SecurityMS.Presentation.Web.Controllers
 
         }
 
+        private async Task<bool> ValidateAttandance(SiteAttendanceModel attendance)
+        {
+            foreach (var emp in attendance.EmployeesStatus) {
+                var exist = await _context.SiteEmployeeAttendanceEntities.FirstOrDefaultAsync(x => x.SiteId == attendance.SiteId && x.AttendanceDate == attendance.AttendanceDate && x.EmployeeId == emp.EmployeeId && x.ShiftId == emp.ShiftId);
+                if (exist != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         public async Task<IActionResult> AddNewAttendance()
         {
             var Sites = new List<SitesEntity>();

@@ -34,8 +34,10 @@
         </tr>
         <tr class="noprint d-none" id="searchBar">
             <th>
+                <label for="fromDate">من</label>
                 <input placeholder="من..." type="date" class="form-control mb-1" id="fromDate"/>
-                <input placeholder="إلى..." type="date" class="form-control" id="toDate"/>
+                <label for="toDate">إلى</label>
+                <input placeholder="إلى..." type="date" class="form-control" id="toDate" />
             </th>
             <th>
                 <input placeholder="أسم الموظف..." class="form-control"  id="employeeName"/>
@@ -124,6 +126,11 @@
         $("#searchBar").toggleClass("d-none");
     }
     $(document).ready(function () {
+            $("input").keyup(() => {
+                if (event.keyCode === 13) {
+                    searchEmployees();
+                }
+            })
         var url = window.location;
         if (url.search && url.search != "") {
             $("#searchBar").removeClass("d-none");
