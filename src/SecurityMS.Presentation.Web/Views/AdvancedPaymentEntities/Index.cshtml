@@ -1,4 +1,5 @@
-﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity>
+﻿@using SecurityMS.Core.Models;
+@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,10 +7,8 @@
 }
 
 <h2>السلف</h2>
-
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+<a class="btn btn-primary" data-toggle="modal" data-target="#advancedPaymentModal"> اضافه سلفه لموظفي موقع</a>
+<hr />
 <table class="table">
     <thead>
         <tr>
@@ -89,7 +88,14 @@
 }
     </tbody>
 </table>
-        <div class="row">
+
+@{
+    SiteAdvancedPaymentsModel advancedPaymentEntity = new SiteAdvancedPaymentsModel();
+    Html.RenderPartial("_addNewAdvancedPaymentsModal", advancedPaymentEntity);
+}
+
+
+<div class="row">
     <div class="col-12 mt-3 text-right">
         <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
     </div>

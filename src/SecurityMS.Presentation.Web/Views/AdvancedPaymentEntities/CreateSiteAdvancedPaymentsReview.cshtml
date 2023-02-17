@@ -1,0 +1,43 @@
+﻿@model List<SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity>;
+
+@{
+    ViewData["Title"] = "Create";
+    ViewBag.EmployeesCount = 0;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>AdvancedPaymentEntity</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-12" id="employeesStatus">
+                    @foreach (var employee in Model)
+                    {
+                        <partial name="_employeeAdvancedPaymentReview" model="employee" />
+                        ViewBag.EmployeesCount++;
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts{
+    <script>
+
+        $(".remove-row").click(function () {
+            $(this).parents('.employee-row')[0].remove();
+        })
+    </script>
+}

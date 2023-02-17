@@ -2,8 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +25,11 @@ namespace SecurityMS.Presentation.Web.Controllers
         // GET: AdvancedPaymentEntities
         public async Task<IActionResult> Index()
         {
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync());
+            ViewData["SiteId"] = new SelectList(Sites, "Id", "Name");
+
             var appDbContext = _context.AdvancedPaymentsEntity.Include(a => a.Employee);
             return View(await appDbContext.ToListAsync());
         }
@@ -50,6 +58,35 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             ViewData["EmployeeId"] = new SelectList(_context.EmployeesEntities, "Id", "Name");
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateSiteAdvancedPayment([Bind("SiteId, Amount, PaymentDate, InstallmentDate, installments")]SiteAdvancedPaymentsModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Employees = new List<EmployeesEntity>();
+                Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
+                Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
+                ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
+                List<AdvancedPaymentEntity> siteAdvancedPayments = _context.SiteEmployeesAssignEntities.Include(e => e.Employee).Where(s => s.SiteEmployee.SiteId == model.SiteId).Select(s => new AdvancedPaymentEntity()
+                {
+                    EmployeeId = s.EmployeeId,
+                    Employee = s.Employee,
+                    Amount = model.Amount,
+                    installments = model.installments,
+                    InstallmentDate = model.InstallmentDate,
+                    PaymentDate = model.PaymentDate,
+                }).ToList();
+                return View("CreateSiteAdvancedPaymentsReview", siteAdvancedPayments);
+            }
+            else
+            {
+                var redirectUrl = Url.Action("Index");
+                redirectUrl = String.Concat(redirectUrl, "#advancedPaymentModal");
+
+                return Redirect(redirectUrl);
+            }
         }
 
         // POST: AdvancedPaymentEntities/Create
