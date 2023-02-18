@@ -8,6 +8,7 @@ using SecurityMS.Infrastructure.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace SecurityMS.Presentation.Web.Controllers
@@ -61,7 +62,7 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSiteAdvancedPayment([Bind("SiteId, Amount, PaymentDate, InstallmentDate, installments")]SiteAdvancedPaymentsModel model)
+        public async Task<IActionResult> CreateSiteAdvancedPayment([Bind("SiteId, Amount, PaymentDate, InstallmentDate, installments")] SiteAdvancedPaymentsModel model)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +70,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
                 Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
                 ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
-                List<AdvancedPaymentEntity> siteAdvancedPayments = _context.SiteEmployeesAssignEntities.Include(e => e.Employee).Where(s => s.SiteEmployee.SiteId == model.SiteId).Select(s => new AdvancedPaymentEntity()
+                List<AdvancedPaymentEntity> siteAdvancedPayments = _context.SiteEmployeesAssignEntities.Distinct().Include(e => e.Employee).Where(s => s.SiteEmployee.SiteId == model.SiteId).Select(s => new AdvancedPaymentEntity()
                 {
                     EmployeeId = s.EmployeeId,
                     Employee = s.Employee,
@@ -86,6 +87,25 @@ namespace SecurityMS.Presentation.Web.Controllers
                 redirectUrl = String.Concat(redirectUrl, "#advancedPaymentModal");
 
                 return Redirect(redirectUrl);
+            }
+        }
+
+        [HttpPost]
+        public async Task<bool> SaveSiteAdvancedPayments([FromBody] List<AdvancedPaymentEntity> siteAdvancedPayments)
+        {
+            try
+            {
+                foreach (var p in siteAdvancedPayments)
+                {
+                    p.create(HttpContext.User.Identity.Name);
+                    _context.Add(p);
+                }
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
             }
         }
 

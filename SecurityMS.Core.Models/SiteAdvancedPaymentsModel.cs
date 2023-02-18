@@ -1,7 +1,5 @@
 ﻿using DataAnnotationsExtensions;
-using SecurityMS.Infrastructure.Data.Entities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SecurityMS.Core.Models
