@@ -1,0 +1,83 @@
+﻿@model List<SecurityMS.Infrastructure.Data.Entities.AdvancedPaymentEntity>;
+
+@{
+    ViewData["Title"] = "اضافة سلف لموظفي موقع";
+    ViewBag.EmployeesCount = 0;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>اضافة سلف لموظفي موقع</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-12" id="employeesStatus">
+                    @foreach (var employee in Model)
+                    {
+                        <partial name="_employeeAdvancedPaymentReview" model="employee" />
+                        ViewBag.EmployeesCount++;
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" id="SaveAdvancedPayments">حفظ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">رجوع</a>
+</div>
+
+@section Scripts{
+    <script>
+        $("#SaveAdvancedPayments").click(function () {
+            var employees = $(".employee-name");
+            var paymentAmount = $(".payment-amount");
+            var paymentDate = $(".payment-date");
+            var installmentDate = $(".installment-date");
+            var installments = $(".installments");
+            var paymentsList = [];
+            for (var i = 0; i < employees.length; i++) {
+                if (employees[i].value == 0 || paymentAmount[i].value == 0 || installments[i].value == 0) {
+                    alert("يرجي التأكد من البيانات المدخلة");
+                    return;
+                }
+                var e = {
+                    EmployeeId: parseInt(employees[i].value),
+                    Amount: parseInt(paymentAmount[i].value),
+                    PaymentDate: paymentDate[i].value,
+                    InstallmentDate: installmentDate[i].value,
+                    installments: parseInt(installments[i].value)
+                }
+                paymentsList.push(e);
+            };
+
+            var siteAdvancedPayments = paymentsList;
+
+            $.ajax({
+                url: "/AdvancedPaymentEntities/SaveSiteAdvancedPayments",
+                type: "POST",
+                data: JSON.stringify(siteAdvancedPayments),
+                dataType: 'json', // lowercase is always preferered though jQuery does it, too.
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log(res);
+                    if (res == true) {
+                        window.history.back();
+                    }
+                    else {
+                        alert("يرجي التأكد من البيانات المدخلة");
+                    }
+                }
+            });
+        });
+
+        $(".remove-row").click(function () {
+            $(this).parents('.employee-row')[0].remove();
+        })
+    </script>
+}

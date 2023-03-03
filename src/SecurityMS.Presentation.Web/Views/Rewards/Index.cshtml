@@ -1,10 +1,16 @@
 ﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.RewardEntity>
+@using SecurityMS.Core.Models;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+@{
+    SiteRewardsModel RewardModel = new SiteRewardsModel();
+    Html.RenderPartial("_addNewRewardsModal", RewardModel);
+}
 <h2>الحوافز</h2>
 
 @*<p>
