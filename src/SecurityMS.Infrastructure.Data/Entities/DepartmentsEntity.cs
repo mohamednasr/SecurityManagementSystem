@@ -7,7 +7,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
     [Table("Departments")]
     public class DepartmentsEntity : BaseEntity<long>
     {
-        [Display(Name ="أسم القسم")]
+        [Display(Name = "أسم القسم")]
         [Required]
         public string Name { get; set; }
     }

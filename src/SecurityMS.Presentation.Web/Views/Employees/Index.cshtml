@@ -108,10 +108,13 @@
 
         location.replace(uri)
     }
-    function toggleSearch() {
-        $("#searchBar").toggleClass("d-none");
-    }
+    
     $(document).ready(function () {
+        $("input").keyup(() =>{
+                if (event.keyCode === 13) {
+                    searchEmployees();
+                }
+            })
         var url = window.location;
         if (url.search && url.search != "") {
             $("#searchBar").removeClass("d-none");

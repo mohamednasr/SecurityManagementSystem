@@ -8,7 +8,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
     public class ShiftTypesLookup : BaseEntity<long>
     {
 
-        [Display(Name ="الفتره")]
+        [Display(Name = "الفتره")]
         public string Name { get; set; }
     }
 }

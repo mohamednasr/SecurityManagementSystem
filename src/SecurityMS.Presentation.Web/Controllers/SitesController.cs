@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using SecurityMS.Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,9 +23,13 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
 
         // GET: Sites
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index([FromQuery] string name, [FromQuery] string customer, [FromQuery] string address, [FromQuery] string zone)
         {
-            var appDbContext = _context.SitesEntities.Include(s => s.zone).Include(s => s.Contracts).ThenInclude(c => c.MainCustomer);
+            var appDbContext = _context.SitesEntities.Include(s => s.zone).Include(s => s.Contracts).ThenInclude(c => c.MainCustomer)
+            .WhereIf(!string.IsNullOrEmpty(name) && !string.IsNullOrWhiteSpace(name), x => x.Name.Contains(name))
+            .WhereIf(!string.IsNullOrEmpty(customer) && !string.IsNullOrWhiteSpace(customer), x => x.Contracts.MainCustomer.Name.Contains(customer))
+            .WhereIf(!string.IsNullOrEmpty(address) && !string.IsNullOrWhiteSpace(address), x => x.Address.Contains(address))
+            .WhereIf(!string.IsNullOrEmpty(zone) && !string.IsNullOrWhiteSpace(zone), x => x.zone.Name.Contains(zone));
             return View(await appDbContext.ToListAsync());
         }
 

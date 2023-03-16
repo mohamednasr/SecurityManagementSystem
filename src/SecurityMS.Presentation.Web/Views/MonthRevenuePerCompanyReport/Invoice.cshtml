@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "فاتورة";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row noprint">
+    <div class="col-12 mb-3">
+        <a class="btn btn-primary mb-3" onclick="reportPrint('printableInvoice')"><i class="fas fa-print"></i> طباعه</a>
+    </div>
+</div>
+<div id="printableInvoice" class="print-paper">
+    <div class="row">
+        <div class="col-6 print">
+            <img src="~/images/لوجو بايونير1.jpg" width="100px" id="img">
+        </div>
+        <div class="col-6 print">
+            <div class="form-group">
+                <label for="invoiceReference" class="h6">رقم الفاتورة</label>
+                <input id="invoiceReference" class="form-control" value="" placeholder="رقم الفاتورة..." />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <span class="h6">تاريخ الأصدار: </span>
+            @DateTime.Now
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 print">
+            <div class="row">
+                <div class="col-12">
+                    <span class="h6">صادرة من:</span>
+                </div>
+                <div class="col-12">
+                    <span class="h6">سجل تجاري:</span>
+                </div>
+                <div class="col-12">
+                    <span class="h6">بطاقة ضريبية رقم:</span>
+                </div>
+                <div class="col-12">
+                    <span class="h6">ملف ضريبي رقم:</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 print">
+            <div class="row">
+                <div class="col-12">
+                    <span class="h6">مطلوب من السيد:</span>
+                </div>
+                <div class="col-12">
+                    <span class="h6">رقم التسجيل الضريبي:</span>
+                </div>
+                <div class="col-12">
+                    <span class="h6">العنوان:</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="form-group">
+                <label for="siteInvoiceReference" class="h6">أسم الموقع</label>
+                <input id="siteInvoiceReference" class="form-control" value="" placeholder="عن شهر ........." />
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <th>#</th>
+                <th>البيان</th>
+                <th>العدد</th>
+                <th>سعر الفرد</th>
+                <th>عدد الأيام</th>
+                <th>خصومات</th>
+                <th>اجمالي بدون الضريبة</th>
+                <th>ضريبة القيمة المضافة</th>
+                <th>ضريبة المنبع 3%</th>
+                <th>الاجمالي</th>
+                <th class="noprint"></th>
+            </thead>
+            <tbody>
+                <tr>
+                <td>1</td>
+                <td>فرد امن صباحي</td>
+                <td>2</td>
+                <td>259</td>
+                <td>30</td>
+                <td>0</td>
+                <td>999999</td>
+                <td>9999</td>
+                <td>9999</td>
+                <td>9999999</td>
+                <td class="noprint"><a class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

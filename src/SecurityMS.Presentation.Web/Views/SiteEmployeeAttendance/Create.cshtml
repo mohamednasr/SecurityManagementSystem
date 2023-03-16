@@ -72,16 +72,17 @@
                 }
                 statusList.push(e);
             };
+
+            if (validateDuplication(statusList)){
+                alert("يرجي التأكد من البيانات المدخلة، هناك تقرار فى احد الموظفيين");
+                return;
+            }
+            
             var _list = {
                 SiteId: parseInt(siteId),
                 AttendanceDate: attendanceDate,
                 EmployeesStatus: [...statusList]
             }
-            //$.post("/SiteEmployeeAttendance/SaveAttendance", { attendance: _list }, function (res) {
-            //    console.log(res);
-            //}, function (err) {
-            //        console.log(err)
-            //});
 
             $.ajax({
                 url: "/SiteEmployeeAttendance/SaveAttendance",
@@ -91,8 +92,11 @@
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
                     console.log(res);
-                    if (res == true); {
+                    if (res == true) {
                         window.history.back();
+                    }
+                    else{
+                        alert("يرجي التأكد من البيانات المدخلة");
                     }
                 }
             });
@@ -129,6 +133,19 @@
                     $(this).parents(".employee-row").children(".penality").addClass("d-none");
                 }
             })
+        }
+
+
+        function validateDuplication(empList){
+            var hasDuplication = false;
+            empList.forEach(e => {
+                debugger;
+                var occurance = empList.filter(x => x.EmployeeId == e.EmployeeId && x.ShiftId == e.ShiftId);
+                if(occurance.length > 1)
+                    hasDuplication = true;
+            })
+
+            return hasDuplication;
         }
     </script>
 }

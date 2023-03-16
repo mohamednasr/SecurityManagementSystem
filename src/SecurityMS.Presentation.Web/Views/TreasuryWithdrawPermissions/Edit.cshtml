@@ -1,4 +1,4 @@
-﻿@model SecurityMS.Infrastructure.Data.Entities.TreasuryWithdrawPermissionEntity
+﻿@model SecurityMS.Core.Models.WithdrawPermissionsModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -14,26 +14,41 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="@Model.permission.Date" class="control-label"></label>
+                <input asp-for="@Model.permission.Date" class="form-control" type="date"/>
+                <span asp-validation-for="@Model.permission.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Value" class="control-label"></label>
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
+                <label asp-for="@Model.permission.Value" class="control-label"></label>
+                <input asp-for="@Model.permission.Value" class="form-control" />
+                <span asp-validation-for="@Model.permission.Value" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="@Model.permission.Description" class="control-label"></label>
+                <input asp-for="@Model.permission.Description" class="form-control" />
+                <span asp-validation-for="@Model.permission.Description" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="TypeId" class="control-label"></label>
-                <select asp-for="TypeId" class="form-control" asp-items="ViewBag.list"></select>
+                <label asp-for="@Model.permission.Type.Name" class="control-label"></label>
+                <select asp-for="@Model.permission.TypeId" class="form-control"  onchange="onChangeType()" id="TypesList">
+                    @foreach(var item in @Model.TypesList)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+
+                </select>
             </div>
+
+            <div class="form-group">
+                 <label asp-for="@Model.permission.BenificiaryCode" class="control-label"></label>
+                 <select asp-for="@Model.permission.BenificiaryCode" class="form-control" id="BenfCode" >
+                 </select>
+            </div>
+
  
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="@Model.permission.Id" />
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -46,9 +61,49 @@
 </div>
 
 @section Scripts{ 
+
     <script type="text/javascript">
         function back(){
             history.back();
         }
     </script>
+
+    
+    <script>
+        function onChangeType(){
+            var e = document.getElementById("TypesList");
+            var value = e.value;
+            var text = e.options[e.selectedIndex].text;
+            $.ajax({
+                url: '/TreasuryWithdrawPermissions/PopulateBenfCode/' + value,
+                type: "POST",
+                dataType: 'json',
+                cache: false,
+                contentType: "application/jsonrequest; charset=utf-8",
+                success: function (data) {
+
+                        $('#BenfCode option').remove();
+
+                        data.forEach(populate);
+
+                        function populate(item) {
+                            console.log(item);
+                            if(item.name != undefined){
+                                 $('#BenfCode').append(`<option value="${item.id}">
+                                        ${item.name}
+                                      </option>`) 
+                            }else{
+                                $('#BenfCode').append(`<option value="${item.id}">
+                                           ${item.supplierName}
+                                      </option>`)
+                            }
+  
+                        }
+                }
+
+            });
+
+        }
+    </script>
+
 }

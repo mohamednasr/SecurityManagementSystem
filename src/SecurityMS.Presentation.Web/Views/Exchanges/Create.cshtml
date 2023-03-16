@@ -6,7 +6,7 @@
     ViewBag.ItemsCount = 0;
 }
 
-<h1>Create</h1>
+<h1>انشاء اذن صرف</h1>
 
 <h4>ExchangeEntity</h4>
 <hr />
@@ -16,7 +16,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ExchangeDate" class="control-label"></label>
-                <input asp-for="ExchangeDate" class="form-control" id="exchangeDate" />
+                <input asp-for="ExchangeDate" type="date" class="form-control text-left" id="exchangeDate" />
                 <span asp-validation-for="ExchangeDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -92,7 +92,6 @@
 
             var name = $(this).find('option[value='+$(this).val() + ']').html();
             $("#exchangeName").val(name);
-            debugger;
         })
 
         function getExchangeTargetIds(exchangeTo) {
@@ -180,7 +179,6 @@
                 dataType: 'json', // lowercase is always preferered though jQuery does it, too.
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {
-                    console.log(res);
                     if (res == true){
                         window.history.back();
                     }

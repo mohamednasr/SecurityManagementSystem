@@ -1,0 +1,88 @@
+﻿@model List<SecurityMS.Infrastructure.Data.Entities.RewardEntity>;
+
+@{
+    ViewData["Title"] = "اضافة مكافأه لموظفي موقع";
+    ViewBag.EmployeesCount = 0;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>اضافة سلف لموظفي موقع</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-12" id="employeesStatus">
+                    @foreach (var employee in Model)
+                    {
+                        <partial name="_employeeRewardsReview" model="employee" />
+                        ViewBag.EmployeesCount++;
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <a class="btn btn-primary" id="SaveRewards">حفظ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">رجوع</a>
+</div>
+
+@section Scripts{
+    <script>
+        $(".reward-type").click(function(){
+            $(this).parents('.reward-type-options').find('[checked]').removeAttr('checked');
+            $(this).attr('checked','checked');
+        });
+
+        $("#SaveRewards").click(function () {
+            var employees = $(".employee-name");
+            var rewardAmount = $(".reward-amount");
+            var rewardType = $(".reward-type[checked]");
+            var rewardDate = $(".reward-date");
+            var rewardReason = $(".reward-reason");
+            var rewardsList = [];
+            for (var i = 0; i < employees.length; i++) {
+                if (employees[i].value == 0 || rewardAmount[i].value == 0) {
+                    alert("يرجي التأكد من البيانات المدخلة");
+                    return;
+                }
+                var e = {
+                    EmployeeId: parseInt(employees[i].value),
+                    Amount: parseInt(rewardAmount[i].value),
+                    RewardDate: rewardDate[i].value,
+                    RewardType: rewardType[i].value,
+                    Reason: rewardReason[i].value
+                }
+                rewardsList.push(e);
+            };
+
+            var siteRewards = rewardsList;
+
+            $.ajax({
+                url: "/Rewards/SaveSiteRewards",
+                type: "POST",
+                data: JSON.stringify(siteRewards),
+                dataType: 'json', // lowercase is always preferered though jQuery does it, too.
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log(res);
+                    if (res == true) {
+                        window.history.back();
+                    }
+                    else {
+                        alert("يرجي التأكد من البيانات المدخلة");
+                    }
+                }
+            });
+        });
+
+        $(".remove-row").click(function () {
+            $(this).parents('.employee-row')[0].remove();
+        })
+    </script>
+}

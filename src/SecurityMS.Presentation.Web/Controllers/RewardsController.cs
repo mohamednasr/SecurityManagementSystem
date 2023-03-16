@@ -2,9 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Core.Models.Enums;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +27,59 @@ namespace SecurityMS.Presentation.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var appDbContext = _context.RewardsEntity.Include(r => r.Employee);
+            var Sites = new List<SitesEntity>();
+            Sites.Add(new SitesEntity() { Id = 0, Name = "أختر الموقع" });
+            Sites.AddRange(await _context.SitesEntities.ToListAsync()); ViewData["SiteId"] = new SelectList(Sites, "Id", "Name");
+
             return View(await appDbContext.ToListAsync());
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateSiteRewards([Bind("SiteId, Amount, RewardDate, RewardType, Reason")] SiteRewardsModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Employees = new List<EmployeesEntity>();
+                Employees.Add(new EmployeesEntity() { Id = 0, Name = "أختر الموظف" });
+                Employees.AddRange(await _context.EmployeesEntities.ToListAsync());
+                ViewData["EmployeeId"] = new SelectList(Employees, "Id", "NameCode");
+                List<RewardEntity> siteRewards = _context.SiteEmployeesAssignEntities.Distinct().Include(e => e.Employee).Where(s => s.SiteEmployee.SiteId == model.SiteId).Select(s => new RewardEntity()
+                {
+                    EmployeeId = s.EmployeeId,
+                    Employee = s.Employee,
+                    Amount = model.Amount,
+                    RewardType = model.RewardType,
+                    RewardDate = model.RewardDate,
+                    Reason = model.Reason
+                }).ToList();
+                return View("CreateSiteRewardsReview", siteRewards);
+            }
+            else
+            {
+                var redirectUrl = Url.Action("Index");
+                redirectUrl = String.Concat(redirectUrl, "#advancedPaymentModal");
+
+                return Redirect(redirectUrl);
+            }
+        }
+        
+        [HttpPost]
+        public async Task<bool> SaveSiteRewards([FromBody] List<RewardEntity> siteRewards)
+        {
+            try
+            {
+                foreach (var rewardEntity in siteRewards)
+                {
+                    rewardEntity.create(HttpContext.User.Identity.Name);
+                    rewardEntity.RewardValue = rewardEntity.RewardType == (int)RewardTypeEnum.Days ? await GetRewardValue(rewardEntity.EmployeeId, rewardEntity.Amount) : rewardEntity.Amount;
+                    _context.Add(rewardEntity);
+                }
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         // GET: Rewards/Details/5
@@ -78,7 +133,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var employee = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
             if (employee != null)
             {
-                return value * employee.EmployeeSalary;
+                return value * employee.EmployeeSalary / 30;
             }
             return 0;
         }

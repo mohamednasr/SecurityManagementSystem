@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Collections.Generic;
@@ -21,27 +22,25 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appDbContext = await _context.TreasuryDepositPermission.ToListAsync();
+            var appDbContext = await _context.TreasuryDepositPermission.Include(t => t.Type).ToListAsync();
             ViewBag.PermissionsNumber = appDbContext.Count;
 
-            return View( appDbContext);
+            return View(appDbContext);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            List<string> list = new List<string>()
+            var TypesList = await _context.TreasuryDepositPermissionTypesLookup.ToListAsync();
+
+            var model = new DepositPermissionModel()
             {
-                "Owner",
-                "Client",
-                "Bank"
+                TypesList = TypesList,
             };
 
-            ViewBag.list = new SelectList(list);
-            return View();
+            return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Date,Value,Description,Id,TypeId")] TreasuryDepositPermissionEntity permission)
+        public async Task<IActionResult> Create([Bind("Date,Value,Description,Id,TypeId,BenificiaryCode")] TreasuryDepositPermissionEntity permission)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +49,8 @@ namespace SecurityMS.Presentation.Web.Controllers
                     Date = permission.Date,
                     Value = permission.Value,
                     Description = permission.Description,
-                    TypeId = permission.TypeId
+                    TypeId = permission.TypeId,
+                    BenificiaryCode = permission.BenificiaryCode,
                 };
 
                 _context.Add(permissionEntity);
@@ -161,7 +161,6 @@ namespace SecurityMS.Presentation.Web.Controllers
                 "Bank"
             };
 
-
             ViewBag.list = new SelectList(list);
             return View(depositEntity);
         }
@@ -201,5 +200,35 @@ namespace SecurityMS.Presentation.Web.Controllers
             return _context.TreasuryDepositPermission.Any(e => e.Id == id);
         }
 
+
+        [HttpPost]
+        public JsonResult PopulateBenfCode(int id)
+        {
+
+            var BankAccounts = new List<BankAccountsEntity>();
+            var Customers = new List<CustomersEntity>();
+            var Employees = new List<EmployeesEntity>();
+
+            if (id == 0) return Json(new object[] { "why is it coming in with zero" });
+
+            if (id == 4 || id == 2)
+            {
+                Employees = _context.EmployeesEntities.ToList();
+                return Json(Employees);
+
+            }
+            else if (id == 3)
+            {
+                BankAccounts = _context.BankAccounts.ToList();
+                return Json(BankAccounts);
+
+            }
+            else if (id == 5)
+            {
+                Customers = _context.CustomersEntities.ToList();
+                return Json(Customers);
+            }
+            return Json(new object[] { null });
+        }
     }
 }

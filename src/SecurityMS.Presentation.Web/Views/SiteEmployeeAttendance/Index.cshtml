@@ -34,8 +34,10 @@
         </tr>
         <tr class="noprint d-none" id="searchBar">
             <th>
+                <label for="fromDate">من</label>
                 <input placeholder="من..." type="date" class="form-control mb-1" id="fromDate"/>
-                <input placeholder="إلى..." type="date" class="form-control" id="toDate"/>
+                <label for="toDate">إلى</label>
+                <input placeholder="إلى..." type="date" class="form-control" id="toDate" />
             </th>
             <th>
                 <input placeholder="أسم الموظف..." class="form-control"  id="employeeName"/>
@@ -86,7 +88,6 @@
 
 <div class="row">
     <div class="col-12 mt-3 text-right">
-            <a asp-controller="Home" asp-action="HRIndex" class="btn btn-default mt-3 mx-2">رجوع</a>
         <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
     </div>
 </div>
@@ -125,6 +126,11 @@
         $("#searchBar").toggleClass("d-none");
     }
     $(document).ready(function () {
+            $("input").keyup(() => {
+                if (event.keyCode === 13) {
+                    searchEmployees();
+                }
+            })
         var url = window.location;
         if (url.search && url.search != "") {
             $("#searchBar").removeClass("d-none");

@@ -171,5 +171,12 @@ namespace SecurityMS.Presentation.Web.Controllers
         {
             return _context.Items.Any(e => e.Id == id);
         }
+
+
+        public async Task<IActionResult> UnderMinimumItems()
+        {
+            var items = await _context.Items.Where(i => !i.IsDeleted && i.AvailableTotalCount < i.MinimumAlert).ToListAsync();
+            return View(items);
+        }
     }
 }

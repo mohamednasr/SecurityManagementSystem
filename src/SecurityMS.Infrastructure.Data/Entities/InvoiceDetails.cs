@@ -16,7 +16,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public decimal Total { get; set; }
         [Display(Name = "البند")]
         public string ItemName { get; set; }
-        
+
         public long InvoiceId { get; set; }
 
         public virtual InvoiceEntity invoice { get; set; }

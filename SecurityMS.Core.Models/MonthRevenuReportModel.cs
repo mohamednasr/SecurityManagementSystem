@@ -13,12 +13,12 @@ namespace SecurityMS.Core.Models
     public class MonthRevenuReport
     {
         public long CompanyId { get; set; }
-        [Display(Name ="أسم العميل")]
+        [Display(Name = "أسم العميل")]
         public string CompanyName { get; set; }
 
         [Display(Name = "عدد المواقع")]
         public int SitesCount { get; set; }
-        [Display(Name ="صافى المطلوب")]
+        [Display(Name = "صافى المطلوب")]
         public decimal FinalIncome { get; set; }
     }
 

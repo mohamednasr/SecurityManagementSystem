@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SecurityMS.Core.Models;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
 using System.Collections.Generic;
@@ -21,27 +21,26 @@ namespace SecurityMS.Presentation.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var appDbContext = await _context.TreasuryWithdrawPermission.ToListAsync();
+            var appDbContext = await _context.TreasuryWithdrawPermission.Include(t => t.Type).ToListAsync();
             ViewBag.PermissionsNumber = appDbContext.Count;
             return View(appDbContext);
 
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            List<string> list = new List<string>()
+            var TypesList = await _context.TreasuryWithdrawPermissionTypesLookup.ToListAsync();
+
+            var model = new WithdrawPermissionsModel()
             {
-                "Supplier",
-                "Assets Buying",
-                "Treasury Payment"
+                TypesList = TypesList,
             };
 
-            ViewBag.list = new SelectList(list);
-            return View();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Date,Value,Description,Id,TypeId")] TreasuryWithdrawPermissionEntity permission)
+        public async Task<IActionResult> Create([Bind("Date,Value,Description,Id,TypeId,BenificiaryCode")] TreasuryWithdrawPermissionEntity permission)
         {
             if (ModelState.IsValid)
             {
@@ -50,7 +49,8 @@ namespace SecurityMS.Presentation.Web.Controllers
                     Date = permission.Date,
                     Value = permission.Value,
                     Description = permission.Description,
-                    TypeId = permission.TypeId
+                    TypeId = permission.TypeId,
+                    BenificiaryCode = permission.BenificiaryCode,
                 };
 
                 _context.Add(permissionEntity);
@@ -85,7 +85,7 @@ namespace SecurityMS.Presentation.Web.Controllers
                 Date = withdrawentity.Date,
                 Value = withdrawentity.Value,
                 Description = withdrawentity.Description,
-                TypeId = withdrawentity.TypeId,
+                Type = withdrawentity.Type,
 
             };
 
@@ -107,27 +107,28 @@ namespace SecurityMS.Presentation.Web.Controllers
             }
 
             var withdrawentity = await _context.TreasuryWithdrawPermission.FindAsync(id);
+            var TypesList = await _context.TreasuryWithdrawPermissionTypesLookup.ToListAsync();
+
+            var model = new WithdrawPermissionsModel()
+            {
+                permission = withdrawentity,
+                TypesList = TypesList,
+            };
+
             if (withdrawentity == null)
             {
                 return NotFound();
             }
-            List<string> list = new List<string>()
-            {
-                "Supplier",
-                "Assets Buying",
-                "Treasury Payment"
-            };
 
-            ViewBag.list = new SelectList(list);
-            return View(withdrawentity);
+
+            return View(model);
         }
 
-        // POST: Sites/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("Date,Value,TypeId,Id, Description")] TreasuryWithdrawPermissionEntity withdrawentity)
+        public async Task<IActionResult> Edit(long id, [Bind("Date,Value,Description,TypeId,BenificiaryCode,Id")] TreasuryWithdrawPermissionEntity withdrawentity)
         {
             if (id != withdrawentity.Id)
             {
@@ -138,6 +139,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             {
                 try
                 {
+
                     _context.Update(withdrawentity);
                     await _context.SaveChangesAsync();
                 }
@@ -154,19 +156,17 @@ namespace SecurityMS.Presentation.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            List<string> list = new List<string>()
+            var TypesList = await _context.TreasuryWithdrawPermissionTypesLookup.ToListAsync();
+
+            var model = new WithdrawPermissionsModel()
             {
-                "Supplier",
-                "Assets Buying",
-                "Treasury Payment"
+                permission = withdrawentity,
+                TypesList = TypesList,
             };
 
-
-            ViewBag.list = new SelectList(list);
             return View(withdrawentity);
         }
 
-        // GET: Sites/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -184,7 +184,6 @@ namespace SecurityMS.Presentation.Web.Controllers
             return View(withdrawentity);
         }
 
-        // POST: Sites/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
@@ -199,6 +198,45 @@ namespace SecurityMS.Presentation.Web.Controllers
         private bool PermissionEntityExists(long id)
         {
             return _context.TreasuryWithdrawPermission.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public JsonResult PopulateBenfCode(int id)
+        {
+
+            var SuppliersList = new List<Supplier>();
+            var ExpensesList = new List<ExpensesLookup>();
+            var AssetsList = new List<AssetsLookup>();
+            var Employees = new List<EmployeesEntity>();
+
+            if (id == 0) return Json(new object[] { "why is it coming in with zero" });
+
+            if (id == 1 || id == 2)
+            {
+                ExpensesList = _context.ExpensesLookup.ToList();
+                return Json(ExpensesList);
+
+            }
+            else if (id == 3)
+            {
+                SuppliersList = _context.Suppliers.ToList();
+                return Json(SuppliersList);
+
+            }
+            else if (id == 4)
+            {
+                AssetsList = _context.AssetsLookup.ToList();
+                return Json(AssetsList);
+
+            }
+            else if (id == 5 || id == 6)
+            {
+                Employees = _context.EmployeesEntities.ToList();
+                return Json(Employees);
+
+            }
+
+            return Json(new object[] { null });
         }
     }
 }

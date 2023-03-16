@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SecurityMS.Infrastructure.Data;
 using SecurityMS.Infrastructure.Data.Entities;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,23 +13,34 @@ namespace SecurityMS.Presentation.Web.Controllers
     {
         private readonly AppDbContext _context;
 
-        public BankAccountsController( AppDbContext context)
+        public BankAccountsController(AppDbContext context)
         {
             _context = context;
 
         }
         public async Task<IActionResult> Index()
         {
+            return View();
+        }
+
+        public async Task<IActionResult> BankAccountList()
+        {
             var appDbContext = await _context.BankAccounts.ToListAsync();
             ViewBag.AccountsNumber = appDbContext.Count;
             ViewBag.total = appDbContext.Sum(a => a.CurrentBalance);
-        
+
             return View(appDbContext);
         }
 
+        public IActionResult CreateTransaction(int id)
+        {
+            ViewBag.Id = id;
+
+            return View();
+        }
         public IActionResult Create()
         {
-             return View();
+            return View();
         }
 
         [HttpPost]

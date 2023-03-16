@@ -1,0 +1,99 @@
+﻿@model SecurityMS.Infrastructure.Data.Entities.Supply
+
+@{
+    ViewData["Title"] = "اضافه اصناف التوريد";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>أضافه الاصناف المورده</h1>
+
+<div class="row">
+    <div class="col-md-12" id="SuppliedItemsList">
+        @foreach (var item in Model.SupplyItems)
+        {
+            <div id="purchaseItemsList" class="col-12">
+                <partial name="_SuppliedItemCreate" model="item" />
+            </div>
+        }
+    </div>
+    <div class="col-12 my-3">
+        <a class="btn btn-primary" id="addItem">إضافة صنف</a>
+    </div>
+    <div class="col-12 my-3">
+        <a class="btn btn-primary" id="SaveSuppliedItems">حفظ</a>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" rout>رجوع</a>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $("#SaveSuppliedItems").click(function () {
+
+            debugger
+            var itemsIds = $(".item-name");
+            var quantities = $(".item-quantity");
+            var itemsList = [];
+            var SupplyId = '@(Model.Id)'
+            for (var i = 0; i < itemsIds.length; i++) {
+                if (itemsIds[i].value == 0 || quantities[i].value <= 0) {
+                    alert("يرجي التأكد من البيانات المدخلة");
+                    return;
+                }
+                var e = {
+                    ItemId: parseInt(itemsIds[i].value),
+                    ItemQuantity: parseInt(quantities[i].value),
+                    SupplyId: parseInt(SupplyId)
+                }
+                itemsList.push(e);
+            };
+            
+            var _list = {
+                SupplyId: parseInt(SupplyId),
+                Items: [...itemsList]
+            }
+
+            $.ajax({
+                url: "/Supplies/SaveSuppliedItems",
+                type: "POST",
+                data: JSON.stringify(_list),
+                dataType: 'json', // lowercase is always preferered though jQuery does it, too.
+                contentType: "application/json; charset=utf-8",
+                success: function (res) {
+                    console.log(res);
+                    if (res == true) {
+                        window.location.href = "../index";
+                    }
+                    else {
+                        alert(res)
+                    }
+                },
+
+                error: function (res) {
+                    alert("كود الصنف موجود مسبقا")
+                }
+            });
+        })
+
+        $(".remove-row").click(function () {
+            $(this).parents('.supplied-item-row')[0].remove();
+        })
+
+        $("#addItem").click(function () {
+            $.get("/Supplies/AddNewSuppliedItem").done(function (response) {
+                $("#SuppliedItemsList").append(response);
+                $("select").select2();
+                $(".remove-row").click(function () {
+                    $(this).parents('.supplied-item-row')[0].remove();
+                })
+            })
+        })
+
+    </script>
+}

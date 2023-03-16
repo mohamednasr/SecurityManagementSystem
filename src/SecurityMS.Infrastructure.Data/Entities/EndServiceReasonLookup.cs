@@ -10,5 +10,5 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "سبب الإنهاء")]
         public string Name { get; set; }
     }
-    
+
 }

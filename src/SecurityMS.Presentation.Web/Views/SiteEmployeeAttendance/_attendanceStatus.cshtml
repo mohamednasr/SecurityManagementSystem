@@ -2,20 +2,20 @@
     <div class="row employee-row">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group col-md-4">
-        <label for="EmployeeId" class="control-label">@Html.DisplayNameFor(model => model.EmployeeId)</label>
+        <label for="EmployeeId_@(ViewBag.EmployeesCount)" class="control-label">@Html.DisplayNameFor(model => model.EmployeeId)</label>
         <select asp-for="EmployeeId" class="form-control employee-name" id="employeeName_@(ViewBag.EmployeesCount)" asp-items="ViewBag.EmployeeId"></select>
             @*<input asp-for="EmployeeId" class="typeahead form-control" type="text" placeholder="اسم الموظف" />*@
         </div>
         <div class="form-group col-md-3">
-        <label for="ShiftId" class="control-label">@Html.DisplayNameFor(model => model.ShiftId)</label>
+        <label for="ShiftId_@(ViewBag.EmployeesCount)" class="control-label">@Html.DisplayNameFor(model => model.ShiftId)</label>
         <select asp-for="ShiftId" class="form-control employee-shift" id="employeeShiftId_@(ViewBag.EmployeesCount)" asp-items="ViewBag.ShiftId"></select>
         </div>
         <div class="form-group col-md-2">
-        <label for="AttendanceStatusId" class="control-label">@Html.DisplayNameFor(model => model.AttendanceStatusId)</label>
+        <label for="AttendanceStatusId_@(ViewBag.EmployeesCount)" class="control-label">@Html.DisplayNameFor(model => model.AttendanceStatusId)</label>
         <select asp-for="AttendanceStatusId" class="form-control employee-status" id="employeeStatus_@(ViewBag.EmployeesCount)" asp-items="ViewBag.AttendanceStatusId"></select>
         </div>
         <div class="form-group col-md-2 penality d-none">
-            <label for="Penality" class="control-label">@Html.DisplayNameFor(model => model.Penality)</label>
+        <label for="Penality_@(ViewBag.EmployeesCount)" class="control-label">@Html.DisplayNameFor(model => model.Penality)</label>
         <input asp-for="Penality" type="number" class="form-control employee-penality" id="employeePenality_@(ViewBag.EmployeesCount)" value="0" min="0" max="4" />
         </div>
         <div class="form-group pt-4" col-md-1>

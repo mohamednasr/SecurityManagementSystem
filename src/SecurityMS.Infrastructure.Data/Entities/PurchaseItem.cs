@@ -10,6 +10,9 @@ namespace SecurityMS.Infrastructure.Data.Entities
         public long ItemId { get; set; }
         [Display(Name = "الكمية")]
         public int Quantity { get; set; }
+
+        [Display(Name = "الكمية المورده")]
+        public int SuppliedQuantity { get; set; } = 0;
         [Display(Name = "الصنف")]
         [ForeignKey(nameof(PurchaseId))]
         public Purchases Purchase { get; set; }

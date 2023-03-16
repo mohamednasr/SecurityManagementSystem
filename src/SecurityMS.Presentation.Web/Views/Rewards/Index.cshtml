@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.RewardEntity>
+@using SecurityMS.Core.Models;
+@using SecurityMS.Core.Models.Enums;
 
 @{
     ViewData["Title"] = "Index";
@@ -7,9 +9,8 @@
 
 <h2>الحوافز</h2>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
+<a class="btn btn-primary" data-toggle="modal" data-target="#RewardsModal"> اضافه مكافأه لموظفي موقع</a>
+<hr/>
 <table class="table">
     <thead>
         <tr>
@@ -21,6 +22,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RewardValue)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Reason)
@@ -35,11 +39,14 @@
                 @Html.DisplayFor(modelItem => item.Employee.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RewardType)
+                    @Html.DisplayFor(modelItem => item.TypeString)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.RewardValue)
+                </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Reason)
             </td>
@@ -57,3 +64,10 @@
         <a asp-controller="Home" asp-action="Main" class="btn btn-default mt-3 mx-2">رجوع للرئيسية</a>
     </div>
 </div>
+
+
+
+@{
+    SiteRewardsModel RewardModel = new SiteRewardsModel();
+    Html.RenderPartial("_addNewRewardsModal", RewardModel);
+}

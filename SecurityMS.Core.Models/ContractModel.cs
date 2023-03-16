@@ -21,8 +21,8 @@ namespace SecurityMS.Core.Models
         [Display(Name = "العميل")]
         public CustomersEntity Customer { get; set; }
         [Display(Name = "المواقع")]
-        public List<SiteModel> ContractSites {get;set;}
+        public List<SiteModel> ContractSites { get; set; }
         [Display(Name = "جهة التواصل")]
-        public CustomerContactsEntity ContactPerson { get; set; } 
+        public CustomerContactsEntity ContactPerson { get; set; }
     }
 }
