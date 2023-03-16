@@ -11,10 +11,10 @@ namespace SecurityMS.Core.Models
         [Min(1)]
         public long SiteId { get; set; }
 
-        [Display(Name = "تاريخ الحافز")]
+        [Display(Name = "تاريخ المكافأه")]
         public DateTime RewardDate { get; set; } = DateTime.Now;
 
-        [Display(Name = "نوع الحافز")]
+        [Display(Name = "نوع المكافأه")]
         public int RewardType { get; set; }
         [Display(Name = "القيمه / الأيام")]
         [Required]

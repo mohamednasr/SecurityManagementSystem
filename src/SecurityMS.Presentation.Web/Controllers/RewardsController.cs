@@ -61,6 +61,26 @@ namespace SecurityMS.Presentation.Web.Controllers
                 return Redirect(redirectUrl);
             }
         }
+        
+        [HttpPost]
+        public async Task<bool> SaveSiteRewards([FromBody] List<RewardEntity> siteRewards)
+        {
+            try
+            {
+                foreach (var rewardEntity in siteRewards)
+                {
+                    rewardEntity.create(HttpContext.User.Identity.Name);
+                    rewardEntity.RewardValue = rewardEntity.RewardType == (int)RewardTypeEnum.Days ? await GetRewardValue(rewardEntity.EmployeeId, rewardEntity.Amount) : rewardEntity.Amount;
+                    _context.Add(rewardEntity);
+                }
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
         // GET: Rewards/Details/5
         public async Task<IActionResult> Details(long? id)
@@ -113,7 +133,7 @@ namespace SecurityMS.Presentation.Web.Controllers
             var employee = await _context.SiteEmployeesAssignEntities.Include(s => s.SiteEmployee).FirstOrDefaultAsync(x => x.EmployeeId == EmployeeId);
             if (employee != null)
             {
-                return value * employee.EmployeeSalary;
+                return value * employee.EmployeeSalary / 30;
             }
             return 0;
         }

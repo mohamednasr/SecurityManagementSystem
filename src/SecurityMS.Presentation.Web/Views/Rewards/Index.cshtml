@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<SecurityMS.Infrastructure.Data.Entities.RewardEntity>
 @using SecurityMS.Core.Models;
+@using SecurityMS.Core.Models.Enums;
 
 @{
     ViewData["Title"] = "Index";
@@ -8,7 +9,7 @@
 
 <h2>الحوافز</h2>
 
-<a class="btn btn-primary" data-toggle="modal" data-target="#RewardsModal"> اضافه سلفه لموظفي موقع</a>
+<a class="btn btn-primary" data-toggle="modal" data-target="#RewardsModal"> اضافه مكافأه لموظفي موقع</a>
 <hr/>
 <table class="table">
     <thead>
@@ -23,6 +24,9 @@
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.RewardValue)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Reason)
             </th>
             @*<th></th>*@
@@ -35,11 +39,14 @@
                 @Html.DisplayFor(modelItem => item.Employee.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RewardType)
+                    @Html.DisplayFor(modelItem => item.TypeString)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.RewardValue)
+                </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Reason)
             </td>

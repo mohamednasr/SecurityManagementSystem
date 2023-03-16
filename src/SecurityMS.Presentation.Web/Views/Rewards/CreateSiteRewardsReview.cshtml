@@ -34,34 +34,39 @@
 
 @section Scripts{
     <script>
+        $(".reward-type").click(function(){
+            $(this).parents('.reward-type-options').find('[checked]').removeAttr('checked');
+            $(this).attr('checked','checked');
+        });
+
         $("#SaveRewards").click(function () {
             var employees = $(".employee-name");
-            var paymentAmount = $(".payment-amount");
-            var paymentDate = $(".payment-date");
-            var installmentDate = $(".installment-date");
-            var installments = $(".installments");
-            var paymentsList = [];
+            var rewardAmount = $(".reward-amount");
+            var rewardType = $(".reward-type[checked]");
+            var rewardDate = $(".reward-date");
+            var rewardReason = $(".reward-reason");
+            var rewardsList = [];
             for (var i = 0; i < employees.length; i++) {
-                if (employees[i].value == 0 || paymentAmount[i].value == 0 || installments[i].value == 0) {
+                if (employees[i].value == 0 || rewardAmount[i].value == 0) {
                     alert("يرجي التأكد من البيانات المدخلة");
                     return;
                 }
                 var e = {
                     EmployeeId: parseInt(employees[i].value),
-                    Amount: parseInt(paymentAmount[i].value),
-                    PaymentDate: paymentDate[i].value,
-                    InstallmentDate: installmentDate[i].value,
-                    installments: parseInt(installments[i].value)
+                    Amount: parseInt(rewardAmount[i].value),
+                    RewardDate: rewardDate[i].value,
+                    RewardType: rewardType[i].value,
+                    Reason: rewardReason[i].value
                 }
-                paymentsList.push(e);
+                rewardsList.push(e);
             };
 
-            var siteAdvancedPayments = paymentsList;
+            var siteRewards = rewardsList;
 
             $.ajax({
-                url: "/AdvancedPaymentEntities/SaveSiteAdvancedPayments",
+                url: "/Rewards/SaveSiteRewards",
                 type: "POST",
-                data: JSON.stringify(siteAdvancedPayments),
+                data: JSON.stringify(siteRewards),
                 dataType: 'json', // lowercase is always preferered though jQuery does it, too.
                 contentType: "application/json; charset=utf-8",
                 success: function (res) {

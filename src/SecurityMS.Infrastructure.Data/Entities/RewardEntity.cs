@@ -10,6 +10,7 @@ namespace SecurityMS.Infrastructure.Data.Entities
     {
         [Display(Name = "تاريخ الحافز")]
         public DateTime RewardDate { get; set; } = DateTime.Now;
+        [Display(Name = "أسم الموظف")]
         public long EmployeeId { get; set; }
         [Display(Name = "نوع الحافز")]
         public int RewardType { get; set; }
@@ -18,10 +19,26 @@ namespace SecurityMS.Infrastructure.Data.Entities
         [Display(Name = "السبب")]
         public string Reason { get; set; }
 
+        [Display(Name = "القيمه الاجماليه")]
         public decimal? RewardValue { get; set; }
 
         [Display(Name = "الموظف")]
         public virtual EmployeesEntity Employee { get; set; }
 
+        public string TypeString
+        {
+            get
+            {
+                switch (this.RewardType)
+                {
+                    case 0:
+                        return "أيام";
+                    case 1:
+                        return "مبلغ";
+                    default:
+                        return "";
+                }
+            }
+        }
     }
 }
